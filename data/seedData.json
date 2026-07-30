@@ -1,0 +1,211 @@
+{
+  "business": {
+    "id": "biz-001",
+    "name": "Urban Coffee",
+    "category": "Кофейня & Пекарня",
+    "district": "Алмалинский",
+    "avgCheck": 2500,
+    "phone": "+7 (707) 111-2233",
+    "contactName": "Арман Ибраев",
+    "description": "Уютная спешелти кофейня в центре Алматы с авторскими десертами и свежей выпечкой.",
+    "logoUrl": "☕"
+  },
+  "partners": [
+    {
+      "id": "part-001",
+      "businessId": "biz-002",
+      "name": "Барбершоп \"ManCave\"",
+      "category": "Барбершоп & Мужской уход",
+      "district": "Алмалинский",
+      "matchScore": 94,
+      "avgCheck": 6000,
+      "status": "ACTIVE"
+    },
+    {
+      "id": "part-002",
+      "businessId": "biz-003",
+      "name": "Фитнес-клуб \"FitLife\"",
+      "category": "Спорт & Фитнес",
+      "district": "Алмалинский",
+      "matchScore": 88,
+      "avgCheck": 18000,
+      "status": "ACTIVE"
+    },
+    {
+      "id": "part-003",
+      "businessId": "biz-004",
+      "name": "Цветочная студия \"Flora\"",
+      "category": "Цветы & Подарки",
+      "district": "Алмалинский",
+      "matchScore": 82,
+      "avgCheck": 8500,
+      "status": "SUGGESTED"
+    },
+    {
+      "id": "part-004",
+      "businessId": "biz-005",
+      "name": "Пекарня \"Croissant Co\"",
+      "category": "Выпечка & Десерты",
+      "district": "Медеуский",
+      "matchScore": 79,
+      "avgCheck": 3000,
+      "status": "SUGGESTED"
+    }
+  ],
+  "templates": [
+    {
+      "id": "tmpl-001",
+      "title": "Утренний кофе + Скидка на стрижку",
+      "category": "Кросс-промо",
+      "description": "Клиент кофейни получает скидку 20% в барбершопе, а клиент барбершопа — бесплатный напиток.",
+      "recommendedFor": "Кофейни, Барбершопы",
+      "defaultReward": "Скидка 20% + Бесплатный кофе",
+      "expectedReach": "500+ клиентов/мес",
+      "expectedRoi": "+35% повторных визитов",
+      "tags": ["Кофе", "Стрижка", "Район"]
+    },
+    {
+      "id": "tmpl-002",
+      "title": "ЗОЖ-маршрут: Фитнес + Полезный завтрак",
+      "category": "Здоровье",
+      "description": "После тренировки клиент получат 15% скидку на протеиновые боулы и смузи в вашей кофейне.",
+      "recommendedFor": "Фитнес-клубы, ЗОЖ-кафе",
+      "defaultReward": "Скидка 15% на боулы",
+      "expectedReach": "350+ клиентов/мес",
+      "expectedRoi": "+25% чека",
+      "tags": ["ЗОЖ", "Фитнес", "Смузи"]
+    },
+    {
+      "id": "tmpl-003",
+      "title": "Романтический вечер: Букет + Десерт",
+      "category": "Праздники",
+      "description": "При покупке букета клиент получает купон на фирменный десерт при заказе кофе.",
+      "recommendedFor": "Цветочные салоны, Пекарни",
+      "defaultReward": "Фирменный десерт в подарок",
+      "expectedReach": "200+ клиентов/мес",
+      "expectedRoi": "+40% лояльности",
+      "tags": ["Цветы", "Десерт", "Праздник"]
+    }
+  ],
+  "campaigns": [
+    {
+      "id": "cmp-001",
+      "title": "Көрші-Маршрут: Кофе & Стрижка",
+      "sourceBusinessId": "biz-001",
+      "targetPartnerIds": ["part-001"],
+      "rewardText": "Скидка 20% на первую стрижку в ManCave при чеке от 2000 ₸ в Urban Coffee",
+      "minSpend": 2000,
+      "durationDays": 30,
+      "expireDate": "2026-08-30",
+      "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://zherles.kz/b2c/passport?pin=1234",
+      "shareMessage": "Привет! Держи мой Паспорт Алмалинского района со скидкой 20% на стрижку в ManCave!",
+      "status": "ACTIVE",
+      "createdAt": "2026-07-28T10:00:00Z"
+    },
+    {
+      "id": "cmp-002",
+      "title": "Көрші-Маршрут: Фитнес & Завтрак",
+      "sourceBusinessId": "biz-001",
+      "targetPartnerIds": ["part-002"],
+      "rewardText": "Бесплатный фреш к любому боулу при предъявлении клубной карты FitLife",
+      "minSpend": 2500,
+      "durationDays": 15,
+      "expireDate": "2026-08-15",
+      "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://zherles.kz/b2c/passport?pin=7890",
+      "shareMessage": "Лови подарок от FitLife и Urban Coffee — бесплатный фреш!",
+      "status": "ACTIVE",
+      "createdAt": "2026-07-29T14:30:00Z"
+    }
+  ],
+  "clients": [
+    {
+      "id": "crm-001",
+      "name": "Айдар Касымов",
+      "phone": "+7 (777) 333-4455",
+      "acquiredFromPartner": "Барбершоп \"ManCave\"",
+      "campaignId": "cmp-001",
+      "totalSpent": 12500,
+      "visitCount": 5,
+      "status": "VIP",
+      "lastVisit": "2026-07-29T16:20:00Z"
+    },
+    {
+      "id": "crm-002",
+      "name": "Динара Сатпаева",
+      "phone": "+7 (701) 555-8822",
+      "acquiredFromPartner": "Фитнес-клуб \"FitLife\"",
+      "campaignId": "cmp-002",
+      "totalSpent": 5000,
+      "visitCount": 2,
+      "status": "ACTIVE",
+      "lastVisit": "2026-07-30T11:00:00Z"
+    },
+    {
+      "id": "crm-003",
+      "name": "Кайрат Нуртасов",
+      "phone": "+7 (705) 888-1122",
+      "acquiredFromPartner": "Барбершоп \"ManCave\"",
+      "campaignId": "cmp-001",
+      "totalSpent": 2500,
+      "visitCount": 1,
+      "status": "NEW",
+      "lastVisit": "2026-07-30T13:45:00Z"
+    }
+  ],
+  "coupons": [
+    {
+      "id": "coup-001",
+      "campaignId": "cmp-001",
+      "pinCode": "1234",
+      "rewardText": "Скидка 20% на стрижку в ManCave",
+      "partnerName": "Барбершоп \"ManCave\"",
+      "customerPhone": "+7 (777) 333-4455",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "coup-002",
+      "campaignId": "cmp-001",
+      "pinCode": "5678",
+      "rewardText": "Бесплатный американо в Urban Coffee",
+      "partnerName": "Urban Coffee",
+      "customerPhone": "+7 (701) 999-0011",
+      "status": "REDEEMED",
+      "redeemedAt": "2026-07-29T18:10:00Z",
+      "redeemedByStaff": "Кассир Алия"
+    },
+    {
+      "id": "coup-003",
+      "campaignId": "cmp-002",
+      "pinCode": "7890",
+      "rewardText": "Бесплатный фреш к боулу",
+      "partnerName": "Urban Coffee",
+      "customerPhone": "+7 (701) 555-8822",
+      "status": "ACTIVE"
+    }
+  ],
+  "districtPassport": {
+    "districtName": "Алмалинский район",
+    "featuredDeals": [
+      {
+        "id": "deal-001",
+        "title": "Скидка 20% на первую стрижку",
+        "businessName": "Барбершоп \"ManCave\"",
+        "category": "Красота",
+        "reward": "Скидка 20% по промокоду 1234",
+        "pinCode": "1234",
+        "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=1234",
+        "minSpend": 2000
+      },
+      {
+        "id": "deal-002",
+        "title": "Бесплатный фреш к боулу",
+        "businessName": "Urban Coffee",
+        "category": "Кофейня",
+        "reward": "Фреш в подарок по промокоду 7890",
+        "pinCode": "7890",
+        "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=7890",
+        "minSpend": 2500
+      }
+    ]
+  }
+}
