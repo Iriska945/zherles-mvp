@@ -1,23 +1,26 @@
-## 2026-07-30T14:17:26Z
-You are a Worker subagent implementing Milestone 3: Campaign Creation Module ("Көрші-маршрут") for MVP "ЖЕРЛЕС".
+## 2026-08-01T00:37:01Z
+<USER_REQUEST>
+You are Worker 1 for Milestone 3 (PROJECT.md Update & Final Build Verification).
+Working directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_worker_m3_1
 
-Project Directory: /Users/ramil/teamwork_projects/zherles_mvp
-Your Working Directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_worker_m3_1
+MANDATORY INTEGRITY WARNING:
+DO NOT CHEAT. All implementations must be genuine. DO NOT hardcode test results, create dummy/facade implementations, or circumvent the intended task. A Forensic Auditor will independently verify your work. Integrity violations WILL be detected and your work WILL be rejected.
 
-Tasks:
-1. Create your working directory `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_worker_m3_1` if not exists and maintain `progress.md`.
-2. Implement components and pages for Milestone 3:
-   - `components/QRGenerator.tsx`: Dynamic QR code renderer component generating SVG/Canvas QR codes (or using clean SVG QR matrix / `api.qrserver.com` image fallback) with download & print buttons.
-   - `app/b2b/campaigns/new/page.tsx`: Step-by-step Campaign Creation Wizard ("Көрші-маршрут"):
-     - Support optional pre-fill via `useSearchParams()` query param `templateId`.
-     - Step 1: Partner Selection. Grid of available partner businesses from `state.partners` with match score %, district badge, category icon, and select checkboxes.
-     - Step 2: Rewards & Conditions. Form inputs for Campaign Title, Reward Description (text), Minimum Spend (KZT), Duration (days), and custom sharing message template.
-     - Step 3: Message & QR Preview. Live preview card of client WhatsApp message + generated QR code targeting `/b2c/passport?campaignId=...` + "Запустить акцию" submit button.
-     - Submission persists campaign via `useApp().addCampaign(newCampaign)` and redirects to `/b2b/campaigns`.
-   - `app/b2b/campaigns/page.tsx`: Active & Past Campaigns Overview page:
-     - Header with "Создать новую акцию" button.
-     - Summary metrics (Active Campaigns count, Total Issued Coupons, Total Redeemed Bonuses).
-     - Grid/List of campaigns showing title, target partners, reward details, status badges (`ACTIVE`, `PAUSED`), coupon stats, QR code preview modal/trigger, and direct link to B2C Passport view.
-3. Verify build by executing `npm run build` in `/Users/ramil/teamwork_projects/zherles_mvp/`.
-4. Write your handoff report to `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_worker_m3_1/handoff.md`.
-5. Send a message to parent with build status and report summary.
+Your task:
+1. Update `/Users/ramil/teamwork_projects/zherles_mvp/PROJECT.md` in the project root to include all 5 required sections:
+   - **Описание продукта** (Product Description, 2-3 detailed paragraphs)
+   - **Текущий статус и roadmap** (Current Status & Roadmap detailing completed M1-M3 features and roadmap)
+   - **Инструкции для разработчика** (Developer Instructions: `npm run dev`, `npm run build`, `npx playwright test`, `.env.local` setup with `GREENAPI_URL`, `GREENAPI_ID`, `GREENAPI_TOKEN`)
+   - **Описание архитектуры** (Architecture: Next.js App Router structure, routes table, LocalStorage state engine in `lib/storage.ts`, event dispatching `zherles_state_change`, data models)
+   - **Описание WhatsApp-интеграции** (WhatsApp Integration: `/api/whatsapp/send` endpoint spec, Green API payload structure, phone sanitization rules, mock testing via `MOCK_GREEN_API=true`, UI status feedback)
+
+2. Run full verification commands:
+   - `npm run build`
+   - `npx playwright test`
+
+3. Verify that:
+   - `npm run build` succeeds cleanly with exit code 0.
+   - All Playwright E2E tests pass 100%.
+
+4. Document `PROJECT.md` structure and build/test outputs in `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_worker_m3_1/handoff.md`. Send a message back to orchestrator.
+</USER_REQUEST>

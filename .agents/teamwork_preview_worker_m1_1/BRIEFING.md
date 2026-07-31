@@ -1,51 +1,50 @@
-# BRIEFING — 2026-07-30T14:04:00Z
+# BRIEFING — 2026-08-01T00:28:12Z
 
 ## Mission
-Implement Milestone 1 (Project Foundation, Data Models & Seed State Engine) for MVP "ЖЕРЛЕС" in `/Users/ramil/teamwork_projects/zherles_mvp/`.
+Implement WhatsApp Green API integration, API route, B2C share modal UI, and Playwright E2E tests.
 
 ## 🔒 My Identity
-- Archetype: worker
+- Archetype: implementer/qa/specialist
 - Roles: implementer, qa, specialist
 - Working directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_worker_m1_1
-- Original parent: a7d1b784-0d80-4af0-8d25-70c89c779c11
-- Milestone: Milestone 1 - Project Foundation, Data Models & Seed State Engine
+- Original parent: eb5563f0-f075-40d2-aaef-8bdfef0597c5
+- Milestone: Milestone 1 (WhatsApp Green API Integration)
 
 ## 🔒 Key Constraints
-- Pure Next.js App Router, TypeScript, Tailwind CSS, Recharts, Lucide React, Playwright.
-- LocalStorage state key: 'zherles_app_state_v1'.
-- Custom event dispatch: 'zherles_state_change'.
-- Anti-fraud redemption logic with double-redemption error.
-- All code files in `/Users/ramil/teamwork_projects/zherles_mvp/`.
+- CODE_ONLY network mode: do not make outbound external HTTP requests during automated testing unless mocked.
+- Real genuine implementation, no cheating or hardcoded mock responses in production code.
 
 ## Current Parent
-- Conversation ID: a7d1b784-0d80-4af0-8d25-70c89c779c11
-- Updated: 2026-07-30T14:04:00Z
+- Conversation ID: eb5563f0-f075-40d2-aaef-8bdfef0597c5
+- Updated: 2026-08-01T00:28:12Z
 
 ## Task Summary
-- **What to build**: Next.js project foundation, configuration, TypeScript types, seed data, LocalStorage storage engine with custom event dispatching, AppContext provider, ResetDemoButton, Header navigation, RootLayout, global CSS, Home page.
-- **Success criteria**: `npm install` completes cleanly, `npm run build` compiles with 0 errors.
+- **What to build**:
+  1. `.env.local` Green API credentials configuration.
+  2. Next.js Server API route `app/api/whatsapp/send/route.ts` with phone sanitization and Green API POST forwarder.
+  3. UI update in `components/ShareButtons.tsx` (and `app/b2c/passport/page.tsx` if relevant) with phone input modal/prompt and real-time toast feedback.
+  4. Playwright tests in `e2e/whatsapp.spec.ts` (or `e2e/zherles_mvp.spec.ts`) with Green API mocking.
+  5. Build & test verification (`npm run build`, `npx playwright test`).
+- **Success criteria**:
+  - `npm run build` passes with zero errors.
+  - Playwright test passes.
+  - Clean handoff report.
 
 ## Change Tracker
-- **Files modified**:
-  - `package.json`
-  - `tsconfig.json`
-  - `tailwind.config.js`
-  - `postcss.config.js`
-  - `next.config.js`
-  - `playwright.config.ts`
-  - `types/index.ts`
-  - `data/seedData.json`
-  - `lib/storage.ts`
-  - `context/AppContext.tsx`
-  - `components/ResetDemoButton.tsx`
-  - `components/Header.tsx`
-  - `app/globals.css`
-  - `app/layout.tsx`
-  - `app/page.tsx`
-- **Build status**: PASS (`npm run build` compiled successfully, 4/4 static pages generated)
+- **Files modified**: TBD
+- **Build status**: TBD
 - **Pending issues**: None
 
 ## Quality Status
-- **Build/test result**: PASS
-- **Lint status**: Clean
-- **Tests added/modified**: e2e configuration set up in `playwright.config.ts`
+- **Build/test result**: TBD
+- **Lint status**: TBD
+- **Tests added/modified**: TBD
+
+## Loaded Skills
+- None
+
+## Key Decisions Made
+- Starting task analysis and reading Explorer report.
+
+## Artifact Index
+- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_worker_m1_1/ORIGINAL_REQUEST.md` — original request

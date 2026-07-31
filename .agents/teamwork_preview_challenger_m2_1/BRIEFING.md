@@ -1,49 +1,45 @@
-# BRIEFING — 2026-07-30T14:13:00+05:00
+# BRIEFING — 2026-08-01T00:36:49Z
 
 ## Mission
-Empirically test Milestone 2 (B2B Module) for MVP "ЖЕРЛЕС" in lib/storage.ts.
+Empirically verify and stress-test the Milestone 2 Minimalism UX Redesign and Playwright test suite for zherles_mvp.
 
 ## 🔒 My Identity
-- Archetype: challenger
+- Archetype: Empirical Challenger
 - Roles: critic, specialist
 - Working directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_challenger_m2_1
-- Original parent: a7d1b784-0d80-4af0-8d25-70c89c779c11
-- Milestone: Milestone 2 (B2B Module)
-- Instance: 1 of 1
+- Original parent: eb5563f0-f075-40d2-aaef-8bdfef0597c5
+- Milestone: Milestone 2 (Minimalism UX Redesign)
+- Instance: 2 of 2 (Challenger 2)
 
 ## 🔒 Key Constraints
-- Review and empirical verification only — test via executable Node.js verification script
-- Write agent metadata strictly inside working directory
+- Review-only — do NOT modify implementation code
+- Must run empirical verification and tests directly
+- Test Desktop Chrome & Mobile Chrome
+- Mobile responsiveness at 375px viewport (horizontal scroll check, min-h-[48px] buttons, bottom nav toolbar overlap)
+- Verify 14 Playwright E2E tests
 
 ## Current Parent
-- Conversation ID: a7d1b784-0d80-4af0-8d25-70c89c779c11
-- Updated: 2026-07-30T14:13:00+05:00
-
-## Review Scope
-- **Files to review**: lib/storage.ts
-- **Review criteria**: updateBusinessProfile (name/district & event dispatch), addTemplate (insert), updateTemplate (modify title/fields), deleteTemplate (remove by ID)
+- Conversation ID: eb5563f0-f075-40d2-aaef-8bdfef0597c5
+- Updated: 2026-08-01T00:36:49Z
 
 ## Attack Surface
-- **Hypotheses tested**:
-  - `updateBusinessProfile` updates name/district and dispatches `zherles_state_change` event. (PASSED)
-  - `addTemplate` inserts new template at beginning of list and persists state. (PASSED)
-  - `updateTemplate` updates title and fields of existing template. (PASSED)
-  - `deleteTemplate` removes template by ID. (PASSED)
-  - Non-existent template IDs in update/delete operations degrade gracefully. (PASSED)
-  - SSR environment execution (`window === undefined`) handles operations safely without throwing. (PASSED)
-- **Vulnerabilities found**: None in tested storage operations.
-- **Untested angles**: UI component event handling integration (covered separately in E2E tests).
+- **Hypotheses tested**: Playwright test suite execution on Desktop/Mobile, 375px viewport horizontal scroll, bottom toolbar button obscuration, 48px touch target heights.
+- **Vulnerabilities found**: Secondary navigation buttons and filter pills render below 48px height (28px–38px).
+- **Untested angles**: Extreme zoom levels or screen readers (out of scope).
 
 ## Loaded Skills
-- None loaded explicitly
+- None required.
 
 ## Key Decisions Made
-- Constructed and executed Node.js empirical test runner `verify_b2b_storage.ts`.
-- Verified 16 test assertions across template CRUD, business profile updates, event dispatch, and SSR edge cases.
+- Executed `npx playwright test` on clean dev server: 20/20 passed (14 core E2E tests + 6 API edge tests).
+- Created empirical 375px mobile responsiveness test harness in `e2e/m2_minimalism_responsiveness.spec.ts`.
+- Verified zero horizontal scroll on all 9 routes at 375px.
+- Verified zero obscuration of CTAs/WhatsApp triggers by bottom nav.
+- Recorded touch target height recommendations in `handoff.md`.
 
 ## Artifact Index
-- ORIGINAL_REQUEST.md — Original request instructions
-- BRIEFING.md — Working briefing and identity
-- progress.md — Liveness heartbeat and progress tracking
-- verify_b2b_storage.ts — Executable Node.js test script for B2B storage verification
-- handoff.md — 5-component handoff report with verification details
+- ORIGINAL_REQUEST.md — Original request record
+- BRIEFING.md — Working memory briefing
+- progress.md — Heartbeat progress tracker
+- handoff.md — Final handoff report
+- e2e/m2_minimalism_responsiveness.spec.ts — Mobile 375px responsiveness stress test

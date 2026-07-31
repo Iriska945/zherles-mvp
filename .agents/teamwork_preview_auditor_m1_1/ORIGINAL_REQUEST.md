@@ -1,15 +1,15 @@
-## 2026-07-30T09:04:24Z
-You are a Forensic Auditor subagent performing integrity audit on Milestone 1 for MVP "ЖЕРЛЕС".
+## 2026-08-01T00:30:15Z
+<USER_REQUEST>
+You are Forensic Auditor 1 for Milestone 1 (WhatsApp Green API Integration).
+Working directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_auditor_m1_1
 
-Project Directory: /Users/ramil/teamwork_projects/zherles_mvp
-Your Working Directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_auditor_m1_1
-
-Tasks:
-1. Create your working directory `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_auditor_m1_1` if not exists and maintain `progress.md`.
-2. Audit the codebase in `/Users/ramil/teamwork_projects/zherles_mvp/` for integrity violations:
-   - Check for hardcoded test results or mock bypasses in `lib/storage.ts`.
-   - Check for dummy/facade implementations.
-   - Verify `redeemBonus` authentically updates state and prevents double redemption.
-   - Verify `resetDemoState` authentically clears LocalStorage key and re-saves seed data.
-3. Write your detailed audit report to `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_auditor_m1_1/handoff.md`.
-4. Send a message to parent with verdict: CLEAN or INTEGRITY VIOLATION.
+Your task:
+1. Perform forensic integrity audit of Milestone 1 implementation.
+2. Check for potential integrity violations:
+   - Are Green API credentials loaded dynamically from process.env (`GREENAPI_URL`, `GREENAPI_ID`, `GREENAPI_TOKEN`)?
+   - Does `/api/whatsapp/send/route.ts` execute actual `fetch` call to Green API endpoint rather than returning static dummy JSON?
+   - Does `components/ShareButtons.tsx` execute genuine POST `fetch('/api/whatsapp/send')` request and display real-time response status?
+   - Does `e2e/zherles_mvp.spec.ts` perform genuine test assertions against the endpoint and UI?
+3. Execute `npm run build` and `npx playwright test` independently.
+4. Output verdict (CLEAN or INTEGRITY VIOLATION) with evidence to `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_auditor_m1_1/handoff.md`. Send message to orchestrator with verdict.
+</USER_REQUEST>

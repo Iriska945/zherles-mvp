@@ -1,88 +1,149 @@
-# Milestone 1 Review Handoff Report: Project Foundation, Data Models & Seed State Engine
+# Handoff Report — Milestone 1 (WhatsApp Green API Integration) Review
+
+## Review Summary
+
+**Verdict**: **FAIL**
+
+---
 
 ## 1. Observation
 
-All required project files and configurations for Milestone 1 were inspected and verified in `/Users/ramil/teamwork_projects/zherles_mvp/`:
+### Build & E2E Test Execution
+- **Command**: `npm run build`
+  - **Result**: PASSED cleanly. Next.js 14.2.35 generated static pages (13/13) and dynamic API routes (`/api/whatsapp/send`).
+- **Command**: `npx playwright test`
+  - **Result**: **FAILED** (Exit code 1, 12 test failures out of 22 test runs across Chromium and Mobile Chrome projects).
+  - **Verbatim Error (Mobile Chrome - Test 7)**:
+    ```text
+    1) [Mobile Chrome] › e2e/zherles_mvp.spec.ts:191:7 › MVP ЖЕРЛЕС E2E Test Suite › Test 7: Green API WhatsApp Send Integration
+       Test timeout of 30000ms exceeded.
+       Error: locator.click: Test timeout of 30000ms exceeded.
+       Call log:
+         - waiting for getByRole('button', { name: /WhatsApp/i }).first()
+           - locator resolved to <button type="button" title="Поделиться в WhatsApp через Green API" class="inline-flex items-center space-x-1.5 ...">...</button>
+         - attempting click action
+           - waiting for element to be visible, enabled and stable
+           - element is visible, enabled and stable
+           - scrolling into view if needed
+           - done scrolling
+           - <div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-white/95 backdrop-blur-md border-t border-slate-200 p-3 shadow-2xl z-40">...</div> intercepts pointer events
+    ```
 
-1. **`types/index.ts`** (Lines 1-98):
-   - Fully defines TypeScript interfaces: `Business`, `Partner`, `CampaignTemplate`, `Campaign`, `ClientCRM`, `BonusCoupon`, `DistrictPassportDeal`, `AppState`. All interfaces strictly match domain specs.
-2. **`data/seedData.json`** (Lines 1-212):
-   - Realistically models initial state for "Urban Coffee" in Almaly district, including 4 partner businesses, 3 campaign templates, 2 active campaigns, 3 CRM clients, 3 bonus coupons, and district passport deals.
-3. **`lib/storage.ts`** (Lines 1-149):
-   - LocalStorage state manager with key `'zherles_app_state_v1'`.
-   - Dispatches `CustomEvent(STATE_CHANGE_EVENT)` (`zherles_state_change`) on state updates.
-   - Includes anti-fraud double-redemption protection in `redeemBonus(pinCode)`.
-   - SSR safe (`typeof window === 'undefined'` guard).
-4. **`context/AppContext.tsx`** (Lines 1-119):
-   - React context `AppProvider` subscribing to both intra-tab custom events (`zherles_state_change`) and cross-tab window events (`storage`).
-   - Exports custom hook `useApp()`.
-5. **`components/ResetDemoButton.tsx`** (Lines 1-41):
-   - Functional UI button with state feedback reset trigger (`resetDemo()`).
-6. **`components/Header.tsx`** (Lines 1-56):
-   - Application header bar rendering logo, district indicator, B2B/B2C navigation links, and `ResetDemoButton`.
-7. **`app/layout.tsx`** (Lines 1-32):
-   - Next.js root layout wrapping children in `AppProvider` with global styling and header/footer.
-8. **`app/page.tsx`** (Lines 1-151):
-   - Dashboard landing page rendering hero section, live metrics, and module links.
-9. **`tailwind.config.js`** & **`app/globals.css`**:
-   - Proper content path scoping (`./app/**/*`, `./components/**/*`, `./context/**/*`) and custom `brand` color palette.
-
-### Verification Command Execution
-- Command: `npm run build` in `/Users/ramil/teamwork_projects/zherles_mvp`
-- Exit Code: `0`
-- Output: `✓ Compiled successfully`, static pages generated (`4/4`).
+### Code & Config Inspection Findings
+- **File**: `/Users/ramil/teamwork_projects/zherles_mvp/.gitignore` (Lines 1-5):
+  ```gitignore
+  node_modules/
+  .next/
+  playwright-report/
+  test-results/
+  ```
+  - **Observation**: `.env.local` or `.env*` is **NOT listed in `.gitignore`**.
+- **File**: `/Users/ramil/teamwork_projects/zherles_mvp/.env.local` (Lines 1-3):
+  ```env
+  GREENAPI_URL=https://7107.api.greenapi.com
+  GREENAPI_ID=710722698257
+  GREENAPI_TOKEN=8e5ed41b52a44dbe8a74e50ae8ad7a04958f3eebe8004fcfbf
+  ```
+  - **Observation**: Real API token credentials exist in `.env.local`, which is untracked by `.gitignore` and eligible to be committed to git.
+- **File**: `/Users/ramil/teamwork_projects/zherles_mvp/app/api/whatsapp/send/route.ts` (Lines 35-37):
+  ```ts
+  const greenApiUrl = process.env.GREENAPI_URL || 'https://7107.api.greenapi.com';
+  const greenApiId = process.env.GREENAPI_ID || '710722698257';
+  const greenApiToken = process.env.GREENAPI_TOKEN;
+  ```
+  - **Observation**: `greenApiId` fallback value `'710722698257'` is hardcoded in source code.
 
 ---
 
 ## 2. Logic Chain
 
-1. **Integrity Violation Analysis**:
-   - Checked source files for hardcoded test bypasses, dummy implementations, or fake logic. None found.
-   - `lib/storage.ts` implements real `localStorage` read/write, real `CustomEvent` dispatching, real status transition for `redeemBonus`, and real fallback to `seedData`.
+1. **E2E Test Failure on Mobile Chrome**:
+   - Observations show that when running `npx playwright test` on the `Mobile Chrome` (Pixel 5) viewport, `Test 7: Green API WhatsApp Send Integration` fails due to pointer event interception.
+   - Specifically, `ShareButtons.tsx` on `/b2c/passport` places the "WhatsApp" button in a section covered by the fixed bottom navigation bar (`div.fixed.bottom-0.z-40`).
+   - Consequently, real mobile users (and Playwright Mobile Chrome runner) cannot tap the WhatsApp share button because clicks are intercepted by the bottom bar.
+   - Therefore, the feature fails mobile layout/interaction acceptance criteria and breaks E2E test execution.
 
-2. **Reactivity & Synchronization Assessment**:
-   - When state mutators (`addCampaign`, `updateBusiness`, `redeemBonus`, etc.) are called, `saveState` updates `localStorage` AND fires `STATE_CHANGE_EVENT`.
-   - `AppContext`'s `useEffect` listens to `STATE_CHANGE_EVENT` and updates state in real-time within the active tab.
-   - Cross-tab window event listener (`'storage'`) ensures separate browser tabs stay synchronized when `localStorage` changes.
+2. **Security & Git Integrity Risk**:
+   - Observations show `.env.local` contains `GREENAPI_TOKEN=8e5ed41b52a44dbe8a74e50ae8ad7a04958f3eebe8004fcfbf`.
+   - `.gitignore` only excludes `node_modules/`, `.next/`, `playwright-report/`, and `test-results/`. `.env.local` is missing.
+   - Leaving `.env.local` exposed in git repositories violates basic secret-handling rules ("no hardcoded tokens in repo, read from env").
+   - In addition, hardcoding `'710722698257'` as a default fallback in `app/api/whatsapp/send/route.ts` line 36 embeds account-specific identifiers in source code.
 
-3. **Anti-Fraud Double-Redemption Validation**:
-   - `redeemBonus(pinCode)` searches for the coupon by `pinCode`.
-   - If coupon is missing -> Returns `{ success: false, error: 'Код бонуса не найден' }`.
-   - If `coupon.status === 'REDEEMED'` -> Returns `{ success: false, error: 'Бонус уже был использован', redeemedAt }`.
-   - If active -> Updates status to `'REDEEMED'`, sets timestamp, persists to `localStorage`, dispatches update, and returns `{ success: true, coupon, redeemedAt }`.
-   - Submitting the same `pinCode` a second time will hit the status check and be rejected, preventing duplicate redemption.
-
-4. **Build Integrity**:
-   - `npm run build` ran cleanly with Next.js 14.2.35 and TypeScript check. Zero linting or compilation errors.
+3. **Sanitization & Desktop UI Assessment**:
+   - Sanitization logic in `app/api/whatsapp/send/route.ts` (converting `8701...` to `7701...` and appending `@c.us`) operates as intended for valid phone formats.
+   - Desktop UI feedback displaying `"Сообщение отправлено ✓"` in `components/ShareButtons.tsx` functions properly when un-obscured.
+   - However, the mobile layout bug and secret exposure require a **FAIL** verdict.
 
 ---
 
 ## 3. Caveats
 
-- `localStorage` relies on browser execution environment; SSR default fallback returns `seedData`.
-- Pin codes in initial seed data (`1234`, `7890`) are pre-populated for demo testing; production deployment would generate crypto-random unique tokens.
+- Upstream live network calls to Green API servers were tested using Playwright network interception mocks (`page.route('**/waInstance*/**', ...)`), as required by network isolation constraints.
+- No other caveats.
 
 ---
 
 ## 4. Conclusion
 
-- **Verdict**: **PASS** (APPROVED)
-- Milestone 1 meets all technical requirements, architectural standards, quality benchmarks, and type safety constraints. No integrity violations or defects detected.
+**Verdict**: **FAIL**
+
+The implementation cannot be approved in its current state due to:
+1. **Critical E2E Test Failure / Mobile UI Defect**: Test 7 fails on `Mobile Chrome` viewport because `fixed bottom-0` navigation bar overlays and intercepts clicks on the `ShareButtons` WhatsApp button.
+2. **Critical Security Issue**: `.env.local` containing `GREENAPI_TOKEN` is not ignored in `.gitignore`, posing a secret exposure risk in git.
+3. **Hardcoded Credential Fallback**: `app/api/whatsapp/send/route.ts` line 36 contains a hardcoded fallback Green API Instance ID (`710722698257`).
 
 ---
 
 ## 5. Verification Method
 
-To independently verify the build and state functionality:
+To verify these findings independently:
 
-1. Execute Next.js build:
+1. **Verify Mobile UI Interception Bug & Test Failure**:
    ```bash
-   cd /Users/ramil/teamwork_projects/zherles_mvp
+   npx playwright test --project="Mobile Chrome" e2e/zherles_mvp.spec.ts:191
+   ```
+   *Expected result*: Test fails with timeout / pointer event interception error on `<div class="fixed bottom-0...">`.
+
+2. **Verify Security / Git Exposure**:
+   ```bash
+   cat .gitignore
+   ```
+   *Expected result*: `.env.local` is missing from `.gitignore`.
+   ```bash
+   git status
+   ```
+   *Expected result*: `.env.local` is listed as an untracked/committed file.
+
+3. **Verify Build Status**:
+   ```bash
    npm run build
    ```
-   Confirm exit code is `0` and output indicates `✓ Compiled successfully`.
+   *Expected result*: Next.js build completes cleanly (0 TypeScript/lint errors).
 
-2. Inspect state logic:
-   ```bash
-   cat /Users/ramil/teamwork_projects/zherles_mvp/lib/storage.ts
-   ```
+---
+
+## Findings Summary
+
+### [Critical] Finding 1: E2E Failure on Mobile Viewport (UI Interception)
+- **Where**: `components/ShareButtons.tsx` on `/b2c/passport`
+- **Why**: Fixed bottom navigation toolbar (`div.fixed.bottom-0.z-40`) overlaps the WhatsApp button on mobile viewport sizes (Pixel 5), intercepting clicks and timing out Playwright Test 7.
+- **Suggestion**: Adjust padding/margin on `/b2c/passport` or z-index / container positioning so that action buttons are not covered by the fixed bottom navbar.
+
+### [Critical] Finding 2: Exposed Secrets in Repository (`.env.local` missing from `.gitignore`)
+- **Where**: `.gitignore` and `.env.local`
+- **Why**: `.env.local` contains `GREENAPI_TOKEN` but is not excluded in `.gitignore`. Secrets will be leaked to git control.
+- **Suggestion**: Add `.env.local` and `.env*.local` to `.gitignore` immediately.
+
+### [Major] Finding 3: Hardcoded Account Instance ID Fallback in API Route
+- **Where**: `app/api/whatsapp/send/route.ts`:36
+- **Why**: `const greenApiId = process.env.GREENAPI_ID || '710722698257';` hardcodes an account instance ID into application source code.
+- **Suggestion**: Remove hardcoded fallback instance ID; require `process.env.GREENAPI_ID` or return a 500 error if missing, similar to `GREENAPI_TOKEN`.
+
+---
+
+## Verified Claims
+
+- `npm run build` succeeds → verified via running build command → **PASS**
+- Phone number sanitization (8->7 and @c.us suffix) → verified via code inspection → **PASS**
+- Desktop UI toast / success message ("Сообщение отправлено ✓") → verified via Desktop Chrome E2E → **PASS**
+- Mobile Chrome E2E Test 7 execution → verified via `npx playwright test` → **FAIL**

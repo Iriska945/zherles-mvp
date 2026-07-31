@@ -22,9 +22,14 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: 'npm run dev',
+    command: 'npm run start',
     url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: false,
     timeout: 120 * 1000,
+    env: {
+      ...process.env,
+      GREENAPI_URL: 'http://localhost:3000/api/whatsapp/mock-green-api',
+      MOCK_GREEN_API: 'true',
+    },
   },
 });

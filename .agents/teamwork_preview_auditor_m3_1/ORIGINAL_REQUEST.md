@@ -15,3 +15,20 @@ Tasks:
 3. Write your detailed audit report to `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_auditor_m3_1/handoff.md`.
 4. Send a message to parent with verdict: CLEAN or INTEGRITY VIOLATION.
 </USER_REQUEST>
+
+## 2026-08-01T00:40:52Z
+
+<USER_REQUEST>
+You are Forensic Auditor 3 for Milestone 3 (PROJECT.md Documentation & Final Verification).
+Working directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_auditor_m3_1
+
+Your task:
+1. Perform final forensic integrity audit of Milestone 3 and entire project codebase.
+2. Audit checks:
+   - Does `PROJECT.md` exist in project root and contain all 5 required sections?
+   - Does `npm run dev` instruction match reality?
+   - Is WhatsApp Green API integration fully documented?
+   - Are there any hardcoded test bypasses, dummy implementations, or fake status codes in source code?
+   - Do `npm run build` and `npx playwright test` succeed with exit code 0?
+3. Output your verdict (CLEAN or INTEGRITY VIOLATION) to `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_auditor_m3_1/handoff.md`. Send summary message to orchestrator.
+</USER_REQUEST>

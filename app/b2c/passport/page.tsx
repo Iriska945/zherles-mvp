@@ -123,7 +123,7 @@ function DistrictPassportContent() {
   const districtName = state.districtPassport?.districtName || 'Алмалинский район';
 
   return (
-    <div className="max-w-md mx-auto shadow-2xl min-h-screen bg-slate-50 border-x border-slate-200 flex flex-col font-sans pb-24">
+    <div className="max-w-md mx-auto shadow-2xl min-h-screen bg-slate-50 border-x border-slate-200 flex flex-col font-sans pb-32 overflow-x-hidden">
       {/* Header */}
       <header className="bg-gradient-to-br from-emerald-700 via-emerald-600 to-teal-800 text-white p-6 rounded-b-3xl shadow-lg relative overflow-hidden">
         {/* Background decorative elements */}
@@ -147,23 +147,23 @@ function DistrictPassportContent() {
           </h1>
 
           <p className="text-xs text-emerald-100 leading-relaxed font-medium">
-            Добро пожаловать в единый эко-паспорт района! Пользуйтесь скидками и эксклюзивными бонусами в заведениях вашей локации.
+            Единый эко-паспорт района. Скидки и бонусы в лучших локальных заведениях.
           </p>
 
           {/* Quick redemption callout */}
-          <div className="mt-5 p-3.5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 flex items-center justify-between">
+          <div className="mt-5 p-3.5 bg-white/10 backdrop-blur-md rounded-2xl border border-white/20 flex items-center justify-between gap-2">
             <div className="flex items-center space-x-2.5">
-              <div className="w-9 h-9 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-extrabold text-sm shadow">
+              <div className="w-9 h-9 rounded-xl bg-amber-400 text-slate-950 flex items-center justify-center font-extrabold text-sm shadow flex-shrink-0">
                 PIN
               </div>
               <div>
-                <div className="text-xs font-extrabold text-white">Есть PIN-код бонуса?</div>
-                <div className="text-[11px] text-emerald-100">Погасите его за пару секунд</div>
+                <div className="text-xs font-extrabold text-white">Есть PIN-код?</div>
+                <div className="text-[11px] text-emerald-100">Погашение за 2 сек</div>
               </div>
             </div>
             <Link
               href="/b2c/redeem"
-              className="bg-white text-emerald-800 hover:bg-emerald-50 px-3 py-1.5 rounded-xl text-xs font-black transition-all shadow active:scale-95 flex items-center space-x-1"
+              className="bg-white text-emerald-800 hover:bg-emerald-50 h-10 min-h-[44px] px-3.5 rounded-xl text-xs font-black transition-all shadow active:scale-95 flex items-center space-x-1 shrink-0 justify-center"
             >
               <span>Ввести</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -264,14 +264,14 @@ function DistrictPassportContent() {
                   </div>
                 </div>
 
-                {/* Action Buttons */}
+                {/* Action Buttons with h-12 (min 48px height) touch targets */}
                 <div className="space-y-2 pt-1 border-t border-slate-100">
                   <div className="grid grid-cols-2 gap-2">
                     {/* Show QR Modal Button */}
                     <button
                       type="button"
                       onClick={() => setSelectedDeal(deal)}
-                      className="inline-flex items-center justify-center space-x-1.5 px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition-all shadow-sm active:scale-95"
+                      className="inline-flex items-center justify-center space-x-1.5 h-12 min-h-[48px] px-3 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold rounded-xl transition-all shadow-sm active:scale-95"
                     >
                       <QrCode className="w-4 h-4" />
                       <span>QR / PIN код</span>
@@ -280,7 +280,7 @@ function DistrictPassportContent() {
                     {/* Redeem page link */}
                     <Link
                       href={`/b2c/redeem?pin=${deal.pinCode}`}
-                      className="inline-flex items-center justify-center space-x-1.5 px-3 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition-all shadow-sm active:scale-95"
+                      className="inline-flex items-center justify-center space-x-1.5 h-12 min-h-[48px] px-3 bg-slate-900 hover:bg-slate-800 text-white text-xs font-extrabold rounded-xl transition-all shadow-sm active:scale-95"
                     >
                       <CheckCircle2 className="w-4 h-4 text-emerald-400" />
                       <span>Погасить</span>
@@ -310,7 +310,7 @@ function DistrictPassportContent() {
       <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-white/95 backdrop-blur-md border-t border-slate-200 p-3 shadow-2xl z-40">
         <Link
           href="/b2c/redeem"
-          className="w-full inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-extrabold text-sm py-3 px-4 rounded-xl shadow-lg transition-all active:scale-98"
+          className="w-full inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-extrabold text-sm h-12 min-h-[48px] px-4 rounded-xl shadow-lg transition-all active:scale-98"
         >
           <QrCode className="w-5 h-5" />
           <span>Погасить бонус по PIN-коду</span>
@@ -363,7 +363,7 @@ function DistrictPassportContent() {
               <div className="space-y-3">
                 <Link
                   href={`/b2c/redeem?pin=${selectedDeal.pinCode}`}
-                  className="w-full inline-flex items-center justify-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs py-3 rounded-xl transition-all shadow"
+                  className="w-full inline-flex items-center justify-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs h-12 min-h-[48px] rounded-xl transition-all shadow"
                 >
                   <CheckCircle2 className="w-4 h-4" />
                   <span>Перейти к гашению бонуса</span>

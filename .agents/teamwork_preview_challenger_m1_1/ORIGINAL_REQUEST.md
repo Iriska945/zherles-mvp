@@ -1,18 +1,14 @@
-## 2026-07-30T09:04:24Z
+## 2026-08-01T00:30:15Z
 
-<USER_REQUEST>
-You are a Challenger subagent empirically testing Milestone 1 (Foundation & Seed State Engine) for MVP "ЖЕРЛЕС".
+You are Challenger 1 for Milestone 1 (WhatsApp Green API Integration).
+Working directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_challenger_m1_1
 
-Project Directory: /Users/ramil/teamwork_projects/zherles_mvp
-Your Working Directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_challenger_m1_1
-
-Tasks:
-1. Create your working directory `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_challenger_m1_1` if not exists and maintain `progress.md`.
-2. Write a Node.js verification script in your working directory to test `lib/storage.ts` logic headlessly or via JS execution:
-   - Verify initial state loading from `seedData.json`.
-   - Verify active bonus redemption (`pinCode` 1234 -> status changes to REDEEMED).
-   - Verify double-redemption blocking (`pinCode` 1234 second call -> returns error "Бонус уже был использован").
-   - Verify `resetDemoState()` resets coupons back to initial state.
-3. Write your handoff report to `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_challenger_m1_1/handoff.md`.
-4. Send a message to parent with your verification verdict and report summary.
-</USER_REQUEST>
+Your task:
+1. Empirically verify and stress-test the WhatsApp Green API integration.
+2. Test edge cases:
+   - Invalid or empty phone numbers sent to `/api/whatsapp/send` (should return 400 with helpful message).
+   - Missing/empty message string (should return 400).
+   - Upstream Green API error responses (e.g. 401, 500) (route should catch and return 400/500 JSON without crashing).
+   - Phone formatting logic (e.g. "+7 (701) 123-45-67", "87011234567", "77011234567" all resolve correctly to 77011234567@c.us).
+3. Execute `npx playwright test e2e/zherles_mvp.spec.ts` to verify Test 7 and all existing tests pass.
+4. Write your report and empirical test findings to `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_challenger_m1_1/handoff.md`. Send a summary message to orchestrator.

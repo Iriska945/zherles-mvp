@@ -278,14 +278,14 @@ function RedeemContent() {
                 <button
                   type="button"
                   onClick={handleResetForm}
-                  className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-xl transition-all shadow active:scale-98 flex items-center justify-center space-x-1.5"
+                  className="w-full h-12 min-h-[48px] px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs rounded-xl transition-all shadow active:scale-98 flex items-center justify-center space-x-1.5"
                 >
                   <RotateCcw className="w-4 h-4" />
                   <span>Погасить еще один бонус</span>
                 </button>
                 <Link
                   href="/b2c/passport"
-                  className="w-full py-2.5 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 font-bold text-xs rounded-xl transition-all flex items-center justify-center"
+                  className="w-full h-12 min-h-[48px] px-4 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 font-bold text-xs rounded-xl transition-all flex items-center justify-center"
                 >
                   Вернуться в Паспорт района
                 </Link>
@@ -330,14 +330,14 @@ function RedeemContent() {
                 <button
                   type="button"
                   onClick={handleResetForm}
-                  className="w-full py-3 bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs rounded-xl transition-all shadow active:scale-98 flex items-center justify-center space-x-1.5"
+                  className="w-full h-12 min-h-[48px] px-4 bg-red-600 hover:bg-red-700 text-white font-extrabold text-xs rounded-xl transition-all shadow active:scale-98 flex items-center justify-center space-x-1.5"
                 >
                   <RotateCcw className="w-4 h-4" />
                   <span>Попробовать другой PIN-код</span>
                 </button>
                 <Link
                   href="/b2c/passport"
-                  className="w-full py-2.5 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 font-bold text-xs rounded-xl transition-all flex items-center justify-center"
+                  className="w-full h-12 min-h-[48px] px-4 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 font-bold text-xs rounded-xl transition-all flex items-center justify-center"
                 >
                   Вернуться в Паспорт района
                 </Link>
@@ -369,7 +369,7 @@ function RedeemContent() {
               <button
                 type="button"
                 onClick={handleResetForm}
-                className="w-full py-3 bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-xs rounded-xl transition-all shadow active:scale-98 flex items-center justify-center space-x-1.5"
+                className="w-full h-12 min-h-[48px] px-4 bg-amber-600 hover:bg-amber-700 text-white font-extrabold text-xs rounded-xl transition-all shadow active:scale-98 flex items-center justify-center space-x-1.5"
               >
                 <RotateCcw className="w-4 h-4" />
                 <span>Попробовать снова</span>
@@ -406,7 +406,7 @@ function RedeemContent() {
               <button
                 type="submit"
                 disabled={!isComplete}
-                className={`w-full py-3.5 px-4 rounded-2xl font-black text-sm transition-all shadow-lg flex items-center justify-center space-x-2 ${
+                className={`w-full h-12 min-h-[48px] px-4 rounded-2xl font-black text-sm transition-all shadow-lg flex items-center justify-center space-x-2 ${
                   isComplete
                     ? 'bg-emerald-600 hover:bg-emerald-700 text-white active:scale-98'
                     : 'bg-slate-200 text-slate-400 cursor-not-allowed'
@@ -427,7 +427,7 @@ function RedeemContent() {
                       key={num}
                       type="button"
                       onClick={() => handleKeypadPress(num)}
-                      className="h-12 bg-white hover:bg-emerald-50 text-slate-900 font-mono font-extrabold text-xl rounded-xl border border-slate-200 shadow-sm active:bg-emerald-100 transition-all"
+                      className="h-12 min-h-[48px] bg-white hover:bg-emerald-50 text-slate-900 font-mono font-extrabold text-xl rounded-xl border border-slate-200 shadow-sm active:bg-emerald-100 transition-all"
                     >
                       {num}
                     </button>
@@ -435,14 +435,14 @@ function RedeemContent() {
                   <button
                     type="button"
                     onClick={handleKeypadClear}
-                    className="h-12 bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs rounded-xl border border-slate-200 flex items-center justify-center transition-all"
+                    className="h-12 min-h-[48px] bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs rounded-xl border border-slate-200 flex items-center justify-center transition-all"
                   >
                     Сброс
                   </button>
                   <button
                     type="button"
                     onClick={() => handleKeypadPress('0')}
-                    className="h-12 bg-white hover:bg-emerald-50 text-slate-900 font-mono font-extrabold text-xl rounded-xl border border-slate-200 shadow-sm active:bg-emerald-100 transition-all"
+                    className="h-12 min-h-[48px] bg-white hover:bg-emerald-50 text-slate-900 font-mono font-extrabold text-xl rounded-xl border border-slate-200 shadow-sm active:bg-emerald-100 transition-all"
                   >
                     0
                   </button>

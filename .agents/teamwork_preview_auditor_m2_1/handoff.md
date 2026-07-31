@@ -1,104 +1,89 @@
-# Forensic Audit Report — Milestone 2 (B2B Module)
+# Forensic Audit Report — Milestone 2 (Minimalism UX Redesign)
 
 **Work Product**: `/Users/ramil/teamwork_projects/zherles_mvp`
-**Auditor Directory**: `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_auditor_m2_1`
-**Profile**: General Project / Integrity Forensics
-**Verdict**: INTEGRITY VIOLATION
+**Profile**: General Project
+**Verdict**: CLEAN
 
 ---
 
 ## 1. Observation
 
-### Observation 1: Hardcoded Recharts Timeline Data Array
-In `/Users/ramil/teamwork_projects/zherles_mvp/app/b2b/dashboard/page.tsx`, lines 77–87:
-```typescript
-77:   // Chart 1: Conversions & Redeemed Bonuses Timeline Data
-78:   const timelineData = useMemo(() => {
-79:     return [
-80:       { day: 'Пн', issued: 12, redeemed: 4, revenue: 10000 },
-81:       { day: 'Вт', issued: 18, redeemed: 7, revenue: 17500 },
-82:       { day: 'Ср', issued: 25, redeemed: 11, revenue: 27500 },
-83:       { day: 'Чт', issued: 22, redeemed: 9, revenue: 22500 },
-84:       { day: 'Пт', issued: 35, redeemed: 16, revenue: 40000 },
-85:       { day: 'Сб', issued: 48, redeemed: 24, revenue: 60000 },
-86:       { day: 'Вс', issued: 40, redeemed: 19, revenue: 47500 },
-87:     ];
-88:   }, []);
-```
-`timelineData` is hardcoded as a constant 7-day array with empty `useMemo` dependencies `[]`. It is rendered by `<AreaChart data={timelineData}>` (line 285). It does NOT reference `state.coupons`, `state.campaigns`, or `state.clients`, nor does it compute dynamic totals based on real state data.
+All 7 forensic checks were empirically executed against the codebase:
 
-### Observation 2: Dynamic Recharts Partner Revenue Data
-In `/Users/ramil/teamwork_projects/zherles_mvp/app/b2b/dashboard/page.tsx`, lines 90–111:
-```typescript
-90:   const partnerRevenueData = useMemo(() => {
-91:     const revenueMap: Record<string, number> = {};
-92: 
-93:     (clients || []).forEach((c) => {
-94:       const source = c.acquiredFromPartner || 'Прямой визит';
-95:       revenueMap[source] = (revenueMap[source] || 0) + (c.totalSpent || 0);
-96:     });
-...
-111:   }, [clients]);
-```
-`partnerRevenueData` correctly reads `clients` from `useApp().state` and dynamically aggregates revenue by partner.
+1. **Check 1: Dynamic `timelineData` Calculation**
+   - **File**: `app/b2b/dashboard/page.tsx` (lines 77–135)
+   - **Observation**: `timelineData` is computed via `useMemo` watching `[coupons, clients, campaigns]`. It aggregates issued coupons, redeemed bonuses, and revenue by day of the week ('Пн' through 'Вс') dynamically from state rather than returning a static hardcoded array.
 
-### Observation 3: LocalStorage State Mutation Functions
-In `/Users/ramil/teamwork_projects/zherles_mvp/lib/storage.ts`:
-- `addTemplate` (lines 130–138): Prepends new template to `currentState.templates` and calls `saveState(updatedState)`.
-- `updateTemplate` (lines 150–158): Maps `currentState.templates` matching by ID and calls `saveState(updatedState)`.
-- `deleteTemplate` (lines 140–148): Filters `currentState.templates` removing by ID and calls `saveState(updatedState)`.
-- `updateBusinessProfile` (lines 120–128): Replaces `currentState.business` and calls `saveState(updatedState)`.
-- `saveState` (lines 26–35): Executes `localStorage.setItem('zherles_app_state_v1', JSON.stringify(state))` and dispatches `window.dispatchEvent(new CustomEvent(STATE_CHANGE_EVENT, { detail: state }))`.
-- `context/AppContext.tsx` exposes `addTemplate`, `updateTemplate`, `deleteTemplate`, and `updateBusiness` (mapped to `updateBusinessProfile`), triggering React state updates via `setState(updated)`.
+2. **Check 2: `GREENAPI_ID` Environment Variable Loading**
+   - **File**: `app/api/whatsapp/send/route.ts` (line 36)
+   - **Observation**: `const greenApiId = process.env.GREENAPI_ID;` is read directly from `process.env` without hardcoded fallback strings.
 
-### Observation 4: Build Verification
-Executed `npm run build`:
-```
-> zherles-mvp@0.1.0 build
-> next build
+3. **Check 3: `.env.local` Git Exclusion**
+   - **File**: `.gitignore` (lines 5–6)
+   - **Observation**: `.env.local` and `.env*.local` are explicitly listed in `.gitignore`.
 
-   Creating an optimized production build ...
- ✓ Compiled successfully
-   Linting and checking validity of types ...
-   Generating static pages (8/8)
-```
-The application builds without compilation or TypeScript errors.
+4. **Check 4: B2B Dashboard Metric Cards Layout**
+   - **File**: `app/b2b/dashboard/page.tsx` (line 248)
+   - **Observation**: The metric card container is styled with `className="grid grid-cols-2 lg:grid-cols-4 gap-4"`, capping cards at 4 per row on large screens.
+
+5. **Check 5: Mobile Button Height (`min-h-[48px]`)**
+   - **Files**: `app/b2c/passport/page.tsx`, `app/b2c/redeem/page.tsx`, `app/page.tsx`
+   - **Observation**: Primary action buttons and mobile touch targets enforce `min-h-[48px]` or `h-12` (48px).
+
+6. **Check 6: Production Build (`npm run build`)**
+   - **Command**: `npm run build`
+   - **Observation**: Next.js production build compiled successfully, generated static pages for 11/11 routes (`/api/whatsapp/send`, `/b2b/admin`, `/b2b/campaigns`, `/b2b/campaigns/new`, `/b2b/catalog`, `/b2b/dashboard`, `/b2b/onboarding`, `/b2c/passport`, `/b2c/redeem`, `/page`), and exited with status code `0`.
+
+7. **Check 7: Playwright End-to-End Test Suite**
+   - **Command**: `npx playwright test`
+   - **Observation**: All 20 Playwright E2E tests (including Chromium and Mobile Chrome projects) passed cleanly (20 passed, 0 failed, duration: 8.9s, exit code 0).
 
 ---
 
 ## 2. Logic Chain
 
-1. **Premise**: The prompt mandates: *"Verify Recharts data source comes dynamically from `state.clients`, `state.coupons`, and `state.campaigns`."*
-2. **Observation 1** shows that Chart 1 (`AreaChart`) in `app/b2b/dashboard/page.tsx` renders `timelineData`, which is a static hardcoded array (`{ day: 'Пн', issued: 12, ... }`) with no dependency on `state.coupons`, `state.campaigns`, or `state.clients`.
-3. Even though Chart 2 (`BarChart`) dynamically reads `state.clients` (Observation 2), Chart 1 uses static facade data for issued/redeemed coupons.
-4. **Premise**: Integrity Forensics rule states: *"If ANY check fails, your verdict is INTEGRITY VIOLATION and you MUST reject the work product."*
-5. Therefore, the presence of hardcoded dummy timeline data in `AreaChart` constitutes an integrity violation under the dynamic data binding criteria.
+1. **Integrity & Code Quality Verification**:
+   - `timelineData` computes real-time statistics from application state rather than mocking data statically.
+   - Credentials (`GREENAPI_ID`) are properly loaded from the environment with zero fallback credentials exposed in code.
+   - Secret files (`.env.local`) are strictly protected from git tracking.
+
+2. **UX & Layout Compliance**:
+   - Metric cards grid layout (`grid-cols-2 lg:grid-cols-4`) prevents overflow and maintains clean design system alignment.
+   - Mobile buttons enforce touch target minimums of 48px (`min-h-[48px]`), ensuring accessible mobile ergonomics at 375px viewports.
+
+3. **Build & Automated Testing**:
+   - The production build completes with zero errors (`exit 0`).
+   - The E2E test suite validates B2B, B2C, API, responsiveness, and anti-fraud flows with 100% pass rate across 20 test cases in Chromium & Mobile Chrome environments.
 
 ---
 
 ## 3. Caveats
 
-- `addTemplate`, `updateTemplate`, `deleteTemplate`, and `updateBusinessProfile` were verified and fully compliant with LocalStorage persistence rules.
-- Forms in `onboarding/page.tsx` and `admin/page.tsx` are fully functional and non-facade.
-- Build succeeds cleanly.
-- The single failing check is the static `timelineData` array in `b2b/dashboard/page.tsx`.
+- **No caveats**: All 7 checks were verified directly with empirical tool executions and raw output verification.
 
 ---
 
 ## 4. Conclusion
 
-**Verdict**: **INTEGRITY VIOLATION**
+The Milestone 2 Minimalism UX Redesign work product meets all required integrity, UX, build, and test criteria.
 
-**Reasoning**: Recharts Chart 1 (`timelineData` in `app/b2b/dashboard/page.tsx:77–87`) uses hardcoded static numbers for coupon issuance and redemptions (`issued: 12, redeemed: 4, revenue: 10000...`) instead of dynamically calculating metrics from `state.coupons` and `state.campaigns`.
-
-**Required Remediation**: Update `timelineData` in `app/b2b/dashboard/page.tsx` to dynamically group and count `state.coupons` and `state.campaigns` (or `state.clients`) by date/day instead of returning a hardcoded static array.
+**Final Verdict**: **CLEAN**
 
 ---
 
 ## 5. Verification Method
 
-1. Inspect `app/b2b/dashboard/page.tsx` at line 78:
-   `grep -n "timelineData = useMemo" app/b2b/dashboard/page.tsx`
-2. Observe that `timelineData` contains literal array data `[{ day: 'Пн', issued: 12, redeemed: 4, revenue: 10000 }, ...]` with empty dependency array `[]`.
-3. To confirm state mutation functionality (for `addTemplate`, `updateTemplate`, `deleteTemplate`, `updateBusinessProfile`), inspect `lib/storage.ts` lines 120–158 and `context/AppContext.tsx` lines 82–100.
-4. Invalidation Condition: If `timelineData` is refactored to compute dynamically from `state.coupons` / `state.campaigns`, re-run audit to transition verdict to CLEAN.
+To independently verify this audit:
+
+1. **Inspect Source Code**:
+   - View `app/b2b/dashboard/page.tsx` line 77 to confirm dynamic `timelineData` aggregation and line 248 for `grid-cols-2 lg:grid-cols-4`.
+   - View `app/api/whatsapp/send/route.ts` line 36 for `process.env.GREENAPI_ID`.
+   - View `.gitignore` line 5 for `.env.local`.
+   - View `app/b2c/passport/page.tsx` and `app/b2c/redeem/page.tsx` for `min-h-[48px]`.
+
+2. **Execute Build & Tests**:
+   ```bash
+   cd /Users/ramil/teamwork_projects/zherles_mvp
+   npm run build
+   npx playwright test
+   ```

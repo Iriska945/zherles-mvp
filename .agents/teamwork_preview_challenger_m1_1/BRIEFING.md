@@ -1,51 +1,40 @@
-# BRIEFING — 2026-07-30T14:05:25+05:00
+# BRIEFING — 2026-08-01T00:32:00Z
 
 ## Mission
-Empirically test Milestone 1 (Foundation & Seed State Engine) for MVP "ЖЕРЛЕС" in lib/storage.ts.
+Empirically verify and stress-test WhatsApp Green API integration in zherles_mvp, testing edge cases, phone formatting, upstream Green API error responses, and executing Playwright tests.
 
 ## 🔒 My Identity
-- Archetype: empirical-challenger
+- Archetype: empirical_challenger
 - Roles: critic, specialist
 - Working directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_challenger_m1_1
-- Original parent: a7d1b784-0d80-4af0-8d25-70c89c779c11
-- Milestone: Milestone 1 (Foundation & Seed State Engine)
+- Original parent: eb5563f0-f075-40d2-aaef-8bdfef0597c5
+- Milestone: Milestone 1 (WhatsApp Green API Integration)
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Empirically test and verify claims via scripts/harnesses before concluding.
-- Do NOT trust unverified claims.
-- Produce handoff.md and send_message to parent.
+- Review-only — do NOT modify implementation code
+- Empirically verify: run tests and execution code yourself
+- Record findings in handoff.md and notify orchestrator
 
 ## Current Parent
-- Conversation ID: a7d1b784-0d80-4af0-8d25-70c89c779c11
-- Updated: 2026-07-30T14:05:25+05:00
+- Conversation ID: eb5563f0-f075-40d2-aaef-8bdfef0597c5
+- Updated: 2026-08-01T00:32:00Z
 
 ## Review Scope
-- **Files to review**: `lib/storage.ts`, `data/seedData.json`
-- **Interface contracts**: `PROJECT.md`
-- **Review criteria**: Initial seed state loading, active bonus redemption (pinCode 1234 -> REDEEMED), double redemption blocking ("Бонус уже был использован"), resetDemoState functionality.
-
-## Attack Surface
-- **Hypotheses tested**:
-  1. Initial state hydration from `seedData.json` matches schema.
-  2. First redemption of active PIN `1234` transitions coupon status to `REDEEMED`.
-  3. Second redemption of PIN `1234` is blocked with exact error "Бонус уже был использован".
-  4. `resetDemoState()` re-hydrates `seedData.json` and restores coupon state.
-  5. LocalStorage parse failure triggers fallback to seed state.
-- **Vulnerabilities found**: None critical. Minor usability caveat: PIN matching is strict string comparison (`===`), untrimmed PIN input `" 1234 "` returns `"Код бонуса не найден"`. UI form should trim PIN input.
-- **Untested angles**: Cross-tab browser sync events in real DOM (simulated via CustomEvent; E2E covered in M5).
-
-## Loaded Skills
-- None
+- **Files to review**: `/api/whatsapp/send/route.ts`, `e2e/zherles_mvp.spec.ts`
+- **Interface contracts**: API contract for `POST /api/whatsapp/send`
+- **Review criteria**: Edge case handling, 400/500 JSON error responses, phone formatting logic, Playwright test suite green pass
 
 ## Key Decisions Made
-- Built and ran `verify_storage.ts` (16/16 assertions passed).
-- Built and ran `verify_stress.ts` (4/4 stress scenarios passed/analyzed).
+- Executed `npx playwright test e2e/zherles_mvp.spec.ts` (14/14 passed across Chromium & Mobile Chrome).
+- Developed empirical unit test script `.agents/teamwork_preview_challenger_m1_1/test_route_empirical.ts` testing 16 edge case scenarios against `app/api/whatsapp/send/route.ts` (16/16 passed).
+- Developed E2E API Playwright test suite `e2e/whatsapp_challenger.spec.ts` (6/6 passed).
+- Confirmed phone format normalization logic handles `+7 (701) 123-45-67`, `87011234567`, `77011234567`, `7011234567`, and `77011234567@c.us`, all mapping cleanly to `77011234567@c.us`.
 
 ## Artifact Index
-- ORIGINAL_REQUEST.md — Initial user request
-- BRIEFING.md — Persistent briefing file
-- progress.md — Liveness heartbeat
-- verify_storage.ts — Primary Node.js verification script
-- verify_stress.ts — Adversarial stress test script
-- handoff.md — Final handoff report
+- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_challenger_m1_1/ORIGINAL_REQUEST.md` — Original task prompt
+- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_challenger_m1_1/BRIEFING.md` — State briefing
+- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_challenger_m1_1/progress.md` — Progress tracker
+- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_challenger_m1_1/test_route_empirical.ts` — Empirical unit test runner
+- `/Users/ramil/teamwork_projects/zherles_mvp/e2e/whatsapp_challenger.spec.ts` — Empirical E2E test runner
+- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_challenger_m1_1/handoff.md` — Final Handoff Report

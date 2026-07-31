@@ -1,15 +1,13 @@
-## 2026-07-30T14:04:24+05:00
-You are a Reviewer subagent reviewing Milestone 1 (Project Foundation, Data Models & Seed State Engine) for MVP "ЖЕРЛЕС".
+## 2026-08-01T00:30:15Z
+You are Reviewer 1 for Milestone 1 (WhatsApp Green API Integration).
+Working directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_reviewer_m1_1
 
-Project Directory: /Users/ramil/teamwork_projects/zherles_mvp
-Your Working Directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_reviewer_m1_1
-
-Worker Handoff Report: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_worker_m1_1/handoff.md
-
-Tasks:
-1. Create your working directory `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_reviewer_m1_1` if not exists and maintain `progress.md`.
-2. Inspect the created files (`types/index.ts`, `data/seedData.json`, `lib/storage.ts`, `context/AppContext.tsx`, `components/ResetDemoButton.tsx`, `components/Header.tsx`, `app/layout.tsx`, `app/page.tsx`).
-3. Verify code quality, type correctness, Tailwind configuration, LocalStorage subscriber events (`zherles_state_change` and `storage`), and `redeemBonus` logic.
-4. Execute `npm run build` in `/Users/ramil/teamwork_projects/zherles_mvp` to verify build integrity.
-5. Write your handoff report to `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_reviewer_m1_1/handoff.md`.
-6. Send a message to parent with your verdict (PASS/FAIL) and report summary.
+Your task:
+1. Review code changes for Milestone 1:
+   - `app/api/whatsapp/send/route.ts`
+   - `.env.local`
+   - `components/ShareButtons.tsx`
+   - `e2e/zherles_mvp.spec.ts` (Test 7)
+2. Check correctness, security (no hardcoded tokens in repo, read from env), phone sanitization logic (Kazakh 8->7, formatting c.us), error handling, UI feedback ("Сообщение отправлено ✓" / error toasts), and Playwright test assertions.
+3. Run `npm run build` and `npx playwright test` to verify build & E2E status.
+4. Record verdict (PASS or FAIL) and detailed findings in `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_reviewer_m1_1/handoff.md`. Send a message to orchestrator with your verdict.

@@ -1,16 +1,15 @@
-## 2026-07-30T14:12:18Z
+## 2026-08-01T00:34:34Z
+You are Reviewer 2 for Milestone 2 (Minimalism UX Redesign).
+Working directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_reviewer_m2_1
 
-You are a Reviewer subagent reviewing Milestone 2 (B2B Module: Onboarding, Catalog, Dashboard & Admin) for MVP "ЖЕРЛЕС".
+Your task:
+1. Review all UX redesign changes for Milestone 2:
+   - `app/b2b/dashboard/page.tsx`: Verify metric cards grid is max 4 per row (`grid-cols-2 lg:grid-cols-4`), compact icon sidebar, single column content. Verify dynamic `timelineData` aggregation logic.
+   - `app/b2c/passport/page.tsx` & `app/b2c/redeem/page.tsx`: Verify primary CTA buttons have min 48px height (`min-h-[48px]`), cards with large icons and short labels, 375px mobile responsiveness without horizontal scrolling, and bottom padding (`pb-32`) preventing toolbar overlap.
+   - `components/Header.tsx` & `components/B2BNav.tsx`: Verify nav items count <= 5 (Miller's Law).
+   - `.gitignore`: Verify `.env.local` is listed.
+   - `app/api/whatsapp/send/route.ts`: Verify no hardcoded string fallback for `GREENAPI_ID`.
 
-Project Directory: /Users/ramil/teamwork_projects/zherles_mvp
-Your Working Directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_reviewer_m2_1
+2. Run `npm run build` and `npx playwright test` to verify zero errors and all 14 tests pass across both Desktop and Mobile Chrome.
 
-Worker Handoff Report: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_worker_m2_1/handoff.md
-
-Tasks:
-1. Create your working directory `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_reviewer_m2_1` if not exists and maintain `progress.md`.
-2. Inspect B2B pages and components: `app/b2b/onboarding/page.tsx`, `app/b2b/catalog/page.tsx`, `app/b2b/admin/page.tsx`, `app/b2b/dashboard/page.tsx`, `components/RechartsWrapper.tsx`, `components/B2BNav.tsx`.
-3. Check code quality, TypeScript types, Recharts dynamic import / SSR safety, UI layout for desktop optimization, and template CRUD functionality.
-4. Execute `npm run build` in `/Users/ramil/teamwork_projects/zherles_mvp/` to verify build integrity.
-5. Write your handoff report to `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_reviewer_m2_1/handoff.md`.
-6. Send a message to parent with your verdict (PASS/FAIL) and report summary.
+3. Output your verdict (PASS or FAIL) and report to `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_reviewer_m2_1/handoff.md`. Send message to orchestrator.

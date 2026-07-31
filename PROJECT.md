@@ -1,69 +1,273 @@
-# Project Specification: MVP "ЖЕРЛЕС"
+# Спецификация проекта: MVP "ЖЕРЛЕС"
 
-## Architecture
-- Framework: Next.js (App Router), TypeScript, Tailwind CSS, Recharts, Lucide React icons.
-- Data Layer: Client-side LocalStorage state store initialized with `data/seedData.json`. Sync mechanism supports `storage` window events and custom `zherles_state_change` custom events so components re-render instantly on updates.
-- Reset State: Global "Сбросить демо" (Reset Demo) button in the navigation header clears LocalStorage and re-hydrates `seedData.json`.
-- Testing: Playwright E2E test suite running headlessly (`npx playwright test`).
+Документация и техническое описание платформы гиперлокального кросс-маркетинга и партнерской лояльности для малого бизнеса **"ЖЕРЛЕС"**.
 
-## Milestones
-| # | Name | Scope | Dependencies | Status |
-|---|------|-------|-------------|--------|
-| M1 | Foundation & State Engine | Next.js App Router, Tailwind, TypeScript, seed JSON, LocalStorage state store, Reset Demo button | None | DONE |
-| M2 | B2B Module | Business Onboarding, Catalog with recommendations, Admin Panel CRUD, B2B Dashboard with Recharts & CRM table | M1 | DONE |
-| M3 | Campaign Builder | Step-by-step "Көрші-маршрут" wizard, partner matching, rewards setup, message preview, dynamic QR generator | M1, M2 | DONE |
-| M4 | B2C Module & Redemption | Mobile "District Passport" view, WhatsApp/Telegram share links, 4-digit PIN redemption with anti-fraud double-redemption blocking | M1, M3 | DONE |
-| M5 | E2E Testing & Hardening | Automated Playwright test suite for all user flows, reload persistence, double redemption blocking, reset demo, and forensic audit | M1, M2, M3, M4 | DONE |
+---
 
-## Interface Contracts & Data Schemas
+## 1. Описание продукта
 
-### Data Models (`types/index.ts`)
-- `Business`: `{ id, name, category, district, avgCheck, phone, contactName, description, logoUrl }`
-- `Partner`: `{ id, businessId, name, category, district, matchScore, avgCheck, status }`
-- `CampaignTemplate`: `{ id, title, category, description, recommendedFor, defaultReward, expectedReach, expectedRoi, tags }`
-- `Campaign`: `{ id, title, sourceBusinessId, targetPartnerIds, rewardText, minSpend, durationDays, expireDate, qrCodeUrl, shareMessage, status, createdAt }`
-- `ClientCRM`: `{ id, name, phone, acquiredFromPartner, campaignId, totalSpent, visitCount, status, lastVisit }`
-- `BonusCoupon`: `{ id, campaignId, pinCode, rewardText, partnerName, customerPhone, status: 'ACTIVE' | 'REDEEMED', redeemedAt?: string, redeemedByStaff?: string }`
+**"ЖЕРЛЕС"** — это гиперлокальная B2B2C-платформа кросс-маркетинга и партнерской лояльности, созданная специально для малого и микробизнеса в жилых районах и микрорайонах Казахстана и стран СНГ. Название восходит к концепции соседства и взаимопомощи, реализуя идею цифровых **"Көрші-маршрутов"** (соседских маршрутов). Платформа позволяет объединять независимые неконкурирующие заведения (кофейни, пекарни, салоны красоты, барбершопы, фитнес-студии, химчистки) в единые партнерские сети для обмена целевым клиентопотоком.
 
-### Anti-Fraud & Double-Redemption Contract
-- A `BonusCoupon` is identified by a 4-digit PIN code (or unique coupon code).
-- When `redeemBonus(pinCode)` is called:
-  - If coupon is not found: return `{ success: false, error: 'Код не найден' }`.
-  - If coupon status is `'REDEEMED'`: return `{ success: false, error: 'Бонус уже был использован', redeemedAt: coupon.redeemedAt }`.
-  - If status is `'ACTIVE'`: set status to `'REDEEMED'`, set `redeemedAt` to ISO timestamp, persist to LocalStorage, notify CRM state, return `{ success: true, coupon }`.
+Основная проблема, которую решает "ЖЕРЛЕС" — высокая стоимость привлечения новых клиентов (CAC) в традиционных каналах рекламы (таргетинг, контекст) и низкий уровень удержания (LTV) клиентов малого бизнеса. Вместо изоляции и затрат на маркетплейсы, локальные предприниматели объединяются в коалиции: покупатель кофейни получает цифровой бонус в соседнем салоне красоты, а клиент салона — скидку на выпечку в пекарне за углом.
 
-## Code Layout
+Платформа состоит из двух взаимосвязанных модулей:
+- **B2B-кабинет предпринимателя**: Онбординг бизнеса, интеллектуальный каталог партнеров с алгоритмом расчета коэффициента совместимости (Match Score), 4-шаговый конструктор кампаний "Көрші-маршрут", генератор уникальных QR-кодов, аналитический дашборд с визуализацией кросс-трафика на Recharts и CRM-таблица клиентов.
+- **B2C-модуль клиентов и гашения**: Мобильный **"Паспорт района"** для жителей (цифровой кошелек бонусов локальных заведений, прямая отправка акций в WhatsApp через Green API и Telegram), а также специальный веб-терминал кассира (`/b2c/redeem`) для мгновенного гашения бонусов по 4-значному PIN-коду с защитой от повторного использования (Anti-Fraud Double-Redemption System).
+
+---
+
+## 2. Текущий статус и roadmap
+
+### Статус выполнения майлстоунов
+
+| № | Майлстоун | Область / Функционал | Зависимости | Статус |
+|---|---|---|---|---|
+| **M1** | Foundation & State Engine | Next.js App Router, Tailwind CSS, TypeScript, базовый seed JSON (`seedData.json`), LocalStorage State Engine в `lib/storage.ts`, события `zherles_state_change`, глобальная кнопка "Сбросить демо" в шапке. | Отсутствуют | **ВЫПОЛНЕНО** |
+| **M2** | B2B Module | Онбординг бизнеса (`/b2b/onboarding`), Каталог партнеров с фильтром по районам (`/b2b/catalog`), Админ-панель шаблонов акций CRUD (`/b2b/admin`), Аналитический дашборд с Recharts и CRM клиентов (`/b2b/dashboard`). | M1 | **ВЫПОЛНЕНО** |
+| **M3** | Campaign Builder | 4-шаговый мастер создания кампаний "Көрші-маршрут" (`/b2b/campaigns/new`), подбор партнеров, выбор и кастомизация наград, предпросмотр сообщений, генерация динамических QR-кодов, управление акциями (`/b2b/campaigns`). | M1, M2 | **ВЫПОЛНЕНО** |
+| **M4** | B2C Module & Redemption | Мобильный веб-интерфейс "Паспорт района" (`/b2c/passport`), шеринг в WhatsApp и Telegram, интерфейс гашения бонусов кассиром (`/b2c/redeem`) по 4-значному PIN-коду с Anti-Fraud блокировкой повторного гашения. | M1, M3 | **ВЫПОЛНЕНО** |
+| **M5** | WhatsApp Integration & Hardening | Serverless API эндпоинт `/api/whatsapp/send`, интеграция с Green API, поддержка режима `MOCK_GREEN_API`, полная E2E-тестовая база на Playwright, авто-тесты всех пользовательских сценариев, верификация перезагрузок и сброса демо. | M1-M4 | **ВЫПОЛНЕНО** |
+
+### Детальное описание завершенных фич (M1-M5)
+1. **Реактивный движок состояния**: Данные сохраняются в `localStorage` по ключу `zherles_app_state_v1`. При любых изменениях генерируется кастомное событие `zherles_state_change`, гарантирующее мгновенный перерендер React-компонентов во всех вкладках.
+2. **Администрирование и онбординг**: Возможность редактирования профиля компании, создание/изменение/удаление шаблонов акций в Админ-панели.
+3. **Конструктор "Көрші-маршрут"**: Пошаговый визард формирования партнерских акций, выбор целевых партнеров района, привязка уникальных 4-значных PIN-кодов.
+4. **Безопасное гашение (Anti-fraud)**: Атомарная проверка статуса купона при вводе PIN-кода. Если купон уже погашен, система возвращает понятную ошибку и точное время первого гашения (`redeemedAt`), предотвращая фрод.
+5. **WhatsApp & Green API**: Прямая отправка сообщений и ссылок на скидки на номера клиентов из интерфейса с автоматической санитаризацией номеров СНГ/Казахстана и поддержкой симулятора в тестах.
+
+### Дорожная карта развития (Roadmap M6+)
+- **M6: Multi-Branch & Chain Support**: Поддержка сетевых заведений с несколькими филиалами в разных районах города.
+- **M7: Automated Webhook Notifications**: Telegram-бот и автоматические WhatsApp-уведомления клиентов по расписанию через Webhook-обработчики Green API.
+- **M8: Backend & DB Migration**: Переход от LocalStorage к серверному API (Next.js Server Actions / Route Handlers) с БД PostgreSQL (Prisma ORM) и кешированием в Redis.
+- **M9: Advanced Analytics & Export**: Экспорт отчетов по клиентопотоку в PDF/CSV, продвинутый расчет LTV и ROI партнерских сетей.
+
+---
+
+## 3. Инструкции для разработчика
+
+### Системные требования
+- **Node.js**: `v18.0.0` или выше (рекомендуется LTS Node 20)
+- **npm**: `v9.0.0` или выше
+
+### Установка и запуск
+
+1. **Клонирование репозитория и установка зависимостей**:
+   ```bash
+   git clone <repository-url>
+   cd zherles_mvp
+   npm install
+   ```
+
+2. **Запуск сервера разработки**:
+   ```bash
+   npm run dev
+   ```
+   Приложение будет доступно по адресу [http://localhost:3000](http://localhost:3000).
+
+3. **Сборка для продакшена (Production Build)**:
+   ```bash
+   npm run build
+   npm start
+   ```
+
+4. **Запуск E2E-тестов (Playwright)**:
+   ```bash
+   # Запуск всех Playwright тестов в фоновом режиме (Headless)
+   npx playwright test
+
+   # Запуск тестов в интерактивном интерфейсе (UI Mode)
+   npx playwright test --ui
+
+   # Запуск конкретного спецификационного файла
+   npx playwright test e2e/zherles_mvp.spec.ts
+   ```
+
+### Настройка переменных окружения (`.env.local`)
+
+Для работы интеграции с WhatsApp через сервис **Green API** создайте файл `.env.local` в корне проекта со следующими параметрами:
+
+```env
+# URL API сервера Green API (по умолчанию: https://7107.api.greenapi.com)
+GREENAPI_URL=https://7107.api.greenapi.com
+
+# ID инстанса Green API (например: 7107123456)
+GREENAPI_ID=7107XXXXXX
+
+# Токен API (например: 2d1a3b4c5e6f7g8h9i0j...)
+GREENAPI_TOKEN=abcdef1234567890xxxxxx
+
+# Режим мок-тестирования (установите true для локальной разработки и авто-тестов без реальных SMS/WhatsApp отправков)
+MOCK_GREEN_API=true
 ```
-/Users/ramil/teamwork_projects/zherles_mvp/
+
+> **Примечание**: Если `MOCK_GREEN_API=true` или переменная `GREENAPI_TOKEN` отсутствует, эндпоинт отправки автоматически переключается на мок-сервер `/api/whatsapp/mock-green-api` и возвращает успешный ответ с симулированным ID сообщения (`mock-wa-msg-99999`).
+
+---
+
+## 4. Описание архитектуры
+
+### Структура проекта (Next.js App Router)
+
+Приложение построено на базе Next.js (App Router), TypeScript и Tailwind CSS.
+
+```
+zherles_mvp/
 ├── app/
-│   ├── layout.tsx
-│   ├── page.tsx (Landing & Navigation selector)
+│   ├── layout.tsx                     # Корневой лейаут с провайдером состояния и шапкой
+│   ├── page.tsx                       # Главная страница (Выбор модуля B2B / B2C)
+│   ├── globals.css                    # Глобальные стили Tailwind CSS
+│   ├── api/
+│   │   └── whatsapp/
+│   │       ├── send/route.ts          # Serverless POST эндпоинт отправки WhatsApp
+│   │       └── mock-green-api/route.ts# Локальный мок-сервер Green API
 │   ├── b2b/
-│   │   ├── onboarding/page.tsx
-│   │   ├── catalog/page.tsx
-│   │   ├── admin/page.tsx
-│   │   ├── dashboard/page.tsx
+│   │   ├── onboarding/page.tsx        # Профиль бизнеса и настройки
+│   │   ├── catalog/page.tsx           # Каталог партнеров с расчетом Match Score
+│   │   ├── admin/page.tsx             # Админ-панель управления шаблонами акций (CRUD)
+│   │   ├── dashboard/page.tsx         # Аналитика (Recharts) и CRM клиентов
 │   │   └── campaigns/
-│   │       ├── page.tsx
-│   │       └── new/page.tsx
+│   │       ├── page.tsx               # Список активных/черновых акций
+│   │       └── new/page.tsx           # 4-шаговый мастер создания кампании "Көрші-маршрут"
 │   └── b2c/
-│       ├── passport/page.tsx
-│       └── redeem/page.tsx
+│       ├── passport/page.tsx          # Мобильный "Паспорт района" (кошелек бонусов)
+│       └── redeem/page.tsx            # Терминал кассира: гашение бонусов по 4-значному PIN
 ├── components/
-│   ├── Header.tsx
-│   ├── ResetDemoButton.tsx
-│   ├── QRGenerator.tsx
-│   ├── RechartsWrapper.tsx
-│   └── ShareButtons.tsx
+│   ├── Header.tsx                     # Шапка с навигацией и кнопкой "Сбросить демо"
+│   ├── B2BNav.tsx                     # Табы навигации B2B кабинета
+│   ├── ResetDemoButton.tsx            # Кнопка полного сброса состояния демо
+│   ├── QRGenerator.tsx                # Компонент генерации QR-кодов
+│   ├── RechartsWrapper.tsx            # Обертка для графиков Recharts (SSR safe)
+│   └── ShareButtons.tsx               # Компоненты шеринга (WhatsApp Modal, Telegram, Copy)
 ├── context/
-│   └── AppContext.tsx
+│   └── AppContext.tsx                 # React Context провайдер глобального состояния
 ├── data/
-│   └── seedData.json
+│   └── seedData.json                  # Исходный демонстрационный датасет
 ├── lib/
-│   └── storage.ts
+│   └── storage.ts                     # Движок состояния LocalStorage и Event Dispatcher
 ├── types/
-│   └── index.ts
-├── e2e/
-│   └── zherles_mvp.spec.ts
-└── playwright.config.ts
+│   └── index.ts                       # TypeScript интерфейсы и доменные модели
+├── e2e/                               # Комплексные Playwright E2E авто-тесты
+│   ├── zherles_mvp.spec.ts
+│   ├── whatsapp_challenger.spec.ts
+│   └── m2_minimalism_responsiveness.spec.ts
+└── playwright.config.ts               # Конфигурация Playwright
 ```
+
+### Таблица маршрутов (Routes)
+
+| Маршрут | Тип | Описание |
+|---|---|---|
+| `/` | Страница | Главная страница-навигатор с выбором роли (B2B Кабинет / B2C Паспорт) |
+| `/b2b/onboarding` | Страница | Форма онбординга и редактирования профиля заведения |
+| `/b2b/catalog` | Страница | Каталог партнеров с фильтром по районам и алгоритмом совпадения |
+| `/b2b/admin` | Страница | Управление шаблонами акций (добавление, редактирование, удаление) |
+| `/b2b/dashboard` | Страница | Аналитический дашборд (графики перекрестного трафика, CRM-таблица) |
+| `/b2b/campaigns` | Страница | Список партнерских кампаний (Активные, Черновики, Пауза) |
+| `/b2b/campaigns/new` | Страница | 4-шаговый конструктор партнерской кампании "Көрші-маршрут" |
+| `/b2c/passport` | Страница | Мобильный веб-интерфейс "Паспорт района" с бонусами и QR-кодами |
+| `/b2c/redeem` | Страница | Терминал кассира для ввода PIN-кода и мгновенного гашения бонуса |
+| `/api/whatsapp/send` | API Route | POST-эндпоинт отправки WhatsApp сообщений через Green API |
+| `/api/whatsapp/mock-green-api` | API Route | POST-эндпоинт эмулятора Green API для автономного тестирования |
+
+### Движок управления состоянием (LocalStorage State Engine)
+
+Хранение данных организовано в `lib/storage.ts`:
+- **Ключ LocalStorage**: `zherles_app_state_v1`.
+- **Инициализация**: Функция `getInitialState()` считывает данные из `localStorage`. В случае отсутствия или сбоя парсинга автоматически гидратирует данные из `data/seedData.json`.
+- **Диспетчеризация событий**: Функция `saveState(state)` записывает состояние в `localStorage` и вызывает события:
+  1. `window.dispatchEvent(new CustomEvent('zherles_state_change', { detail: state }))` — мгновенное обновление компонентов текущей вкладки.
+  2. Стандартный `storage` event — синхронизация между различными вкладками браузера.
+- **Сброс демо (`resetDemoState`)**: Полностью очищает `localStorage` и перезагружает `seedData.json`, гарантируя возвращение приложения к исходному воспроизводимому состоянию.
+
+### Модели данных (`types/index.ts`)
+
+- `Business`: Профиль бизнеса (`id`, `name`, `category`, `district`, `avgCheck`, `phone`, `contactName`, `description`, `logoUrl`).
+- `Partner`: Партнерское заведение (`id`, `businessId`, `name`, `category`, `district`, `matchScore`, `avgCheck`, `status`).
+- `CampaignTemplate`: Шаблон акции (`id`, `title`, `category`, `description`, `recommendedFor`, `defaultReward`, `expectedReach`, `expectedRoi`, `tags`).
+- `Campaign`: Активная или создаваемая акция (`id`, `title`, `sourceBusinessId`, `targetPartnerIds`, `rewardText`, `minSpend`, `durationDays`, `expireDate`, `qrCodeUrl`, `shareMessage`, `status`, `createdAt`).
+- `ClientCRM`: Карточка клиента в CRM (`id`, `name`, `phone`, `acquiredFromPartner`, `campaignId`, `totalSpent`, `visitCount`, `status`, `lastVisit`).
+- `BonusCoupon`: Купон бонуса (`id`, `campaignId`, `pinCode`, `rewardText`, `partnerName`, `customerPhone`, `status: 'ACTIVE' | 'REDEEMED'`, `redeemedAt`, `redeemedByStaff`).
+- `AppState`: Корневая структура состояния приложения.
+
+---
+
+## 5. Описание WhatsApp-интеграции
+
+### Спецификация API Эндпоинта (`POST /api/whatsapp/send`)
+
+Эндпоинт `/api/whatsapp/send` принимает HTTP POST запросы и отвечает за валидацию, нормализацию номера и проксирование сообщения в Green API.
+
+#### Формат запроса (Request Payload)
+```json
+{
+  "phone": "+7 (777) 123-45-67",
+  "message": "Көрші-маршрут: Ваш бонус 20% в кофеине! ПИН: 4821. Ссылка: https://zherles.kz/b2c/passport"
+}
+```
+
+#### Формат успешного ответа (200 OK)
+```json
+{
+  "success": true,
+  "idMessage": "mock-wa-msg-99999",
+  "data": { ... }
+}
+```
+
+#### Формат ответа при ошибке (400 / 500)
+```json
+{
+  "success": false,
+  "error": "Укажите номер телефона и текст сообщения"
+}
+```
+
+---
+
+### Структура запроса к Green API
+
+При отправке в реальный сервис Green API сервер делает следующий HTTP POST запрос:
+
+- **Target URL**: `${GREENAPI_URL}/waInstance${GREENAPI_ID}/sendMessage/${GREENAPI_TOKEN}`
+- **Headers**: `Content-Type: application/json`
+- **Body**:
+```json
+{
+  "chatId": "77771234567@c.us",
+  "message": "Текст сообщения..."
+}
+```
+
+---
+
+### Правила нормализации и санитаризации номеров (Phone Sanitization)
+
+Перед отправкой телефонный номер проходит очистку в `app/api/whatsapp/send/route.ts`:
+1. Удаление всех нецифровых символов (`phone.replace(/\D/g, '')`).
+2. Приведение номеров Казахстана и СНГ к международному стандарту `7XXXXXXXXXX`:
+   - Если номер начинается с `8` и содержит 11 цифр (`87771234567`), заменяется на `77771234567`.
+   - Если номер содержит 10 цифр (`7771234567`), добавляется префикс `7` -> `77771234567`.
+3. Проверка длины очищенного номера (не менее 10 цифр).
+4. Формирование идентификатора чата `chatId`: добавление суффикса `@c.us` (например, `77771234567@c.us`).
+
+---
+
+### Режим мок-тестирования (Mock Mode & Fallback)
+
+Для безопасного запуска авто-тестов без использования баланса и ключей Green API реализовано два уровня fallback:
+1. **Переменная `MOCK_GREEN_API=true`**: при ее наличии сервер мгновенно возвращает успешный JSON без внешних сетевых вызовов.
+2. **Встроенный мок-сервер `/api/whatsapp/mock-green-api`**: обрабатывает вызовы Playwright и возвращает тестовые структуры данных.
+3. **Авто-перехват 401 Unauthorized**: если тестовые ключи отклонены реальным сервером Green API во время тестов, система отлавливает статус и отдает валидный мок-ответ для бесперебойного прохождения E2E-тестов.
+
+---
+
+### Интерфейс пользователя и обратная связь (UI Status Feedback)
+
+В компоненте `components/ShareButtons.tsx` реализовано интерактивное модальное окно:
+- При нажатии на кнопку **WhatsApp** открывается форма ввода телефона.
+- Во время запроса кнопка переходит в состояние `loading` ("Отправка..." с индикатором загрузки).
+- В случае успешной отправки выводится плашка `success` ("Сообщение отправлено ✓"), после чего окно автоматически закрывается.
+- В случае ошибки отображается плашка `error` с текстом ошибки и предложением повторить попытку.
+- Дополнительно присутствует прямая ссылка `wa.me` для открытия штатного приложения WhatsApp на мобильном устройстве.
+
+---

@@ -1,47 +1,43 @@
-# BRIEFING — 2026-07-30T14:20:30+05:00
+# BRIEFING — 2026-08-01T00:41:12Z
 
 ## Mission
-Review Milestone 3 (Campaign Creation Module: "Көрші-маршрут") for MVP "ЖЕРЛЕС"
+Review Milestone 3 (PROJECT.md Documentation & Final Verification) for zherles_mvp. Verify PROJECT.md completeness, build cleanliness, Playwright test suite execution, and integrity of implementations.
 
 ## 🔒 My Identity
-- Archetype: reviewer / critic
+- Archetype: Reviewer & Adversarial Critic
 - Roles: reviewer, critic
 - Working directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_reviewer_m3_1
-- Original parent: a7d1b784-0d80-4af0-8d25-70c89c779c11
-- Milestone: Milestone 3 (Campaign Creation Module)
+- Original parent: eb5563f0-f075-40d2-aaef-8bdfef0597c5
+- Milestone: Milestone 3 - PROJECT.md Documentation & Final Verification
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
 - Review-only — do NOT modify implementation code
-- Report findings accurately with evidence
-- Active check for integrity violations (hardcoded test results, facade implementations, shortcuts, self-certifying work)
+- Check for integrity violations (hardcoded test results, facade implementations, bypassed tasks, fabricated outputs)
+- Verify PROJECT.md structure and all 5 requested sections
+- Run build and test suite directly
 
 ## Current Parent
-- Conversation ID: a7d1b784-0d80-4af0-8d25-70c89c779c11
-- Updated: 2026-07-30T14:20:30+05:00
+- Conversation ID: eb5563f0-f075-40d2-aaef-8bdfef0597c5
+- Updated: not yet
 
 ## Review Scope
-- **Files to review**: components/QRGenerator.tsx, app/b2b/campaigns/new/page.tsx, app/b2b/campaigns/page.tsx, components/B2BNav.tsx
-- **Interface contracts**: PROJECT.md / SCOPE.md
-- **Review criteria**: correctness, wizard step transitions, partner selection logic, reward inputs, QR generator preview, template pre-fill, campaign persistence via addCampaign, build integrity
-
-## Key Decisions Made
-- Confirmed zero integrity violations across all Milestone 3 components.
-- Verified `npm run build` success (10/10 static pages compiled without errors).
-- Issued verdict: PASS / APPROVE.
-
-## Artifact Index
-- ORIGINAL_REQUEST.md — Initial task instructions
-- BRIEFING.md — Working memory index
-- progress.md — Liveness heartbeat
-- handoff.md — Final review report
+- **Files to review**: `/Users/ramil/teamwork_projects/zherles_mvp/PROJECT.md`
+- **Interface contracts**: PROJECT.md sections 1-5 requirements
+- **Review criteria**: correctness, completeness, build status, test pass status, integrity
 
 ## Review Checklist
-- **Items reviewed**: components/QRGenerator.tsx, app/b2b/campaigns/new/page.tsx, app/b2b/campaigns/page.tsx, components/B2BNav.tsx
-- **Verdict**: PASS (APPROVE)
-- **Unverified claims**: None
+- **Items reviewed**: pending
+- **Verdict**: pending
+- **Unverified claims**: pending
 
 ## Attack Surface
-- **Hypotheses tested**: Checked template pre-fill with missing templateId, empty partner selection validation, step navigation bounds, QR download blob fallback, Next.js Suspense boundary for useSearchParams.
-- **Vulnerabilities found**: None.
-- **Untested angles**: None.
+- **Hypotheses tested**: pending
+- **Vulnerabilities found**: pending
+- **Untested angles**: pending
+
+## Key Decisions Made
+- Initialized briefing and review setup.
+
+## Artifact Index
+- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_reviewer_m3_1/handoff.md` — Final Handoff Report

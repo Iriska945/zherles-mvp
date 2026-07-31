@@ -1,16 +1,17 @@
-# Audit Progress — Milestone 3 "ЖЕРЛЕС"
+# Audit Progress — Milestone 3 Final Forensic Verification "ЖЕРЛЕС"
 
-Last visited: 2026-07-30T09:20:15Z
+Last visited: 2026-08-01T00:40:52Z
 
 ## Status
-Phase: Completed forensic audit. Verdict: CLEAN.
+Phase: Investigating and running forensic audit checks.
 
 ## Checklist
-- [x] Create workspace directory and initialization files (`ORIGINAL_REQUEST.md`, `BRIEFING.md`, `progress.md`)
-- [x] Inspect `app/b2b/campaigns/new/page.tsx` for real state submissions (no fake submission handlers or non-persistent forms)
-- [x] Inspect `lib/storage.ts` — `addCampaign` and related storage methods (verify genuine campaign & coupon generation in state)
-- [x] Locate and inspect `QRGenerator.tsx` to verify authentic URL rendering
-- [x] Run build / test suite to check for build breaks or test failures (`npm run build` PASS)
-- [x] Formulate Phase 1 observations & Phase 2 mode-specific evaluation
-- [x] Write `handoff.md` audit report
-- [x] Send verdict message to parent
+- [x] Update `ORIGINAL_REQUEST.md`, `BRIEFING.md`, `progress.md` with new request
+- [ ] Check 1: Verify `PROJECT.md` exists in project root `/Users/ramil/teamwork_projects/zherles_mvp` and contains all 5 required sections
+- [ ] Check 2: Verify `npm run dev` instruction matches reality (`package.json` scripts & behavior)
+- [ ] Check 3: Verify WhatsApp Green API integration is fully documented in `PROJECT.md`
+- [ ] Check 4: Audit source code for hardcoded test bypasses, dummy implementations, or fake status codes
+- [ ] Check 5: Run `npm run build` and `npx playwright test` to verify exit code 0
+- [ ] Formulate forensic audit conclusions and write `handoff.md`
+- [ ] Send summary message to orchestrator
+

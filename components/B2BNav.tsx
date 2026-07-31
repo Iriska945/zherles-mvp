@@ -17,10 +17,10 @@ export default function B2BNav() {
   ];
 
   return (
-    <div className="bg-white border-b border-slate-200 mb-6 -mt-2">
+    <div className="bg-white border-b border-slate-200 mb-6 -mt-2 shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between overflow-x-auto py-2">
-          <div className="flex items-center space-x-1 sm:space-x-2">
+        <div className="flex items-center justify-between overflow-x-auto py-2.5 scrollbar-none">
+          <nav className="flex items-center space-x-1 sm:space-x-2">
             {links.map((link) => {
               const Icon = link.icon;
               const isActive = pathname === link.href;
@@ -28,23 +28,23 @@ export default function B2BNav() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`inline-flex items-center space-x-2 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap ${
+                  className={`inline-flex items-center space-x-2 px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap ${
                     isActive
-                      ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60 shadow-sm'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
+                      ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/80 shadow-xs'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 border border-transparent'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-emerald-600' : 'text-slate-400'}`} />
+                  <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-emerald-600' : 'text-slate-400'}`} />
                   <span>{link.label}</span>
                 </Link>
               );
             })}
-          </div>
+          </nav>
 
-          <div className="hidden md:block">
+          <div className="hidden md:block shrink-0 ml-4">
             <Link
               href="/b2b/campaigns/new"
-              className="inline-flex items-center space-x-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs sm:text-sm rounded-xl shadow-sm transition-all"
+              className="inline-flex items-center space-x-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm rounded-xl shadow-xs transition-all active:scale-95"
             >
               <PlusCircle className="w-4 h-4" />
               <span>Создать Көрші-акцию</span>

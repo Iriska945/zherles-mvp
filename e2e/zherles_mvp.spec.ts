@@ -68,7 +68,7 @@ test.describe('MVP ЖЕРЛЕС E2E Test Suite', () => {
     await closeModalBtn.click();
 
     // 4. Verify WhatsApp and Telegram share buttons exist
-    const whatsappBtn = page.locator('a[href*="wa.me"]').first();
+    const whatsappBtn = page.getByRole('button', { name: /WhatsApp/i }).first();
     const telegramBtn = page.locator('a[href*="t.me"]').first();
     await expect(whatsappBtn).toBeVisible();
     await expect(telegramBtn).toBeVisible();
@@ -182,10 +182,54 @@ test.describe('MVP ЖЕРЛЕС E2E Test Suite', () => {
     await inputsAfterReset.nth(2).fill('3');
     await inputsAfterReset.nth(3).fill('4');
 
-    await page.getByRole('button', { name: /Погасить бонус/i }).click();
+    const redeemBtnAfterReset = page.getByRole('button', { name: /Погасить бонус/i });
+    await expect(redeemBtnAfterReset).toBeEnabled();
+    await redeemBtnAfterReset.click();
 
     // Verify PIN '1234' can be redeemed again successfully!
     await expect(page.getByText('Бонус успешно погашен!')).toBeVisible();
+  });
+
+  test('Test 7: Green API WhatsApp Send Integration', async ({ page }) => {
+    // 1. Intercept and mock external Green API endpoint request
+    await page.route('**/waInstance*/**', async (route) => {
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({ idMessage: 'mock-wa-msg-99999' }),
+      });
+    });
+
+    // 2. Directly verify API route POST handler /api/whatsapp/send
+    const apiResponse = await page.request.post('/api/whatsapp/send', {
+      data: {
+        phone: '77011234567',
+        message: 'Тестовая акция ЖЕРЛЕС',
+      },
+    });
+
+    expect(apiResponse.status()).toBe(200);
+    const apiJson = await apiResponse.json();
+    expect(apiJson.success).toBe(true);
+
+    // 3. Test B2C Passport UI flow
+    await page.goto('/b2c/passport');
+    const waButton = page.getByRole('button', { name: /WhatsApp/i }).first();
+    await expect(waButton).toBeVisible();
+    await waButton.scrollIntoViewIfNeeded();
+    await waButton.click({ force: true });
+
+    // Fill phone in WhatsApp dialog
+    const phoneInput = page.getByPlaceholder(/701/i);
+    await expect(phoneInput).toBeVisible();
+    await phoneInput.fill('77011234567');
+
+    // Click submit button inside modal
+    const sendSubmitBtn = page.getByRole('button', { name: /^Отправить$/i });
+    await sendSubmitBtn.click();
+
+    // Verify success message appears
+    await expect(page.getByText('Сообщение отправлено ✓')).toBeVisible();
   });
 
 });

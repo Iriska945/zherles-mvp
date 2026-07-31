@@ -1,72 +1,58 @@
-# Master Execution Plan — MVP "ЖЕРЛЕС"
+# Master Plan — ЖЕРЛЕС MVP Enhancement
 
-## Vision & Core Goal
-Deliver a fully functional, mobile-responsive B2C and desktop-optimized B2B cross-marketing platform for local businesses ("ЖЕРЛЕС") with Next.js App Router, LocalStorage state persistence, seed data, 4-digit PIN bonus redemption with anti-fraud double-redemption blocking, campaign QR builder, WhatsApp/Telegram share links, and automated Playwright E2E tests verifying all acceptance criteria.
-
----
+## Architecture & Scope Overview
+The "ЖЕРЛЕС" project is a Next.js (App Router), TypeScript, Tailwind CSS local business cross-marketing web application.
+This enhancement iteration covers 4 core requirement areas (R1-R4):
+1. **R1: WhatsApp Green API Integration**: Server API route `/api/whatsapp/send`, `.env.local` configuration (`GREENAPI_URL`, `GREENAPI_ID`, `GREENAPI_TOKEN`), B2C "Share on WhatsApp" button integration with status feedback, and a Playwright test with API mocking.
+2. **R2: Minimalism UX Redesign**:
+   - Hick's Law: <=4 primary actions per screen above fold.
+   - Miller's Law: <=5 navigation items.
+   - F-pattern layout: 1-line title, <=2 lines subtitle.
+   - Visual hierarchy: Title -> Subtitle/Description -> Large CTA button. No text blocks > 3 lines.
+   - Color as signal: Green (success/action), Grey (secondary), Red (error). Max 2 primary colors per page.
+   - Mobile B2C: 375px responsive, no horizontal scroll, cards with big icons + 1-3 word labels, min 48px buttons.
+   - Desktop B2B: Compact sidebar with icons, single column content, metric cards max 4 per row.
+   - Concise text throughout.
+3. **R3: `PROJECT.md` Update**: Comprehensive root documentation with 5 sections (Product Description, Status/Roadmap, Developer Instructions, Architecture, WhatsApp Integration).
+4. **R4: Retain Existing Functionality**: All modules (B2B Dashboard, CRM, Admin CRUD, Campaign Builder, QR Generation, PIN Redemption) and 12 existing E2E Playwright tests + build validation.
 
 ## Milestone Decomposition
 
-### Milestone 1: Foundation, Infrastructure & Seed State Engine (M1)
-- **Goal**: Initialize Next.js (App Router), TypeScript, Tailwind CSS, Lucide Icons, Recharts, and LocalStorage state store with initial seed JSON data and Reset Demo functionality.
-- **Deliverables**:
-  - `package.json`, `tsconfig.json`, `tailwind.config.js`, `next.config.js`.
-  - Data models (`types/index.ts` for Business, Partner, CampaignTemplate, Campaign, ClientCRM, BonusCoupon, RedemptionRecord).
-  - Seed JSON dataset (`data/seedData.json`) with realistic local Kazakhstani businesses (cafes, beauty salons, fitness centers, bakeries, car washes across districts like Алмалинский, Медеуский, Бостандыкский).
-  - LocalStorage State Manager hook & service (`lib/storage.ts` & `context/AppContext.tsx`) with state persistence, subscriber events, and `resetDemoData()` function.
-  - Root Layout with responsive frame switcher / header including "Reset Demo" button ("Сбросить демо").
+### Milestone 1 (M1): WhatsApp Server API & Integration
+- **Scope**:
+  - Implement `/app/api/whatsapp/send/route.ts` taking `{ phone, message }`, sending POST to `${GREENAPI_URL}/waInstance${GREENAPI_ID}/sendMessage/${GREENAPI_TOKEN}` with `{ chatId: `${cleanPhone}@c.us`, message }`.
+  - Create/update `.env.local` containing `GREENAPI_URL=https://7107.api.greenapi.com`, `GREENAPI_ID=710722698257`, `GREENAPI_TOKEN=...`.
+  - Update B2C "District Passport" page ("Паспорт района") with "Поделиться в WhatsApp" CTA calling `/api/whatsapp/send`.
+  - Add toast/status element displaying "Сообщение отправлено ✓" or "Ошибка — попробуйте ещё раз".
+  - Add E2E Playwright test (`e2e/whatsapp.spec.ts`) asserting `/api/whatsapp/send` API functionality and UI trigger.
 
-### Milestone 2: B2B Module — Onboarding, Catalog, Dashboard & Admin (M2)
-- **Goal**: Build desktop-optimized B2B workspace for offline business owners.
-- **Deliverables**:
-  - **Onboarding Page (`/b2b/onboarding`)**: Step-by-step business info collection (Business Name, Category/Type, District/City, Average Check in KZT, Contact Person, Phone, Description).
-  - **Catalog of Tools & Templates (`/b2b/catalog`)**: Grid of cross-marketing campaign templates (e.g. "Кофе + Стрижка", "Фитнес + Здоровое питание", "Автомойка + Кафе") with filters by business type/district, ROI/reach recommendations.
-  - **Admin Panel (`/b2b/admin`)**: Template CRUD operations (Create, Edit, Delete templates, add custom tags & default rewards).
-  - **B2B Dashboard (`/b2b/dashboard`)**:
-    - High-level KPIs (Total Reach, Issued Coupons, Redeemed Bonuses, Conversion Rate, Estimated Revenue).
-    - Interactive Recharts charts (Daily conversions, Revenue breakdown by partner, Popular reward tiers).
-    - CRM Customer Table: list of test clients, acquired via cross-marketing, status (New, Active, Redeemed), contact info, partner source, date.
+### Milestone 2 (M2): Minimalism UX Redesign
+- **Scope**:
+  - Refactor all app pages (Home/B2C, B2B Dashboard, Campaign Builder, CRM, Admin CRUD, PIN Redemption modal/page) for UX minimalism:
+    - Hick's Law: Max 4 actions above fold per page.
+    - Miller's Law: Navigation menus reduced to max 5 items.
+    - F-pattern layout & Visual Hierarchy: 1-line page title, <=2 lines subtitle, clear CTA.
+    - Remove long text blocks (no text > 3 lines).
+    - Color signals: Green for primary/success, Grey for neutral/secondary, Red for errors. Max 2 main theme colors per page.
+    - Mobile B2C: Full responsiveness at 375px width without horizontal scrolling, big icon cards with 1-3 word labels, buttons min 48px height.
+    - Desktop B2B: Compact icon sidebar, single column content layout, metric cards max 4 per row.
+    - Concise labels and microcopy.
+  - Preserve all existing data structures, LocalStorage schema, and functional capabilities.
 
-### Milestone 3: Campaign Creation Module — "Көрші-маршрут" (M3)
-- **Goal**: Build step-by-step wizard to create cross-promotional campaigns with partner selection, reward rules, message preview, and QR code generation.
-- **Deliverables**:
-  - **Wizard UI (`/b2b/campaigns/new`)**:
-    - Step 1: Select partner businesses from catalog in the same or adjacent district (with match score & recommendations).
-    - Step 2: Configure reward terms (Give reward X when customer spends Y KZT at partner, expiry period in days, max redemptions limit).
-    - Step 3: Client message preview (SMS/WhatsApp template format) & QR Code generator (downloadable/printable QR code linking to `/b2c/passport?campaignId=...`).
-  - Active campaigns listing page (`/b2b/campaigns`) with status indicators, active QR links, and pause/delete actions.
+### Milestone 3 (M3): Documentation (`PROJECT.md`) & Verification
+- **Scope**:
+  - Update `PROJECT.md` in project root with 5 detailed sections:
+    1. Product Description (2-3 paragraphs)
+    2. Current Status & Roadmap
+    3. Developer Instructions (`npm run dev`, env setup, build)
+    4. Architecture Overview (routes, data flow, LocalStorage schema)
+    5. WhatsApp Integration details & testing guide.
+  - Run `npm run build` and all E2E Playwright tests (all 12 existing + new WhatsApp test).
+  - Execute Reviewer, Challenger, and Forensic Auditor verification.
 
-### Milestone 4: B2C Module — "Паспорт района" & 4-Digit PIN Bonus Redemption (M4)
-- **Goal**: Build mobile-optimized customer experience accessible via QR scan or share links with anti-fraud PIN redemption logic.
-- **Deliverables**:
-  - **"Паспорт района" View (`/b2c/passport`)**:
-    - Mobile-first responsive UI presenting local partner deals, map/list of participating neighborhood spots, earned bonuses, active coupons.
-  - **Share Mechanism**:
-    - "Пригласить друга" (Invite a friend) buttons generating pre-filled shareable URLs for WhatsApp (`https://wa.me/?text=...`) and Telegram (`https://t.me/share/url?url=...`).
-  - **Bonus Redemption Flow (`/b2c/redeem` & modal inside Passport)**:
-    - Customer presents coupon to partner staff.
-    - 4-digit PIN code verification interface (Enter 4-digit code e.g. `1234` or unique coupon code).
-    - Successful redemption: Coupon status updates to `REDEEMED`, timestamp logged, CRM table updated in LocalStorage.
-    - **Anti-fraud enforcement**: Attempting to redeem an already redeemed 4-digit code MUST fail immediately with clear warning ("Бонус уже был использован [timestamp]"). Double-redemption is strictly blocked in LocalStorage state.
-
-### Milestone 5: E2E Testing Suite & Quality Hardening (Dual Track) (M5)
-- **Goal**: End-to-end Playwright automated test suite verifying all functional requirements and acceptance criteria.
-- **Deliverables**:
-  - `playwright.config.ts` setup.
-  - E2E test files covering:
-    1. Campaign creation flow via B2B wizard.
-    2. B2C client path via District Passport link.
-    3. WhatsApp/Telegram share link button triggers.
-    4. Successful 4-digit PIN bonus redemption.
-    5. Blocked re-redemption attempt (verifying error message and state rejection).
-    6. LocalStorage persistence validation across browser reloads.
-    7. "Reset Demo" button resetting state to initial seed state.
-  - All tests passing with `npx playwright test`.
-  - Forensic Auditor verification.
-
----
-
-## Gating & Quality Criteria
-- Every milestone requires Explorer assessment -> Worker implementation -> Reviewer pass -> Challenger verification -> Forensic Auditor veto check.
-- Build must pass cleanly (`npm run build`).
-- E2E tests must pass 100%.
+## Execution Schedule & Verification
+Each milestone follows:
+- Specialist Worker implementation
+- Code Review & Quality check (Reviewer)
+- Stress & Empirical verification (Challenger)
+- Forensic Integrity Audit (Auditor)

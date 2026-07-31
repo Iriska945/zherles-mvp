@@ -17,26 +17,26 @@ export default function HomePage() {
             <Zap className="w-3.5 h-3.5 text-yellow-300" />
             <span>Локальный партнерский маркетинг</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-            Объединяйте заведения, привлекайте соседей — без лишних трат
+          <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight truncate line-clamp-1">
+            Объединяйте заведения, привлекайте соседей
           </h1>
-          <p className="text-emerald-100 text-sm sm:text-base leading-relaxed">
-            Платформа «ЖЕРЛЕС» помогает бизнесам {state.business.district} района объединяться в кросс-маркетинговые маршруты «Көрші». Обменивайтесь клиентами через QR-коды и WhatsApp без установки мобильных приложений.
+          <p className="text-emerald-100 text-sm sm:text-base leading-relaxed line-clamp-2">
+            Кросс-маркетинговые маршруты «Көрші» для {state.business.district} района. Обменивайтесь клиентами через QR и WhatsApp без приложений.
           </p>
           <div className="pt-2 flex flex-wrap gap-4">
             <Link
               href="/b2b/dashboard"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-emerald-800 font-bold rounded-xl shadow hover:bg-emerald-50 transition-all"
+              className="inline-flex items-center justify-center gap-2 h-12 min-h-[48px] px-6 bg-white text-emerald-800 font-bold rounded-xl shadow hover:bg-emerald-50 transition-all text-sm sm:text-base"
             >
-              <Store className="w-4 h-4" />
+              <Store className="w-5 h-5" />
               <span>Кабинет бизнеса</span>
             </Link>
             <Link
               href="/b2c/passport"
-              className="inline-flex items-center gap-2 px-5 py-2.5 bg-emerald-500 text-white font-bold rounded-xl shadow hover:bg-emerald-400 border border-emerald-400 transition-all"
+              className="inline-flex items-center justify-center gap-2 h-12 min-h-[48px] px-6 bg-emerald-500 text-white font-bold rounded-xl shadow hover:bg-emerald-400 border border-emerald-400 transition-all text-sm sm:text-base"
             >
-              <Smartphone className="w-4 h-4" />
-              <span>Паспорт района (B2C)</span>
+              <Smartphone className="w-5 h-5" />
+              <span>Паспорт района</span>
             </Link>
           </div>
         </div>
@@ -97,7 +97,7 @@ export default function HomePage() {
           </div>
           <h2 className="text-xl font-bold text-slate-900">Модуль для Бизнеса</h2>
           <p className="text-sm text-slate-600 leading-relaxed">
-            Онбординг заведения, каталог готовых механик, конструктор акций "Көрші-маршрут", партнерский скоринг и аналитический дашборд с CRM.
+            Онбординг, каталог акций, конструктор Көрші-маршрутов и CRM-аналитика.
           </p>
           <div className="pt-2 grid grid-cols-2 gap-2 text-xs font-medium text-slate-700">
             <Link href="/b2b/onboarding" className="p-2.5 bg-slate-50 hover:bg-slate-100 rounded-lg flex items-center justify-between">
@@ -131,7 +131,7 @@ export default function HomePage() {
           </div>
           <h2 className="text-xl font-bold text-slate-900">Модуль для Гостей</h2>
           <p className="text-sm text-slate-600 leading-relaxed">
-            Мобильный веб-интерфейс "Паспорт района", шеринг акций друзьям в мессенджерах и безопасная гашение бонусов по 4-значному PIN-коду.
+            Паспорт района, мессенджер-шеринг акций и гашение бонусов по PIN-коду.
           </p>
           <div className="pt-2 grid grid-cols-2 gap-2 text-xs font-medium text-slate-700">
             <Link href="/b2c/passport" className="p-2.5 bg-slate-50 hover:bg-slate-100 rounded-lg flex items-center justify-between">
