@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Share2, Copy, Check, Send, X, Loader2 } from 'lucide-react';
+import { useApp } from '@/context/AppContext';
 
 interface ShareButtonsProps {
   title?: string;
@@ -23,6 +24,9 @@ export default function ShareButtons({
   const [phone, setPhone] = useState('');
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [statusMessage, setStatusMessage] = useState('');
+  
+  const { state } = useApp();
+  const { greenApiSettings } = state;
 
   const getShareUrl = () => {
     if (typeof window !== 'undefined') {
@@ -56,6 +60,8 @@ export default function ShareButtons({
         body: JSON.stringify({
           phone: phone.trim(),
           message: waMessage,
+          greenApiId: greenApiSettings?.idInstance,
+          greenApiToken: greenApiSettings?.apiTokenInstance,
         }),
       });
 

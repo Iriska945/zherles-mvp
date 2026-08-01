@@ -22,6 +22,8 @@ import {
   CreditCard,
   Building2,
   Clock,
+  Star,
+  Award,
 } from 'lucide-react';
 
 interface UnifiedDeal {
@@ -174,6 +176,50 @@ function DistrictPassportContent() {
 
       {/* Main Content Area */}
       <main className="p-4 space-y-4 flex-1">
+        
+        {/* Global User Profile Status Banner */}
+        {state.userProfile && (
+          <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Мой статус</div>
+                <div className="text-xl font-black text-slate-900 flex items-center space-x-2">
+                  <Award className={`w-6 h-6 ${state.userProfile.tier === 'Gold' ? 'text-amber-500' : state.userProfile.tier === 'Silver' ? 'text-slate-400' : 'text-amber-700'}`} />
+                  <span>{state.userProfile.tier}</span>
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Скидка сети</div>
+                <div className="text-xl font-black text-emerald-600">{state.userProfile.globalDiscount}%</div>
+              </div>
+            </div>
+            
+            {/* Progress to next tier */}
+            {state.userProfile.tier !== 'Gold' && (
+              <div className="mb-4">
+                <div className="flex justify-between text-xs font-bold mb-1">
+                  <span className="text-slate-500">Визитов: {state.userProfile.visitsCount}</span>
+                  <span className="text-emerald-600">Цель: {state.userProfile.tier === 'Bronze' ? 5 : 10}</span>
+                </div>
+                <div className="w-full bg-slate-100 rounded-full h-2">
+                  <div 
+                    className="bg-emerald-500 h-2 rounded-full transition-all"
+                    style={{ width: `${(state.userProfile.visitsCount / (state.userProfile.tier === 'Bronze' ? 5 : 10)) * 100}%` }}
+                  ></div>
+                </div>
+              </div>
+            )}
+            
+            {/* Holiday Bonuses */}
+            <div className="flex items-center justify-between bg-amber-50 p-3 rounded-xl border border-amber-200">
+              <div className="flex items-center space-x-2">
+                <Star className="w-5 h-5 text-amber-500" />
+                <span className="text-xs font-extrabold text-amber-900">Праздничные бонусы</span>
+              </div>
+              <span className="text-sm font-black text-amber-700">{state.userProfile.holidayBonuses} ₸</span>
+            </div>
+          </div>
+        )}
         {/* URL PIN Banner indicator if parameter was supplied */}
         {highlightedPin && (
           <div className="bg-amber-50 border border-amber-300 p-3.5 rounded-2xl flex items-center justify-between shadow-sm animate-pulse">
@@ -238,18 +284,17 @@ function DistrictPassportContent() {
                   )}
                 </div>
 
-                {/* Offer details */}
-                <div className="bg-emerald-50/70 border border-emerald-100 p-3 rounded-xl mb-3">
-                  <div className="text-xs font-black text-emerald-950 mb-1">
+                {/* Offer details (Simplified) */}
+                <div className="mb-4">
+                  <div className="text-base font-black text-slate-900 mb-1 leading-tight">
                     {deal.title}
                   </div>
-                  <div className="text-xs text-emerald-800 font-medium">
+                  <div className="text-sm text-slate-600 font-medium">
                     {deal.reward}
                   </div>
                   {deal.minSpend && (
-                    <div className="text-[11px] text-emerald-600 font-semibold mt-1 flex items-center space-x-1">
-                      <CreditCard className="w-3 h-3" />
-                      <span>При чеке от {deal.minSpend.toLocaleString('ru-RU')} ₸</span>
+                    <div className="text-xs text-emerald-600 font-bold mt-2 bg-emerald-50 inline-block px-2 py-1 rounded-md">
+                      При чеке от {deal.minSpend.toLocaleString('ru-RU')} ₸
                     </div>
                   )}
                 </div>

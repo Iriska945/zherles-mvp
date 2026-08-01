@@ -81,9 +81,28 @@ export function redeemBonus(pinCode: string): {
   const updatedCoupons = [...state.coupons];
   updatedCoupons[couponIndex] = updatedCoupon;
 
+  // Global Points Logic
+  let updatedUserProfile = { ...state.userProfile };
+  if (updatedUserProfile) {
+    updatedUserProfile.globalPoints += 500; // e.g. 500 points per redeem
+    updatedUserProfile.visitsCount += 1;
+    
+    if (updatedUserProfile.visitsCount >= 10) {
+      updatedUserProfile.tier = 'Gold';
+      updatedUserProfile.globalDiscount = 15;
+    } else if (updatedUserProfile.visitsCount >= 5) {
+      updatedUserProfile.tier = 'Silver';
+      updatedUserProfile.globalDiscount = 10;
+    } else {
+      updatedUserProfile.tier = 'Bronze';
+      updatedUserProfile.globalDiscount = 5;
+    }
+  }
+
   const newState: AppState = {
     ...state,
     coupons: updatedCoupons,
+    userProfile: updatedUserProfile || state.userProfile,
   };
 
   saveState(newState);
@@ -160,6 +179,19 @@ export function updateTemplate(template: CampaignTemplate): AppState {
   const updatedState: AppState = {
     ...currentState,
     templates: currentState.templates.map((t) => (t.id === template.id ? template : t)),
+  };
+  saveState(updatedState);
+  return updatedState;
+}
+
+export function updateGreenApiSettings(idInstance: string, apiTokenInstance: string): AppState {
+  const currentState = getInitialState();
+  const updatedState: AppState = {
+    ...currentState,
+    greenApiSettings: {
+      idInstance,
+      apiTokenInstance
+    }
   };
   saveState(updatedState);
   return updatedState;

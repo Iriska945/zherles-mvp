@@ -12,6 +12,7 @@ import {
   resetDemoState as resetDemoStorage,
   STATE_CHANGE_EVENT,
   updateBusinessProfile as updateBusinessStorage,
+  updateGreenApiSettings as updateGreenApiSettingsStorage,
 } from '@/lib/storage';
 
 interface AppContextType {
@@ -28,6 +29,7 @@ interface AppContextType {
   addTemplate: (template: CampaignTemplate) => void;
   deleteTemplate: (id: string) => void;
   updateTemplate: (template: CampaignTemplate) => void;
+  updateGreenApiSettings: (idInstance: string, apiTokenInstance: string) => void;
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined);
@@ -99,6 +101,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setState(updated);
   };
 
+  const updateGreenApiSettings = (idInstance: string, apiTokenInstance: string) => {
+    const updated = updateGreenApiSettingsStorage(idInstance, apiTokenInstance);
+    setState(updated);
+  };
+
   return (
     <AppContext.Provider
       value={{
@@ -110,6 +117,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         addTemplate,
         deleteTemplate,
         updateTemplate,
+        updateGreenApiSettings,
       }}
     >
       {children}

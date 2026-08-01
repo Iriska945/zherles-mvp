@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { phone, message } = body;
+    const { phone, message, greenApiId: bodyGreenApiId, greenApiToken: bodyGreenApiToken } = body;
 
     // Clean phone number: remove non-digits
     let cleanPhone = String(phone).replace(/\D/g, '');
@@ -33,8 +33,8 @@ export async function POST(req: NextRequest) {
     const chatId = cleanPhone.endsWith('@c.us') ? cleanPhone : `${cleanPhone}@c.us`;
 
     const greenApiUrl = process.env.GREENAPI_URL || 'https://7107.api.greenapi.com';
-    const greenApiId = process.env.GREENAPI_ID || '710722698257';
-    const greenApiToken = process.env.GREENAPI_TOKEN;
+    const greenApiId = bodyGreenApiId || process.env.GREENAPI_ID || '710722698257';
+    const greenApiToken = bodyGreenApiToken || process.env.GREENAPI_TOKEN;
 
     const isMock = greenApiUrl.includes('mock-green-api') || process.env.MOCK_GREEN_API === 'true';
 
@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          error: 'Сервер WhatsApp не настроен (отсутствует GREENAPI_TOKEN в .env.local)',
+          error: 'Сервер WhatsApp не настроен (укажите токен в настройках или .env.local)',
         },
         { status: 500 }
       );

@@ -83,6 +83,19 @@ export interface DistrictPassportDeal {
   minSpend: number;
 }
 
+export interface GlobalUserProfile {
+  globalPoints: number;
+  visitsCount: number;
+  tier: 'Bronze' | 'Silver' | 'Gold';
+  globalDiscount: number;
+  holidayBonuses: number;
+}
+
+export interface GreenApiSettings {
+  idInstance: string;
+  apiTokenInstance: string;
+}
+
 export interface AppState {
   business: Business;
   partners: Partner[];
@@ -94,4 +107,6 @@ export interface AppState {
     districtName: string;
     featuredDeals: DistrictPassportDeal[];
   };
+  userProfile: GlobalUserProfile;
+  greenApiSettings: GreenApiSettings;
 }

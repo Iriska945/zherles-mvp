@@ -209,6 +209,15 @@ function RedeemContent() {
                 </div>
               </div>
 
+              {/* Global Points Notification */}
+              <div className="bg-amber-50 p-3 rounded-xl border border-amber-200 flex items-start space-x-3">
+                <Gift className="w-5 h-5 text-amber-500 mt-0.5" />
+                <div>
+                  <div className="text-xs font-bold text-amber-900 mb-0.5">Визит засчитан!</div>
+                  <div className="text-[11px] text-amber-700 leading-tight">Ваш визит добавлен в глобальную бонусную систему Zherles. Вы на шаг ближе к новому уровню и повышенной скидке!</div>
+                </div>
+              </div>
+
               {/* Coupon details */}
               <div className="space-y-2.5 text-xs text-slate-700 bg-white/80 backdrop-blur-sm p-4 rounded-2xl border border-emerald-100">
                 <div className="flex items-start space-x-2">
