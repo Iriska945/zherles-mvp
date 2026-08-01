@@ -11,9 +11,9 @@ export default function B2BNav() {
   const links = [
     { href: '/b2b/dashboard', label: 'Дашборд & CRM', icon: LayoutDashboard },
     { href: '/b2b/campaigns', label: 'Мои акции', icon: Target },
-    { href: '/b2b/onboarding', label: 'Профиль бизнеса', icon: Store },
     { href: '/b2b/catalog', label: 'Каталог акций', icon: BookOpen },
-    { href: '/b2b/admin', label: 'Управление шаблонами', icon: Settings },
+    { href: '/b2b/settings', label: 'Личный кабинет', icon: Settings },
+    { href: '/b2b/admin', label: 'Управление шаблонами', icon: Store },
   ];
 
   return (

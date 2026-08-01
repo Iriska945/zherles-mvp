@@ -38,23 +38,11 @@ import {
 import Link from 'next/link';
 
 export default function B2BDashboardPage() {
-  const { state, updateGreenApiSettings } = useApp();
-  const { business, partners, clients, coupons, campaigns, greenApiSettings } = state;
+  const { state } = useApp();
+  const { business, partners, clients, coupons, campaigns } = state;
 
   const [clientSearch, setClientSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('ALL');
-
-  // Green API State
-  const [idInstance, setIdInstance] = useState(greenApiSettings?.idInstance || '');
-  const [apiTokenInstance, setApiTokenInstance] = useState(greenApiSettings?.apiTokenInstance || '');
-  const [settingsSaved, setSettingsSaved] = useState(false);
-
-  const handleSaveSettings = (e: React.FormEvent) => {
-    e.preventDefault();
-    updateGreenApiSettings(idInstance, apiTokenInstance);
-    setSettingsSaved(true);
-    setTimeout(() => setSettingsSaved(false), 3000);
-  };
 
   // KPI Calculations
   const activePartnersCount = useMemo(() => {
@@ -231,25 +219,25 @@ export default function B2BDashboardPage() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         {/* Header section */}
-        <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 py-4">
           <div>
-            <div className="inline-flex items-center space-x-2 bg-emerald-50 text-emerald-700 text-xs font-semibold px-3 py-1 rounded-full mb-2">
+            <div className="inline-flex items-center space-x-2 bg-slate-100 text-slate-600 text-xs font-semibold px-3 py-1 rounded-full mb-3">
               <Building2 className="w-3.5 h-3.5" />
               <span>{business?.district || 'Алмалинский'} район</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight flex items-center space-x-3">
+            <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight flex items-center space-x-3">
               <span>{business?.logoUrl || '☕'}</span>
-              <span>Дашборд бизнеса: {business?.name || 'Urban Coffee'}</span>
+              <span>{business?.name || 'Urban Coffee'}</span>
             </h1>
-            <p className="text-slate-600 text-sm mt-1">
-              Аналитика кросс-маркетинга, выданных купонов и CRM база клиентов в реальном времени.
+            <p className="text-slate-500 text-sm mt-2">
+              Сводная аналитика и клиентская база заведения.
             </p>
           </div>
 
           <div className="flex items-center space-x-3">
             <Link
               href="/b2b/campaigns/new"
-              className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm rounded-xl shadow-sm transition-all"
+              className="px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm rounded-xl transition-all"
             >
               + Создать акцию
             </Link>
@@ -259,84 +247,61 @@ export default function B2BDashboardPage() {
         {/* Metric Cards Grid (Max 4 per row) */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {/* KPI 1: Total Reach */}
-          <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <div className="bg-slate-50 p-5 rounded-2xl space-y-2">
             <div className="flex items-center justify-between text-slate-500">
-              <span className="text-xs font-bold">Общий охват</span>
-              <Users className="w-4 h-4 text-emerald-600" />
+              <span className="text-xs font-bold uppercase tracking-wider">Охват</span>
+              <Users className="w-4 h-4 text-slate-400" />
             </div>
-            <p className="text-2xl font-extrabold text-slate-900">
+            <p className="text-3xl font-extrabold text-slate-900">
               {totalReach.toLocaleString('ru-RU')}
             </p>
             <p className="text-[11px] text-slate-500 font-medium">человек/месяц</p>
           </div>
 
           {/* KPI 2: Active Partners */}
-          <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <div className="bg-slate-50 p-5 rounded-2xl space-y-2">
             <div className="flex items-center justify-between text-slate-500">
-              <span className="text-xs font-bold">Партнеры</span>
-              <Building2 className="w-4 h-4 text-blue-600" />
+              <span className="text-xs font-bold uppercase tracking-wider">Партнеры</span>
+              <Building2 className="w-4 h-4 text-slate-400" />
             </div>
-            <p className="text-2xl font-extrabold text-slate-900">{activePartnersCount}</p>
+            <p className="text-3xl font-extrabold text-slate-900">{activePartnersCount}</p>
             <p className="text-[11px] text-slate-500 font-medium">активных заведений</p>
           </div>
 
           {/* KPI 3: Issued Coupons */}
-          <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-2">
+          <div className="bg-slate-50 p-5 rounded-2xl space-y-2">
             <div className="flex items-center justify-between text-slate-500">
-              <span className="text-xs font-bold">Выдано купонов</span>
-              <Gift className="w-4 h-4 text-purple-600" />
+              <span className="text-xs font-bold uppercase tracking-wider">Купоны</span>
+              <Gift className="w-4 h-4 text-slate-400" />
             </div>
-            <p className="text-2xl font-extrabold text-slate-900">{issuedCouponsCount}</p>
-            <p className="text-[11px] text-slate-500 font-medium">QR-промокодов</p>
+            <p className="text-3xl font-extrabold text-slate-900">{issuedCouponsCount}</p>
+            <p className="text-[11px] text-slate-500 font-medium">выдано QR-промокодов</p>
           </div>
 
           {/* KPI 4: Redeemed Bonuses */}
-          <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-            <div className="flex items-center justify-between text-slate-500">
-              <span className="text-xs font-bold">Погашено бонусов</span>
-              <CheckCircle className="w-4 h-4 text-amber-600" />
+          <div className="bg-emerald-50 p-5 rounded-2xl space-y-2">
+            <div className="flex items-center justify-between text-emerald-700">
+              <span className="text-xs font-bold uppercase tracking-wider">Конверсия</span>
+              <TrendingUp className="w-4 h-4 text-emerald-600" />
             </div>
-            <p className="text-2xl font-extrabold text-slate-900">{redeemedBonusesCount}</p>
-            <p className="text-[11px] text-slate-500 font-medium">активаций в кассе</p>
-          </div>
-
-          {/* KPI 5: Conversion Rate */}
-          <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-            <div className="flex items-center justify-between text-slate-500">
-              <span className="text-xs font-bold">Конверсия %</span>
-              <TrendingUp className="w-4 h-4 text-teal-600" />
-            </div>
-            <p className="text-2xl font-extrabold text-emerald-600">{conversionRate}%</p>
-            <p className="text-[11px] text-slate-500 font-medium">из визита в покупку</p>
-          </div>
-
-          {/* KPI 6: Cross-Marketing Revenue */}
-          <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm space-y-2">
-            <div className="flex items-center justify-between text-slate-500">
-              <span className="text-xs font-bold">Выручка ₸</span>
-              <Wallet className="w-4 h-4 text-emerald-700" />
-            </div>
-            <p className="text-xl font-extrabold text-slate-900 truncate">
-              {crossMarketingRevenue.toLocaleString('ru-RU')} ₸
-            </p>
-            <p className="text-[11px] text-slate-500 font-medium">от кросс-маркетинга</p>
+            <p className="text-3xl font-extrabold text-emerald-600">{conversionRate}%</p>
+            <p className="text-[11px] text-emerald-600/80 font-medium">из визита в покупку</p>
           </div>
         </div>
 
         {/* Recharts Analytics Section - Single Column Main Layout */}
         <div className="space-y-6">
           {/* Chart 1: Conversions & Redeemed Bonuses timeline */}
-          <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div className="bg-white rounded-3xl border border-slate-100 p-6 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] space-y-4">
+            <div className="flex items-center justify-between pb-3">
               <div>
-                <h3 className="text-base font-bold text-slate-900 flex items-center space-x-2">
-                  <TrendingUp className="w-4 h-4 text-emerald-600" />
+                <h3 className="text-lg font-bold text-slate-900 flex items-center space-x-2">
+                  <TrendingUp className="w-5 h-5 text-slate-400" />
                   <span>Динамика купонов и активаций</span>
                 </h3>
-                <p className="text-xs text-slate-500">Выдача купонов vs Погашения по дням недели</p>
               </div>
-              <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full">
-                7 дней
+              <span className="text-xs font-semibold text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full">
+                За 7 дней
               </span>
             </div>
 
@@ -345,32 +310,33 @@ export default function B2BDashboardPage() {
                 <AreaChart data={timelineData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                   <defs>
                     <linearGradient id="colorIssued" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#3B82F6" stopOpacity={0.4} />
-                      <stop offset="95%" stopColor="#3B82F6" stopOpacity={0} />
+                      <stop offset="5%" stopColor="#94A3B8" stopOpacity={0.2} />
+                      <stop offset="95%" stopColor="#94A3B8" stopOpacity={0} />
                     </linearGradient>
                     <linearGradient id="colorRedeemed" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="5%" stopColor="#10B981" stopOpacity={0.5} />
+                      <stop offset="5%" stopColor="#10B981" stopOpacity={0.3} />
                       <stop offset="95%" stopColor="#10B981" stopOpacity={0} />
                     </linearGradient>
                   </defs>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
-                  <XAxis dataKey="day" tickLine={false} axisLine={{ stroke: '#CBD5E1' }} />
-                  <YAxis tickLine={false} axisLine={false} />
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F5F9" />
+                  <XAxis dataKey="day" tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: '#64748B' }} />
+                  <YAxis tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: '#64748B' }} />
                   <Tooltip
                     contentStyle={{
-                      backgroundColor: '#1E293B',
-                      borderColor: '#334155',
-                      borderRadius: '12px',
-                      color: '#FFF',
+                      backgroundColor: '#FFFFFF',
+                      borderColor: '#E2E8F0',
+                      borderRadius: '16px',
+                      color: '#0F172A',
                       fontSize: '12px',
+                      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
                     }}
                   />
-                  <Legend wrapperStyle={{ fontSize: '12px', paddingTop: '10px' }} />
+                  <Legend wrapperStyle={{ fontSize: '13px', paddingTop: '10px' }} />
                   <Area
                     type="monotone"
                     dataKey="issued"
                     name="Выдано купонов"
-                    stroke="#3B82F6"
+                    stroke="#94A3B8"
                     fillOpacity={1}
                     fill="url(#colorIssued)"
                     strokeWidth={2}
@@ -390,37 +356,34 @@ export default function B2BDashboardPage() {
           </div>
 
           {/* Chart 2: Revenue breakdown by Partner */}
-          <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-            <div className="flex items-center justify-between border-b border-slate-100 pb-3">
+          <div className="bg-white rounded-3xl border border-slate-100 p-6 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] space-y-4">
+            <div className="flex items-center justify-between pb-3">
               <div>
-                <h3 className="text-base font-bold text-slate-900 flex items-center space-x-2">
-                  <Wallet className="w-4 h-4 text-emerald-600" />
-                  <span>Структура выручки по Партнерам</span>
+                <h3 className="text-lg font-bold text-slate-900 flex items-center space-x-2">
+                  <Wallet className="w-5 h-5 text-slate-400" />
+                  <span>Структура выручки (Всего: {crossMarketingRevenue.toLocaleString('ru-RU')} ₸)</span>
                 </h3>
-                <p className="text-xs text-slate-500">Доход (₸), принесенный клиентами каждого заведения</p>
               </div>
-              <span className="text-xs font-semibold text-blue-700 bg-blue-50 px-2.5 py-1 rounded-full">
-                Партнеры
-              </span>
             </div>
 
             <SafeChartContainer height={280}>
               <ResponsiveContainer width="100%" height={280}>
                 <BarChart data={partnerRevenueData} margin={{ top: 10, right: 10, left: 10, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#E2E8F0" />
-                  <XAxis dataKey="name" tickLine={false} axisLine={{ stroke: '#CBD5E1' }} tick={{ fontSize: 11 }} />
-                  <YAxis tickLine={false} axisLine={false} tickFormatter={(val) => `${val / 1000}k ₸`} />
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#F1F5F9" />
+                  <XAxis dataKey="name" tickLine={false} axisLine={false} tick={{ fontSize: 12, fill: '#64748B' }} />
+                  <YAxis tickLine={false} axisLine={false} tickFormatter={(val) => `${val / 1000}k ₸`} tick={{ fontSize: 12, fill: '#64748B' }} />
                   <Tooltip
                     formatter={(value: number) => [`${value.toLocaleString('ru-RU')} ₸`, 'Выручка']}
                     contentStyle={{
-                      backgroundColor: '#1E293B',
-                      borderColor: '#334155',
-                      borderRadius: '12px',
-                      color: '#FFF',
+                      backgroundColor: '#FFFFFF',
+                      borderColor: '#E2E8F0',
+                      borderRadius: '16px',
+                      color: '#0F172A',
                       fontSize: '12px',
+                      boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
                     }}
                   />
-                  <Bar dataKey="value" name="Выручка (₸)" radius={[8, 8, 0, 0]}>
+                  <Bar dataKey="value" name="Выручка (₸)" radius={[6, 6, 0, 0]}>
                     {partnerRevenueData.map((entry, index) => (
                       <Cell key={`cell-${index}`} fill={entry.color} />
                     ))}
@@ -432,42 +395,38 @@ export default function B2BDashboardPage() {
         </div>
 
         {/* CRM Client Table Section */}
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+        <div className="bg-white rounded-3xl border border-slate-100 shadow-[0_2px_10px_-4px_rgba(0,0,0,0.05)] p-6 space-y-4">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2">
             <div>
-              <h2 className="text-lg font-bold text-slate-900 flex items-center space-x-2">
-                <Users className="w-5 h-5 text-emerald-600" />
-                <span>CRM Таблица привелических клиентов</span>
+              <h2 className="text-xl font-bold text-slate-900 flex items-center space-x-2">
+                <span>Клиентская база</span>
               </h2>
-              <p className="text-xs text-slate-500 mt-0.5">
-                Клиенты, пришедшие из партнерских акциях «Көрші-маршрут».
-              </p>
             </div>
 
             {/* Search and Status Filters */}
             <div className="flex flex-wrap items-center gap-3">
               {/* Search */}
               <div className="relative w-full sm:w-64">
-                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-2.5" />
+                <Search className="w-4 h-4 text-slate-400 absolute left-4 top-3" />
                 <input
                   type="text"
                   value={clientSearch}
                   onChange={(e) => setClientSearch(e.target.value)}
-                  placeholder="Поиск по имени или телефону..."
-                  className="w-full pl-9 pr-3 py-1.5 bg-slate-50 border border-slate-200 rounded-xl text-xs font-medium text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                  placeholder="Поиск клиентов..."
+                  className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-full text-sm font-medium text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 />
               </div>
 
               {/* Status Filter Tabs */}
-              <div className="flex items-center space-x-1 bg-slate-100 p-1 rounded-xl">
+              <div className="flex items-center space-x-1 bg-slate-50 p-1 rounded-full border border-slate-100">
                 {['ALL', 'NEW', 'ACTIVE', 'VIP', 'CHURNED'].map((st) => (
                   <button
                     key={st}
                     onClick={() => setStatusFilter(st)}
-                    className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition-all ${
+                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
                       statusFilter === st
                         ? 'bg-white text-slate-900 shadow-sm'
-                        : 'text-slate-600 hover:text-slate-900'
+                        : 'text-slate-500 hover:text-slate-900'
                     }`}
                   >
                     {st === 'ALL' ? 'Все' : st}
@@ -479,53 +438,46 @@ export default function B2BDashboardPage() {
 
           {/* CRM Table */}
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-slate-50 text-slate-500 font-bold uppercase tracking-wider border-b border-slate-200">
+            <table className="w-full text-left text-sm">
+              <thead className="text-slate-400 font-semibold border-b border-slate-100">
                 <tr>
-                  <th className="px-4 py-3">Клиент (Имя & Телефон)</th>
-                  <th className="px-4 py-3">Источник (Партнер)</th>
-                  <th className="px-4 py-3 text-center">Визиты</th>
-                  <th className="px-4 py-3 text-right">Истрачено (₸)</th>
-                  <th className="px-4 py-3 text-center">Статус</th>
-                  <th className="px-4 py-3 text-right">Последний визит</th>
+                  <th className="px-4 py-4 font-medium">Клиент</th>
+                  <th className="px-4 py-4 font-medium">Источник</th>
+                  <th className="px-4 py-4 font-medium text-center">Визиты</th>
+                  <th className="px-4 py-4 font-medium text-right">Выручка</th>
+                  <th className="px-4 py-4 font-medium text-center">Статус</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-100">
+              <tbody className="divide-y divide-slate-50">
                 {filteredClients.length === 0 ? (
                   <tr>
-                    <td colSpan={6} className="px-4 py-8 text-center text-slate-400">
+                    <td colSpan={5} className="px-4 py-12 text-center text-slate-400">
                       Клиенты не найдены.
                     </td>
                   </tr>
                 ) : (
                   filteredClients.map((client) => (
-                    <tr key={client.id} className="hover:bg-slate-50/80 transition-colors">
-                      <td className="px-4 py-3.5 font-bold text-slate-900">
-                        <div>{client.name}</div>
-                        <div className="text-[11px] font-normal text-slate-500">{client.phone}</div>
+                    <tr key={client.id} className="hover:bg-slate-50/50 transition-colors group">
+                      <td className="px-4 py-4">
+                        <div className="font-bold text-slate-900">{client.name}</div>
+                        <div className="text-xs text-slate-500">{client.phone}</div>
                       </td>
-                      <td className="px-4 py-3.5 font-medium text-slate-700">
-                        <div className="flex items-center space-x-1.5">
+                      <td className="px-4 py-4">
+                        <div className="inline-flex items-center space-x-1.5 bg-slate-50 px-2 py-1 rounded-lg border border-slate-100">
                           <Building2 className="w-3.5 h-3.5 text-slate-400" />
-                          <span>{client.acquiredFromPartner}</span>
+                          <span className="text-xs font-semibold text-slate-600">{client.acquiredFromPartner}</span>
                         </div>
                       </td>
-                      <td className="px-4 py-3.5 text-center font-bold text-slate-800">
+                      <td className="px-4 py-4 text-center font-bold text-slate-700">
                         {client.visitCount}
                       </td>
-                      <td className="px-4 py-3.5 text-right font-extrabold text-emerald-700">
-                        {client.totalSpent.toLocaleString('ru-RU')} ₸
+                      <td className="px-4 py-4 text-right">
+                        <span className="font-extrabold text-slate-900">
+                          {client.totalSpent.toLocaleString('ru-RU')} ₸
+                        </span>
                       </td>
-                      <td className="px-4 py-3.5 text-center">
+                      <td className="px-4 py-4 text-center">
                         {renderStatusBadge(client.status)}
-                      </td>
-                      <td className="px-4 py-3.5 text-right text-slate-500 font-medium">
-                        {new Date(client.lastVisit).toLocaleDateString('ru-RU', {
-                          day: 'numeric',
-                          month: 'short',
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        })}
                       </td>
                     </tr>
                   ))
@@ -533,56 +485,6 @@ export default function B2BDashboardPage() {
               </tbody>
             </table>
           </div>
-        </div>
-
-        {/* Green API Settings Section */}
-        <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 space-y-4">
-          <div className="border-b border-slate-100 pb-4">
-            <h2 className="text-lg font-bold text-slate-900 flex items-center space-x-2">
-              <Zap className="w-5 h-5 text-emerald-600" />
-              <span>Настройки интеграции WhatsApp (Green API)</span>
-            </h2>
-            <p className="text-xs text-slate-500 mt-0.5">
-              Введите ваши данные из консоли Green API для отправки сообщений.
-            </p>
-          </div>
-          
-          <form onSubmit={handleSaveSettings} className="space-y-4 max-w-lg">
-            <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">ID Instance</label>
-              <input
-                type="text"
-                value={idInstance}
-                onChange={(e) => setIdInstance(e.target.value)}
-                className="w-full px-3 py-2 border border-slate-300 rounded-xl text-sm focus:ring-emerald-500 focus:border-emerald-500"
-                placeholder="710722698257"
-              />
-            </div>
-            <div>
-              <label className="block text-xs font-bold text-slate-700 mb-1">API Token Instance</label>
-              <input
-                type="password"
-                value={apiTokenInstance}
-                onChange={(e) => setApiTokenInstance(e.target.value)}
-                className="w-full px-3 py-2 border border-slate-300 rounded-xl text-sm focus:ring-emerald-500 focus:border-emerald-500"
-                placeholder="Ваш токен"
-              />
-            </div>
-            <div className="flex items-center space-x-4">
-              <button
-                type="submit"
-                className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl transition-all"
-              >
-                Сохранить настройки
-              </button>
-              {settingsSaved && (
-                <span className="text-sm text-emerald-600 font-bold flex items-center">
-                  <CheckCircle className="w-4 h-4 mr-1" />
-                  Сохранено!
-                </span>
-              )}
-            </div>
-          </form>
         </div>
       </div>
     </div>
