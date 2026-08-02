@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { MapPin, Filter, Store, Sparkles, Navigation, Layers } from 'lucide-react';
+import { YMaps, Map as YandexMap, Placemark, ZoomControl } from '@pbe/react-yandex-maps';
 import { Business, Partner, BusinessPassportModalData } from '@/types';
 
 interface InteractiveMapProps {
@@ -70,20 +71,8 @@ export default function InteractiveMap({
     return b.district.toLowerCase().includes(selectedDistrict.toLowerCase());
   });
 
-  // Calculate pin position on map viewbox (in percentages)
-  // Almaty bounding box: Lat (43.2350 - 43.2650), Lng (76.9150 - 76.9650)
-  const getPinPosition = (coords?: { lat: number; lng: number }) => {
-    if (!coords) return { x: 50, y: 50 };
-    const minLat = 43.2350;
-    const maxLat = 43.2650;
-    const minLng = 76.9150;
-    const maxLng = 76.9650;
-
-    const x = Math.min(Math.max(((coords.lng - minLng) / (maxLng - minLng)) * 75 + 12, 10), 90);
-    const y = Math.min(Math.max(((maxLat - coords.lat) / (maxLat - minLat)) * 75 + 12, 10), 90);
-
-    return { x, y };
-  };
+  // Map bounds calculation logic is no longer needed since Yandex Map handles coords
+  const mapCenter = [43.2565, 76.9284];
 
   return (
     <section className="bg-white rounded-3xl border border-slate-200 shadow-sm p-6 sm:p-8 space-y-6">
@@ -121,139 +110,40 @@ export default function InteractiveMap({
         </div>
       </div>
 
-      {/* SVG Vector Map Container */}
-      <div className="relative w-full h-[360px] sm:h-[420px] bg-slate-900 rounded-2xl overflow-hidden border border-slate-800 shadow-inner group">
-        {/* District SVG Map Illustration */}
-        <svg
-          className="w-full h-full object-cover opacity-60"
-          viewBox="0 0 1000 600"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          {/* Grid lines */}
-          <defs>
-            <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
-            </pattern>
-          </defs>
-          <rect width="1000" height="600" fill="url(#grid)" />
-
-          {/* District Regions */}
-          {/* Almaly District */}
-          <path
-            d="M150 120 L550 100 L580 350 L120 380 Z"
-            fill="rgba(16, 185, 129, 0.15)"
-            stroke="rgba(16, 185, 129, 0.4)"
-            strokeWidth="2"
-            strokeDasharray="4 4"
-          />
-          <text x="320" y="240" fill="rgba(16, 185, 129, 0.6)" fontSize="18" fontWeight="bold">
-            АЛМАЛИНСКИЙ РАЙОН
-          </text>
-
-          {/* Medeu District */}
-          <path
-            d="M550 100 L920 80 L900 480 L580 350 Z"
-            fill="rgba(59, 130, 246, 0.12)"
-            stroke="rgba(59, 130, 246, 0.4)"
-            strokeWidth="2"
-            strokeDasharray="4 4"
-          />
-          <text x="680" y="240" fill="rgba(59, 130, 246, 0.6)" fontSize="18" fontWeight="bold">
-            МЕДЕУСКИЙ РАЙОН
-          </text>
-
-          {/* Bostandyk District */}
-          <path
-            d="M120 380 L580 350 L560 560 L80 540 Z"
-            fill="rgba(168, 85, 247, 0.12)"
-            stroke="rgba(168, 85, 247, 0.4)"
-            strokeWidth="2"
-            strokeDasharray="4 4"
-          />
-          <text x="300" y="470" fill="rgba(168, 85, 247, 0.6)" fontSize="18" fontWeight="bold">
-            БОСТАНДЫКСКИЙ РАЙОН
-          </text>
-
-          {/* Main Avenues / Streets */}
-          <line x1="80" y1="280" x2="920" y2="250" stroke="rgba(255,255,255,0.2)" strokeWidth="3" />
-          <text x="100" y="272" fill="rgba(255,255,255,0.4)" fontSize="11">пр. Абая</text>
-
-          <line x1="450" y1="80" x2="420" y2="560" stroke="rgba(255,255,255,0.2)" strokeWidth="3" />
-          <text x="430" y="100" fill="rgba(255,255,255,0.4)" fontSize="11">ул. Байтурсынова</text>
-
-          <line x1="720" y1="80" x2="700" y2="540" stroke="rgba(255,255,255,0.2)" strokeWidth="3" />
-          <text x="730" y="100" fill="rgba(255,255,255,0.4)" fontSize="11">пр. Достык</text>
-        </svg>
+      {/* Yandex Map Container */}
+      <div className="relative w-full h-[360px] sm:h-[420px] bg-slate-100 rounded-2xl overflow-hidden border border-slate-200 shadow-inner group">
+        <YMaps query={{ lang: 'ru_RU' }}>
+          <YandexMap 
+            defaultState={{ center: mapCenter, zoom: 13 }} 
+            width="100%" 
+            height="100%"
+          >
+            <ZoomControl />
+            {filteredBusinesses.map((biz) => (
+              <Placemark 
+                key={biz.id}
+                geometry={[biz.coordinates?.lat || 43.2565, biz.coordinates?.lng || 76.9284]}
+                properties={{
+                  balloonContentHeader: biz.name,
+                  balloonContentBody: `<div style="font-family: sans-serif;"><b>${biz.category}</b><br/>Средний чек: ${biz.avgCheck}₸<br/><br/><button style="padding:4px 8px;background:#10B981;color:white;border:none;border-radius:4px;cursor:pointer;">Подробнее</button></div>`,
+                  hintContent: biz.name
+                }}
+                options={{
+                  preset: biz.isPrimary ? 'islands#greenDotIcon' : 'islands#blueIcon'
+                }}
+                onClick={() => onSelectBusiness(biz)}
+              />
+            ))}
+          </YandexMap>
+        </YMaps>
 
         {/* District Active Badge */}
-        <div className="absolute top-4 left-4 bg-slate-900/80 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-slate-700 text-xs font-semibold text-slate-300 flex items-center gap-2">
-          <Layers className="w-3.5 h-3.5 text-emerald-400" />
-          <span>Район: <strong className="text-white">{selectedDistrict === 'ALL' ? 'Алматы (Все)' : selectedDistrict}</strong></span>
+        <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-slate-200 text-xs font-semibold text-slate-700 flex items-center gap-2 z-10 shadow-sm">
+          <Layers className="w-3.5 h-3.5 text-emerald-500" />
+          <span>Район: <strong className="text-slate-900">{selectedDistrict === 'ALL' ? 'Алматы (Все)' : selectedDistrict}</strong></span>
           <span className="bg-emerald-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">
             {filteredBusinesses.length} мест
           </span>
-        </div>
-
-        {/* Interactive Map Pins Layer */}
-        <div className="absolute inset-0">
-          {filteredBusinesses.map((biz) => {
-            const pos = getPinPosition(biz.coordinates);
-            const isHovered = hoveredId === biz.id;
-
-            return (
-              <div
-                key={biz.id}
-                style={{ left: `${pos.x}%`, top: `${pos.y}%` }}
-                className="absolute -translate-x-1/2 -translate-y-1/2 z-20 group/pin"
-                onMouseEnter={() => setHoveredId(biz.id)}
-                onMouseLeave={() => setHoveredId(null)}
-              >
-                {/* Pin Tooltip */}
-                <div
-                  className={`aria-tooltip absolute bottom-full left-1/2 -translate-x-1/2 mb-3 bg-slate-900 text-white p-3 rounded-xl shadow-2xl border border-slate-700 min-w-[200px] pointer-events-none transition-all duration-200 z-30 ${
-                    isHovered ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-2 scale-95'
-                  }`}
-                >
-                  <div className="flex items-center gap-2">
-                    <span className="text-lg">{biz.logoUrl || '🏪'}</span>
-                    <div>
-                      <h4 className="font-bold text-xs text-white leading-tight">{biz.name}</h4>
-                      <p className="text-[10px] text-emerald-400 font-medium">{biz.category}</p>
-                    </div>
-                  </div>
-                  <div className="mt-2 pt-1.5 border-t border-slate-800 flex items-center justify-between text-[10px] text-slate-300">
-                    <span>Средний чек: <strong>{biz.avgCheck.toLocaleString('ru-RU')} ₸</strong></span>
-                    {biz.matchScore && (
-                      <span className="text-emerald-400 font-bold">★ {biz.matchScore}%</span>
-                    )}
-                  </div>
-                </div>
-
-                {/* Pin Button - Meets min 48px touch target requirement */}
-                <button
-                  type="button"
-                  onClick={() => onSelectBusiness(biz)}
-                  aria-label={`Открыть Паспорт района для ${biz.name}`}
-                  className={`min-h-[48px] min-w-[48px] p-1.5 rounded-full flex items-center justify-center transition-all transform hover:scale-115 shadow-xl relative ${
-                    biz.isPrimary
-                      ? 'bg-emerald-500 text-white ring-4 ring-emerald-500/40 animate-pulse'
-                      : 'bg-white text-slate-900 border-2 border-emerald-500 hover:bg-emerald-50'
-                  }`}
-                >
-                  <span className="text-base sm:text-lg select-none">{biz.logoUrl || '📍'}</span>
-
-                  {/* Pulsing ring */}
-                  <span className="absolute -inset-1 rounded-full bg-emerald-400 opacity-20 group-hover/pin:animate-ping pointer-events-none" />
-                </button>
-
-                {/* Business Title Marker Label underneath Pin */}
-                <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 bg-slate-900/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-bold text-white whitespace-nowrap shadow-md border border-slate-700/80 pointer-events-none">
-                  {biz.name}
-                </div>
-              </div>
-            );
-          })}
         </div>
       </div>
 
