@@ -11,7 +11,9 @@ import {
 } from '@/types';
 import seedData from '@/data/seedData.json';
 
-const DB_FILE_PATH = path.join(process.cwd(), 'data', 'db.json');
+const DB_FILE_PATH = process.env.VERCEL || process.env.NODE_ENV === 'production'
+  ? path.join('/tmp', 'db.json')
+  : path.join(process.cwd(), 'data', 'db.json');
 
 export function calculateTierInfo(points: number, visitsCount: number = 0): TierInfo {
   const safePoints = Math.max(0, points);
