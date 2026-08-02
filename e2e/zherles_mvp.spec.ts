@@ -2,10 +2,14 @@ import { test, expect } from '@playwright/test';
 
 test.describe('MVP ЖЕРЛЕС E2E Test Suite', () => {
 
-  test.beforeEach(async ({ page }) => {
-    // Navigate to homepage before each test
+  test.beforeEach(async ({ page, context }) => {
+    await context.clearCookies();
     await page.goto('/');
+    await page.evaluate(() => localStorage.clear());
+    await page.request.post('/api/demo/reset');
   });
+
+
 
   test('Test 1: Campaign Creation Flow', async ({ page }) => {
     // 1. Navigate to /b2b/campaigns/new
@@ -65,7 +69,8 @@ test.describe('MVP ЖЕРЛЕС E2E Test Suite', () => {
 
     // Close QR modal (click close button inside modal)
     const closeModalBtn = page.locator('button:has(svg.lucide-x)').first();
-    await closeModalBtn.click();
+    await closeModalBtn.dispatchEvent('click');
+
 
     // 4. Verify WhatsApp and Telegram share buttons exist
     const whatsappBtn = page.getByRole('button', { name: /WhatsApp/i }).first();

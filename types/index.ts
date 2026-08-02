@@ -8,6 +8,9 @@ export interface Business {
   contactName: string;
   description: string;
   logoUrl: string;
+  coordinates?: { lat: number; lng: number };
+  address?: string;
+  activePromotions?: string[];
 }
 
 export interface Partner {
@@ -19,6 +22,26 @@ export interface Partner {
   matchScore: number;
   avgCheck: number;
   status: 'ACTIVE' | 'PENDING' | 'SUGGESTED';
+  coordinates?: { lat: number; lng: number };
+  address?: string;
+  activePromotions?: string[];
+}
+
+export interface BusinessPassportModalData {
+  id: string;
+  name: string;
+  category: string;
+  district: string;
+  address?: string;
+  avgCheck: number;
+  phone?: string;
+  contactName?: string;
+  matchScore?: number;
+  description?: string;
+  logoUrl?: string;
+  coordinates?: { lat: number; lng: number };
+  activePromotions?: string[];
+  isPrimary?: boolean;
 }
 
 export interface CampaignTemplate {
@@ -110,3 +133,76 @@ export interface AppState {
   userProfile: GlobalUserProfile;
   greenApiSettings: GreenApiSettings;
 }
+
+// --- B2C Auth & Real DB Models ---
+
+export type UserTier = 'Сосед-Новичок' | 'Активный Көрші' | 'Почетный Көрші' | 'Легенда Района';
+
+export interface User {
+  id: string;
+  phone: string;
+  email?: string;
+  name: string;
+  passwordHash: string;
+  tier: UserTier;
+  bonusBalance: number;
+  discountRate: number;
+  visitsCount: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface AuthSession {
+  id: string;
+  userId: string;
+  token: string;
+  expiresAt: string;
+  createdAt: string;
+}
+
+export interface UserBonusTransaction {
+  id: string;
+  userId: string;
+  type: 'EARNED' | 'REDEEMED' | 'WELCOME' | 'HOLIDAY' | 'PROMO';
+  amount: number;
+  description: string;
+  createdAt: string;
+  relatedCouponId?: string;
+}
+
+export interface TierInfo {
+  currentTier: UserTier;
+  nextTier?: UserTier;
+  pointsToNextTier: number;
+  progressPercentage: number;
+  discountRate: number;
+}
+
+export interface UserCabinetData {
+  user: Omit<User, 'passwordHash'>;
+  tierInfo: TierInfo;
+  bonusBalance: number;
+  activeCoupons: BonusCoupon[];
+  recentTransactions: UserBonusTransaction[];
+}
+
+export interface AuthResponse {
+  success: boolean;
+  user?: Omit<User, 'passwordHash'>;
+  token?: string;
+  tierInfo?: TierInfo;
+  error?: string;
+}
+
+export interface DatabaseSchema {
+  users: User[];
+  sessions: AuthSession[];
+  bonusTransactions: UserBonusTransaction[];
+  coupons: BonusCoupon[];
+  campaigns: Campaign[];
+  partners: Partner[];
+  businesses: Business[];
+  templates: CampaignTemplate[];
+  clients: ClientCRM[];
+}
+

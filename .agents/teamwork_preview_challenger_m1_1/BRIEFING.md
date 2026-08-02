@@ -1,40 +1,38 @@
-# BRIEFING — 2026-08-01T00:32:00Z
+# BRIEFING — 2026-08-01T20:19:20+05:00
 
 ## Mission
-Empirically verify and stress-test WhatsApp Green API integration in zherles_mvp, testing edge cases, phone formatting, upstream Green API error responses, and executing Playwright tests.
+Empirically verify and stress-test Milestone 1 (Interactive Homepage & Map Component) of the ЖЕРЛЕС MVP project.
 
 ## 🔒 My Identity
-- Archetype: empirical_challenger
+- Archetype: EMPIRICAL CHALLENGER
 - Roles: critic, specialist
 - Working directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_challenger_m1_1
-- Original parent: eb5563f0-f075-40d2-aaef-8bdfef0597c5
-- Milestone: Milestone 1 (WhatsApp Green API Integration)
+- Original parent: 34c48431-2171-414a-9d2a-c0d08154ad63
+- Milestone: Milestone 1 (Interactive Homepage & Map Component)
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code
-- Empirically verify: run tests and execution code yourself
-- Record findings in handoff.md and notify orchestrator
+- Review-only & empirical verification — do NOT modify implementation code (report findings as bugs/issues in handoff)
+- Write report to /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_challenger_m1_1/handoff.md
+- Run build and playwright test commands empirically
 
 ## Current Parent
-- Conversation ID: eb5563f0-f075-40d2-aaef-8bdfef0597c5
-- Updated: 2026-08-01T00:32:00Z
+- Conversation ID: 34c48431-2171-414a-9d2a-c0d08154ad63
+- Updated: 2026-08-01T20:19:20+05:00
 
 ## Review Scope
-- **Files to review**: `/api/whatsapp/send/route.ts`, `e2e/zherles_mvp.spec.ts`
-- **Interface contracts**: API contract for `POST /api/whatsapp/send`
-- **Review criteria**: Edge case handling, 400/500 JSON error responses, phone formatting logic, Playwright test suite green pass
+- **Files to review**: Homepage, Map Component, modal components, B2B CTA links, E2E tests
+- **Verification target**: Milestone 1 delivery
+- **Review criteria**: Build stability, Playwright tests pass rate, UI interactions (district filters, hover/click, modal backdrop/escape, B2B CTAs, 375px mobile viewport)
 
 ## Key Decisions Made
-- Executed `npx playwright test e2e/zherles_mvp.spec.ts` (14/14 passed across Chromium & Mobile Chrome).
-- Developed empirical unit test script `.agents/teamwork_preview_challenger_m1_1/test_route_empirical.ts` testing 16 edge case scenarios against `app/api/whatsapp/send/route.ts` (16/16 passed).
-- Developed E2E API Playwright test suite `e2e/whatsapp_challenger.spec.ts` (6/6 passed).
-- Confirmed phone format normalization logic handles `+7 (701) 123-45-67`, `87011234567`, `77011234567`, `7011234567`, and `77011234567@c.us`, all mapping cleanly to `77011234567@c.us`.
+- Empirically executed build, standard test suite, and custom challenger stress suite.
+- Identified 4 key failure modes / empirical bugs:
+  1. `npm run build` manifest ENOENT failure.
+  2. Missing Escape key closing handler in `BusinessPassportModal.tsx`.
+  3. 375px mobile viewport horizontal overflow (417.35px scrollWidth due to Header nav overflow & Hero glows).
+  4. Mobile 375px map pin click/hover pointer intercept bug.
 
 ## Artifact Index
-- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_challenger_m1_1/ORIGINAL_REQUEST.md` — Original task prompt
-- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_challenger_m1_1/BRIEFING.md` — State briefing
-- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_challenger_m1_1/progress.md` — Progress tracker
-- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_challenger_m1_1/test_route_empirical.ts` — Empirical unit test runner
-- `/Users/ramil/teamwork_projects/zherles_mvp/e2e/whatsapp_challenger.spec.ts` — Empirical E2E test runner
-- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_challenger_m1_1/handoff.md` — Final Handoff Report
+- handoff.md — Empirical Verification Report
+- e2e/m1_challenger_verification.spec.ts — Empirical Challenger E2E Suite

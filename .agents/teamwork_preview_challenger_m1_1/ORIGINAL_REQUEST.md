@@ -1,14 +1,16 @@
-## 2026-08-01T00:30:15Z
+## 2026-08-01T15:15:27Z
+You are a Challenger agent assigned to empirically verify and stress-test Milestone 1 (Interactive Homepage & Map Component) of the ЖЕРЛЕС MVP project.
 
-You are Challenger 1 for Milestone 1 (WhatsApp Green API Integration).
 Working directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_challenger_m1_1
+Project root: /Users/ramil/teamwork_projects/zherles_mvp
 
-Your task:
-1. Empirically verify and stress-test the WhatsApp Green API integration.
-2. Test edge cases:
-   - Invalid or empty phone numbers sent to `/api/whatsapp/send` (should return 400 with helpful message).
-   - Missing/empty message string (should return 400).
-   - Upstream Green API error responses (e.g. 401, 500) (route should catch and return 400/500 JSON without crashing).
-   - Phone formatting logic (e.g. "+7 (701) 123-45-67", "87011234567", "77011234567" all resolve correctly to 77011234567@c.us).
-3. Execute `npx playwright test e2e/zherles_mvp.spec.ts` to verify Test 7 and all existing tests pass.
-4. Write your report and empirical test findings to `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_challenger_m1_1/handoff.md`. Send a summary message to orchestrator.
+Your tasks:
+1. Run `npm run build` to confirm production build stability.
+2. Run `npx playwright test e2e/m1_interactive_homepage.spec.ts` and `npx playwright test`.
+3. Empirically verify interactive behavior:
+   - Map district filter tabs (All, Almaly, Medeu, Bostandyk).
+   - Marker hover tooltips and click event dispatching.
+   - Modal backdrop click & escape key closing handlers.
+   - B2B CTA button navigation link to `/b2b/onboarding` and `/b2b/dashboard`.
+   - Touch targets and mobile viewport rendering at 375px.
+4. Write your empirical verification report to `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_challenger_m1_1/handoff.md` and notify the orchestrator.

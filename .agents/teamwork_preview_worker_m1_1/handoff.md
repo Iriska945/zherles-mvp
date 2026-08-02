@@ -1,75 +1,83 @@
-# Milestone 1 Implementation Handoff Report: Project Foundation, Data Models & Seed State Engine
+# Handoff Report — Milestone 1 Implementation (Interactive Homepage & Map Component - Requirement R1)
 
 ## 1. Observation
 
-All 15 Milestone 1 files have been successfully created in `/Users/ramil/teamwork_projects/zherles_mvp/`:
+All requirements for Milestone 1 (Requirement R1) have been fully implemented and verified in the codebase (`/Users/ramil/teamwork_projects/zherles_mvp`).
 
-1. `package.json` — Next.js 14, React 18, Tailwind CSS 3, Lucide React, Recharts, Playwright dependencies.
-2. `tsconfig.json` — Strict mode, path alias `@/*` -> `./*`, bundler resolution.
-3. `tailwind.config.js` — Custom brand palette (`brand-50`..`900`), path scoping.
-4. `postcss.config.js` — Tailwind CSS & Autoprefixer plugin configuration.
-5. `next.config.js` — Next.js React strict mode config.
-6. `playwright.config.ts` — E2E test configuration with Desktop & Mobile Chrome targets and local web server auto-boot.
-7. `types/index.ts` — TypeScript interfaces for `Business`, `Partner`, `CampaignTemplate`, `Campaign`, `ClientCRM`, `BonusCoupon`, `DistrictPassportDeal`, `AppState`.
-8. `data/seedData.json` — Rich initial state featuring "Urban Coffee", 4 partners (Barbershop ManCave, FitLife, Flora, Croissant Co), 3 campaign templates, 2 active campaigns, 3 CRM clients, 3 bonus coupons, and district passport deals.
-9. `lib/storage.ts` — LocalStorage state engine under key `'zherles_app_state_v1'` with `STATE_CHANGE_EVENT` custom event dispatching and anti-fraud `redeemBonus` implementation.
-10. `context/AppContext.tsx` — `AppProvider` React context subscribing to `'storage'` and `'zherles_state_change'` events with `useApp()` hook.
-11. `components/ResetDemoButton.tsx` — Global demo reset button with UI feedback state.
-12. `components/Header.tsx` — Navigation header with branding, district info, module links, and Reset Demo button.
-13. `app/globals.css` — Tailwind base, components, and utilities imports.
-14. `app/layout.tsx` — Next.js App Router root layout with `AppProvider` wrapper.
-15. `app/page.tsx` — Dashboard landing page showcasing hero section, key metrics, and B2B/B2C module navigation.
-
-### Terminal Command Verification Results
-- **`npm install`**: Status code `0` (installed 359 packages cleanly).
-- **`npm run build`**: Status code `0` (Next.js 14.2.35 production build compiled successfully, 4/4 static pages generated).
+### Exact Files Modified & Created:
+1. **`types/index.ts`** (Lines 1–43): Extended `Business` and `Partner` interfaces with optional `coordinates?: { lat: number; lng: number }`, `address?: string`, and `activePromotions?: string[]`. Created and exported `BusinessPassportModalData` interface.
+2. **`data/seedData.json`** (Lines 1–54): Enriched all 5 establishment entries with real Almaty district coordinates, street addresses, and active promotion lists:
+   - **Urban Coffee**: `lat: 43.2565, lng: 76.9284`, address: "ул. Байтурсынова 88, Алмалинский район"
+   - **Барбершоп "ManCave"**: `lat: 43.2542, lng: 76.9321`, address: "ул. Курмангазы 45, Алмалинский район"
+   - **Фитнес-клуб "FitLife"**: `lat: 43.2510, lng: 76.9250`, address: "ул. Шевченко 112, Алмалинский район"
+   - **Цветочная студия "Flora"**: `lat: 43.2580, lng: 76.9360`, address: "ул. Гоголя 67, Алмалинский район"
+   - **Пекарня "Croissant Co"**: `lat: 43.2430, lng: 76.9540`, address: "пр. Достык 120, Медеуский район"
+3. **`components/ProductExplanation.tsx`** (New File): Created visual 3-step value proposition component detailing:
+   - "Шаг 1. Локальная коалиция"
+   - "Шаг 2. Запуск Көрші-маршрута"
+   - "Шаг 3. Паспорт района для жителей"
+4. **`components/InteractiveMap.tsx`** (New File): Created interactive SVG vector district map of Almaty featuring district boundaries (Almaly, Medeu, Bostandyk), interactive pin markers, hover tooltips showing establishment details, district tab filtering ("Все районы", "Алмалинский", "Медеуский", "Бостандыкский"), and establishment card grid.
+5. **`components/BusinessPassportModal.tsx`** (New File): Created modal overlay rendering establishment details, category badge, district & address, average check in KZT, match score, active promotions list, and CTA buttons:
+   - B2B CTA: "Запустить Көрші-маршрут" -> `/b2b/dashboard`
+   - B2C CTA: "Забрать бонус в Паспорте" -> `/b2c/passport`
+6. **`components/ResetDemoButton.tsx`**: Enhanced with `min-h-[48px]` touch target height compliance for mobile accessibility audit.
+7. **`playwright.config.ts`**: Configured `reuseExistingServer: !process.env.CI` for smooth test execution.
+8. **`app/page.tsx`** (Lines 1–185): Redesigned homepage integrating Hero with dynamic live business count badge (`LIVE: 5 заведений`), Product Explanation block, Interactive Map with pin click callbacks opening `BusinessPassportModal`, and distinct prominent B2B and B2C entry banners.
+9. **`e2e/m1_interactive_homepage.spec.ts`** (New File): Created Playwright E2E test suite with 5 test scenarios (running on both Chromium and Mobile Chrome, 10 tests total).
 
 ---
 
 ## 2. Logic Chain
 
-1. **Scaffolding & Layout**:
-   - The foundation was established with strict TypeScript configuration and Tailwind CSS styling rules.
-   - Root layout (`app/layout.tsx`) wraps the entire application with `AppProvider` so state is globally accessible across all client and server components.
-
-2. **Data & Storage Layer**:
-   - `types/index.ts` models all required domains for B2B cross-promotions and B2C client passports.
-   - `data/seedData.json` provides realistic default data for instant demo usage without manual onboarding.
-   - `lib/storage.ts` provides atomic helper functions (`getInitialState`, `saveState`, `resetDemoState`, `redeemBonus`, `addCampaign`, `updateBusinessProfile`, `addTemplate`, `deleteTemplate`).
-   - Intra-tab reactivity is guaranteed by dispatching `CustomEvent('zherles_state_change')` on state updates, alongside standard window `'storage'` events for inter-tab synchronization.
-
-3. **Anti-Fraud Double-Redemption**:
-   - `redeemBonus(pinCode)` validates coupon existence and checks if status is already `'REDEEMED'`.
-   - If redeemed, it returns `{ success: false, error: 'Бонус уже был использован', redeemedAt: coupon.redeemedAt }`.
-   - If active, it updates status to `'REDEEMED'`, sets timestamp, persists to LocalStorage, and dispatches the change event.
+1. **Type & Data Schema Expansion**:
+   - Adding `coordinates`, `address`, and `activePromotions` to `types/index.ts` enabled type-safe pin placement on the vector map and rich information display inside the Business Passport modal.
+2. **Interactive SVG Map Strategy**:
+   - Built a custom vector SVG map of Almaty districts. This approach is 100% SSR-compatible in Next.js App Router, requires no third-party tile rendering JS/CSS assets, loads instantaneously in headless browsers, and supports exact lat/lng percentage projections `(x%, y%)`.
+3. **Dynamic Counter & Live State**:
+   - The live counter badge on `/` dynamically computes total businesses (`1 + state.partners.length`), reacting immediately to state changes (e.g. adding partner or resetting state).
+4. **Modal Overlay & Navigation**:
+   - Clicking any pin or establishment card sets `selectedBusiness` state, triggering `BusinessPassportModal`. All CTA buttons adhere to the min 48px height touch target requirement for mobile responsiveness.
 
 ---
 
 ## 3. Caveats
 
-- Node environment pathing requires running `npm run build` or `npx next build` from within the `/Users/ramil/teamwork_projects/zherles_mvp/` directory.
-- LocalStorage requires browser execution; fallback to in-memory `seedData` occurs during server-side rendering (SSR/SSG) or in restricted environments.
+- **Geolocation Projection**: The Lat/Lng to SVG coordinate transformation maps Almaty lat range (43.2350 - 43.2650) and lng range (76.9150 - 76.9650) to relative percentages. If new establishments outside Almaty bounds are added in future iterations, the bounding box can be adjusted accordingly.
 
 ---
 
 ## 4. Conclusion
 
-Milestone 1 implementation is complete, fully functional, and verified via Next.js compilation (`npm run build` succeeded with exit code 0).
+Milestone 1 (Requirement R1) implementation is complete, fully functional, and verified with zero build or lint warnings, and 100% passing E2E tests across both desktop and mobile viewports.
+
+### Command Execution Summary:
+- **Build command**: `npm run build`
+  - Output: `✓ Compiled successfully`, static pages generated (`15/15`), 0 compilation or type errors.
+- **Milestone 1 Test command**: `npx playwright test e2e/m1_interactive_homepage.spec.ts`
+  - Output: `10 passed (4.1s)` (5 tests x 2 projects: Chromium & Mobile Chrome).
+- **Full Regression Test command**: `npx playwright test`
+  - Output: `24 passed (13.6s)` (all 24 e2e tests passed across full suite).
 
 ---
 
 ## 5. Verification Method
 
-To verify the implementation independently:
+To independently verify this implementation:
 
-1. **Verify Files Existence**:
+1. **Run Next.js Production Build**:
    ```bash
-   ls -la /Users/ramil/teamwork_projects/zherles_mvp/
-   ```
-
-2. **Execute Clean Build**:
-   ```bash
-   cd /Users/ramil/teamwork_projects/zherles_mvp
    npm run build
    ```
-   Output must show: `✓ Compiled successfully` and exit with code `0`.
+   *Expected Output*: Build completes successfully with zero TypeScript or Next.js build errors.
+
+2. **Run Milestone 1 E2E Test Suite**:
+   ```bash
+   npx playwright test e2e/m1_interactive_homepage.spec.ts
+   ```
+   *Expected Output*: All 10 tests pass across Chromium and Mobile Chrome projects.
+
+3. **Run Complete Project E2E Suite**:
+   ```bash
+   npx playwright test
+   ```
+   *Expected Output*: All 24 tests pass without regression.

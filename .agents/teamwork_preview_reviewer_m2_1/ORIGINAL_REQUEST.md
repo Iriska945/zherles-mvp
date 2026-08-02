@@ -1,15 +1,29 @@
-## 2026-08-01T00:34:34Z
-You are Reviewer 2 for Milestone 2 (Minimalism UX Redesign).
+## 2026-08-01T15:30:27Z
+You are a Reviewer agent assigned to review Milestone 2 (B2C Personal Cabinet with Real Database & Auth System - Requirement R2) of the ЖЕРЛЕС MVP project.
+
 Working directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_reviewer_m2_1
+Project root: /Users/ramil/teamwork_projects/zherles_mvp
 
-Your task:
-1. Review all UX redesign changes for Milestone 2:
-   - `app/b2b/dashboard/page.tsx`: Verify metric cards grid is max 4 per row (`grid-cols-2 lg:grid-cols-4`), compact icon sidebar, single column content. Verify dynamic `timelineData` aggregation logic.
-   - `app/b2c/passport/page.tsx` & `app/b2c/redeem/page.tsx`: Verify primary CTA buttons have min 48px height (`min-h-[48px]`), cards with large icons and short labels, 375px mobile responsiveness without horizontal scrolling, and bottom padding (`pb-32`) preventing toolbar overlap.
-   - `components/Header.tsx` & `components/B2BNav.tsx`: Verify nav items count <= 5 (Miller's Law).
-   - `.gitignore`: Verify `.env.local` is listed.
-   - `app/api/whatsapp/send/route.ts`: Verify no hardcoded string fallback for `GREENAPI_ID`.
+Inspect the implementation made by the worker:
+- `lib/db.ts`
+- `data/db.json`
+- `context/AuthContext.tsx`
+- `app/api/auth/register/route.ts`
+- `app/api/auth/login/route.ts`
+- `app/api/auth/logout/route.ts`
+- `app/api/auth/me/route.ts`
+- `app/api/user/cabinet/route.ts`
+- `app/api/b2c/redeem/route.ts`
+- `app/b2c/cabinet/page.tsx`
+- `e2e/m2_b2c_cabinet_auth.spec.ts`
 
-2. Run `npm run build` and `npx playwright test` to verify zero errors and all 14 tests pass across both Desktop and Mobile Chrome.
-
-3. Output your verdict (PASS or FAIL) and report to `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_reviewer_m2_1/handoff.md`. Send message to orchestrator.
+Verification tasks:
+1. Verify TypeScript types and clean Next.js App Router code standards.
+2. Run `npm run build` and verify zero compilation errors.
+3. Run `npx playwright test e2e/m2_b2c_cabinet_auth.spec.ts` and `npx playwright test` to verify 100% test pass rate.
+4. Verify Requirement R2 compliance:
+   - User registration and phone/email login functionality.
+   - Real database file persistence (`data/db.json`) for user profiles, level tiers, bonus points, and discounts.
+   - Logged-in B2C Personal Cabinet displaying user profile, tier level ("Сосед-Новичок", "Активный Көрші"), bonus balance, active coupons, and transactions.
+   - Real-time DB read/write updates when redeeming bonuses.
+5. Write your detailed review report and verdict to `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_reviewer_m2_1/handoff.md` and notify the orchestrator.

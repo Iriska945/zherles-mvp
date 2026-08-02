@@ -192,7 +192,7 @@ function AdminContent() {
           <div className="flex items-center space-x-3">
             <button
               onClick={handleOpenCreateModal}
-              className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm rounded-xl shadow-sm transition-all flex items-center space-x-2"
+              className="px-4 h-12 min-h-[48px] bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm rounded-xl shadow-sm transition-all flex items-center space-x-2"
             >
               <Plus className="w-4 h-4" />
               <span>Добавить новый шаблон</span>
@@ -281,14 +281,14 @@ function AdminContent() {
                         <div className="flex items-center justify-end space-x-2">
                           <button
                             onClick={() => handleOpenEditModal(template)}
-                            className="p-1.5 text-slate-600 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors"
+                            className="p-2 h-12 min-h-[48px] min-w-[48px] text-slate-600 hover:text-emerald-600 hover:bg-emerald-50 rounded-lg transition-colors inline-flex items-center justify-center"
                             title="Редактировать"
                           >
                             <Edit className="w-4 h-4" />
                           </button>
                           <button
                             onClick={() => handleDelete(template.id, template.title)}
-                            className="p-1.5 text-slate-600 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
+                            className="p-2 h-12 min-h-[48px] min-w-[48px] text-slate-600 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors inline-flex items-center justify-center"
                             title="Удалить"
                           >
                             <Trash2 className="w-4 h-4" />
@@ -298,6 +298,8 @@ function AdminContent() {
                     </tr>
                   ))
                 )}
+
+
               </tbody>
             </table>
           </div>

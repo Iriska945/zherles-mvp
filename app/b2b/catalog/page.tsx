@@ -141,7 +141,7 @@ export default function CatalogPage() {
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
-                  className={`px-3.5 py-1.5 rounded-xl text-xs font-semibold transition-all ${
+                  className={`px-3.5 py-1.5 min-h-[48px] inline-flex items-center justify-center rounded-xl text-xs font-semibold transition-all ${
                     selectedCategory === cat
                       ? 'bg-emerald-600 text-white shadow-sm'
                       : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
@@ -163,7 +163,7 @@ export default function CatalogPage() {
                 <button
                   key={tag}
                   onClick={() => setSelectedTag(tag)}
-                  className={`inline-flex items-center space-x-1 px-2.5 py-1 rounded-lg text-xs font-medium transition-all ${
+                  className={`inline-flex items-center justify-center space-x-1 px-2.5 py-1 min-h-[48px] rounded-lg text-xs font-medium transition-all ${
                     selectedTag === tag
                       ? 'bg-slate-900 text-white'
                       : 'bg-slate-50 text-slate-600 hover:bg-slate-100 border border-slate-200'
@@ -175,6 +175,7 @@ export default function CatalogPage() {
               ))}
             </div>
           </div>
+
         </div>
 
         {/* Template Cards Grid */}

@@ -1,64 +1,39 @@
-# Handoff Report — Victory Audit MVP "ЖЕРЛЕС"
+# Victory Audit Handoff Report — Project zherles_mvp
 
 ## 1. Observation
-- Target project: `/Users/ramil/teamwork_projects/zherles_mvp`
-- `ORIGINAL_REQUEST.md` specifies Benchmark integrity mode with requirements R1-R4 and 5 acceptance criteria.
-- File structure inspected: Next.js App Router (`app/`), components (`components/`), state engine (`context/AppContext.tsx`, `lib/storage.ts`), mock data (`data/seedData.json`), data types (`types/index.ts`), E2E test suite (`e2e/zherles_mvp.spec.ts`).
-- Production build command `npm run build` executed: Built 10 routes with zero errors.
-- Test execution command `npx playwright test` executed: 12 tests passed across Chromium and Mobile Chrome viewports.
-- Timeline audit confirmed sequential milestone development (M1 -> M5) with no pre-populated attestation artifacts.
-- Code forensic audit confirmed:
-  - Real LocalStorage state management (`zherles_app_state_v1`) with window & custom event listeners (`zherles_state_change`).
-  - Real PIN double-redemption blocking logic in `lib/storage.ts` line 65 (`coupon.status === 'REDEEMED'`) returning explicit error and timestamp.
-  - Real Reset Demo rehydration in `lib/storage.ts` line 37 (`resetDemoState`) clearing LocalStorage and restoring seed data.
-  - Zero test bypass shortcuts, hardcoded results, or facade implementations.
+- **Phase 1 (Requirements Verification)**:
+  - **R1 (Interactive Homepage & Map)**: Verified in `app/page.tsx`, `components/InteractiveMap.tsx`, `components/ProductExplanation.tsx`, `components/BusinessPassportModal.tsx`. Home page displays product explanation, live business count badge, Almaty interactive vector map with district bounds (Almaly, Medeu, Bostandyk) and pins that open the business passport modal.
+  - **R2 (B2C Personal Cabinet with Real Database & Auth)**: Verified in `lib/db.ts`, `data/db.json`, `app/api/auth/register/route.ts`, `login/route.ts`, `logout/route.ts`, `me/route.ts`, `app/api/user/cabinet/route.ts`, `app/b2c/cabinet/page.tsx`. Features a file-backed JSON database saving user profiles, session cookies (`zherles_session_token`), hashed passwords, bonus points, loyalty tier calculation ("Сосед-Новичок", "Активный Көрші" 10%, "Почетный Көрші" 15%, "Легенда Района" 20%), active coupons, and transaction log.
+  - **R3 (WhatsApp Bot Integration)**: Verified in `app/api/whatsapp/send/route.ts`, `components/ShareButtons.tsx`, `app/b2c/passport/page.tsx`. API route formats CIS phone numbers (`77XXXXXXXXX`), sends WhatsApp messages via Green API or MOCK mode, with UI modal and `wa.me` deep links.
+  - **R4 (Aesthetic & Psychological Optimization)**: Verified clean lightweight UI, Kazakh "Көрші" branding, Tenge currency (`₸`), live counter social proof, community belonging narrative, and clear tier progression incentives.
+
+- **Phase 2 (Anti-Cheating & Integrity Checks)**:
+  - Verdict: **CLEAN**.
+  - Verified real database persistence in `lib/db.ts` (`data/db.json`), real auth API routes, real bonus redemption anti-fraud system in `app/api/b2c/redeem/route.ts` and `lib/storage.ts`.
+  - No hardcoded test results, facade stubs, or pre-populated fake test files detected.
+
+- **Phase 3 (Independent Build & Test Execution)**:
+  - Command `npm run build`: **PASSED** (17 static and dynamic routes compiled with 0 errors).
+  - Command `npx playwright test`: **FAILED** (67 passed, 3 failed out of 70 test runs across Desktop Chromium and Mobile Chrome).
+  - **Failure 1**: `[chromium] › e2e/m1_challenger_verification.spec.ts:24` — `expect(countBadge).toHaveText('4 мест')` failed. Received `"5 мест"`.
+  - **Failure 2**: `[Mobile Chrome] › e2e/m1_challenger_verification.spec.ts:43` — `firstPin.hover()` timed out (30000ms exceeded) due to pointer interception / lack of hover in mobile viewports.
+  - **Failure 3**: `[Mobile Chrome] › e2e/zherles_mvp.spec.ts:70` — `closeModalBtn.click({ force: true })` failed with `Element is outside of the viewport`.
 
 ## 2. Logic Chain
-- Step 1: Audited timeline and requirements traceability against `ORIGINAL_REQUEST.md`. Every requirement (R1 B2B onboarding, catalog, admin CRUD, dashboard; R2 campaign wizard; R3 B2C district passport, share links, redemption; R4 Next.js/Tailwind/Recharts/LocalStorage/Reset Demo) is 100% covered by genuine source code.
-- Step 2: Conducted anti-cheat and anti-facade forensic code review under Benchmark integrity mode. Verified that `redeemBonus` and `resetDemo` perform true state mutations in LocalStorage and reactively notify components. Verified Playwright tests interact with actual UI controls and assert true state persistence across page reloads.
-- Step 3: Independently executed `npm run build` and `npx playwright test`. Build completed cleanly (10 static routes). Tests passed 12/12, matching the team's claimed test score.
+- Milestone claims stated that 100% of Playwright tests pass (`npx playwright test`).
+- Independent execution of `npx playwright test` produced 3 failing test specs out of 70 executed test cases.
+- According to the Victory Audit Protocol ("The only unforgeable proof of execution is independent execution. Any discrepancy between independent test execution and claimed results requires rejecting victory"), victory cannot be confirmed when canonical test suite execution fails.
 
 ## 3. Caveats
-- No caveats. The project code, build process, test suite, state management, and anti-fraud mechanics were audited directly and independently.
+- The application functionality itself (code logic, database, auth, UI components, API routes) is completely built, clean, and fully operational.
+- The 3 test failures are caused by:
+  1. A hardcoded assertion in `m1_challenger_verification.spec.ts` expecting 4 establishments in Almaly district when the current dataset contains 5.
+  2. Mobile Chrome viewport test interaction issues with hover events on SVG map pins and button scroll positioning in modals.
 
 ## 4. Conclusion
-- All functional and programmatic acceptance criteria are satisfied.
-- Forensic integrity checks passed with zero violations detected.
-- Independent build and test execution verified 100% pass rate (12/12 tests).
-- Verdict: **VICTORY CONFIRMED**.
+- Final Verdict: **VICTORY REJECTED**.
+- Rationale: Independent execution of `npx playwright test` failed 3 test cases. The project team must fix the failing test assertions and mobile viewport interactions so `npx playwright test` passes 100%.
 
 ## 5. Verification Method
-- Execute `npm run build` in `/Users/ramil/teamwork_projects/zherles_mvp`.
-- Execute `npx playwright test` in `/Users/ramil/teamwork_projects/zherles_mvp`.
-
----
-
-=== VICTORY AUDIT REPORT ===
-
-VERDICT: VICTORY CONFIRMED
-
-PHASE A — TIMELINE & REQUIREMENTS TRACEABILITY:
-  Result: PASS
-  Anomalies: none
-  Traceability:
-    - R1 B2B Module (Onboarding, Catalog, Dashboard & Admin CRUD): PASS
-    - R2 Campaign Creation ("Көрші-маршрут" 3-step wizard & QR): PASS
-    - R3 B2C Module (Mobile District Passport, Share links, 4-digit PIN bonus redemption): PASS
-    - R4 Architecture & Data (Next.js, TypeScript, Tailwind, Recharts, LocalStorage state engine, Reset Demo): PASS
-
-PHASE B — INTEGRITY CHECK:
-  Result: PASS
-  Details:
-    - Hardcoded test results / bypasses: NONE (0 detected)
-    - Facade implementations: NONE (0 detected)
-    - Genuine LocalStorage state management: VERIFIED (`lib/storage.ts` & `context/AppContext.tsx`)
-    - Real PIN double-redemption blocking logic: VERIFIED (`redeemBonus` in `lib/storage.ts` line 65)
-    - Real Reset Demo state rehydration: VERIFIED (`resetDemoState` in `lib/storage.ts` line 37)
-
-PHASE C — INDEPENDENT TEST EXECUTION:
-  Test command: `npm run build` and `npx playwright test`
-  Your results:
-    - Build: SUCCESS (10 routes compiled statically)
-    - Playwright E2E Tests: 12 passed (12.5s)
-  Claimed results: 12/12 passed
-  Match: YES (0 discrepancies)
+- Run `npm run build` to verify clean build compilation.
+- Run `npx playwright test` to inspect test results and confirm that all 70 test scenarios pass without failure.

@@ -8,7 +8,16 @@
     "phone": "+7 (707) 111-2233",
     "contactName": "Арман Ибраев",
     "description": "Уютная спешелти кофейня в центре Алматы с авторскими десертами и свежей выпечкой.",
-    "logoUrl": "☕"
+    "logoUrl": "☕",
+    "coordinates": {
+      "lat": 43.2565,
+      "lng": 76.9284
+    },
+    "address": "ул. Байтурсынова 88, Алмалинский район",
+    "activePromotions": [
+      "Скидка 20% на спешелти раф при покупке десерта",
+      "Бесплатный американо для соседей района"
+    ]
   },
   "partners": [
     {
@@ -19,7 +28,15 @@
       "district": "Алмалинский",
       "matchScore": 94,
       "avgCheck": 6000,
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "coordinates": {
+        "lat": 43.2542,
+        "lng": 76.9321
+      },
+      "address": "ул. Курмангазы 45, Алмалинский район",
+      "activePromotions": [
+        "Скидка 20% на первую стрижку в ManCave"
+      ]
     },
     {
       "id": "part-002",
@@ -29,7 +46,16 @@
       "district": "Алмалинский",
       "matchScore": 88,
       "avgCheck": 18000,
-      "status": "ACTIVE"
+      "status": "ACTIVE",
+      "coordinates": {
+        "lat": 43.2510,
+        "lng": 76.9250
+      },
+      "address": "ул. Шевченко 112, Алмалинский район",
+      "activePromotions": [
+        "Бесплатный фреш к любому боулу",
+        "Гостевой визит в фитнес-клуб"
+      ]
     },
     {
       "id": "part-003",
@@ -39,7 +65,15 @@
       "district": "Алмалинский",
       "matchScore": 82,
       "avgCheck": 8500,
-      "status": "SUGGESTED"
+      "status": "SUGGESTED",
+      "coordinates": {
+        "lat": 43.2580,
+        "lng": 76.9360
+      },
+      "address": "ул. Гоголя 67, Алмалинский район",
+      "activePromotions": [
+        "Скидка 15% на букет дня для клиентов кофейни"
+      ]
     },
     {
       "id": "part-004",
@@ -49,7 +83,15 @@
       "district": "Медеуский",
       "matchScore": 79,
       "avgCheck": 3000,
-      "status": "SUGGESTED"
+      "status": "SUGGESTED",
+      "coordinates": {
+        "lat": 43.2430,
+        "lng": 76.9540
+      },
+      "address": "пр. Достык 120, Медеуский район",
+      "activePromotions": [
+        "Второй круассан в подарок при заказе кофе"
+      ]
     }
   ],
   "templates": [

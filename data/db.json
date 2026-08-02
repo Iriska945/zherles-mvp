@@ -1,0 +1,912 @@
+{
+  "users": [
+    {
+      "id": "usr_1785652200223_tp8lx6",
+      "phone": "+7 (701) 3234986",
+      "name": "Арман Батыр",
+      "passwordHash": "UGFzczEyMzQ1",
+      "tier": "Сосед-Новичок",
+      "bonusBalance": 200,
+      "discountRate": 5,
+      "visitsCount": 0,
+      "createdAt": "2026-08-02T06:30:00.223Z",
+      "updatedAt": "2026-08-02T06:30:00.223Z"
+    },
+    {
+      "id": "usr_1785652200632_yhwcv8",
+      "phone": "+7 (702) 7123479",
+      "name": "Динара К.",
+      "passwordHash": "UGFzczEyMzQ1",
+      "tier": "Сосед-Новичок",
+      "bonusBalance": 200,
+      "discountRate": 5,
+      "visitsCount": 0,
+      "createdAt": "2026-08-02T06:30:00.632Z",
+      "updatedAt": "2026-08-02T06:30:00.632Z"
+    },
+    {
+      "id": "usr_1785652200981_1dvysd",
+      "phone": "+7 (703) 3639612",
+      "name": "Ерлан Т.",
+      "passwordHash": "UGFzczEyMzQ1",
+      "tier": "Активный Көрші",
+      "bonusBalance": 700,
+      "discountRate": 10,
+      "visitsCount": 1,
+      "createdAt": "2026-08-02T06:30:00.981Z",
+      "updatedAt": "2026-08-02T06:30:01.083Z"
+    },
+    {
+      "id": "usr_1785652201397_flg9kc",
+      "phone": "+7 (704) 6403080",
+      "name": "Айгерим С.",
+      "passwordHash": "UGFzczEyMzQ1",
+      "tier": "Сосед-Новичок",
+      "bonusBalance": 200,
+      "discountRate": 5,
+      "visitsCount": 0,
+      "createdAt": "2026-08-02T06:30:01.397Z",
+      "updatedAt": "2026-08-02T06:30:01.397Z"
+    },
+    {
+      "id": "usr_1785652214679_3hp6v0",
+      "phone": "+7 (701) 1132155",
+      "name": "Арман Батыр",
+      "passwordHash": "UGFzczEyMzQ1",
+      "tier": "Сосед-Новичок",
+      "bonusBalance": 200,
+      "discountRate": 5,
+      "visitsCount": 0,
+      "createdAt": "2026-08-02T06:30:14.679Z",
+      "updatedAt": "2026-08-02T06:30:14.679Z"
+    },
+    {
+      "id": "usr_1785652214912_ylvjva",
+      "phone": "+7 (702) 1662674",
+      "name": "Динара К.",
+      "passwordHash": "UGFzczEyMzQ1",
+      "tier": "Сосед-Новичок",
+      "bonusBalance": 200,
+      "discountRate": 5,
+      "visitsCount": 0,
+      "createdAt": "2026-08-02T06:30:14.912Z",
+      "updatedAt": "2026-08-02T06:30:14.912Z"
+    },
+    {
+      "id": "usr_1785652215149_cuq893",
+      "phone": "+7 (703) 1890088",
+      "name": "Ерлан Т.",
+      "passwordHash": "UGFzczEyMzQ1",
+      "tier": "Активный Көрші",
+      "bonusBalance": 700,
+      "discountRate": 10,
+      "visitsCount": 1,
+      "createdAt": "2026-08-02T06:30:15.149Z",
+      "updatedAt": "2026-08-02T06:30:15.228Z"
+    },
+    {
+      "id": "usr_1785652215445_fs6e1n",
+      "phone": "+7 (704) 8417102",
+      "name": "Айгерим С.",
+      "passwordHash": "UGFzczEyMzQ1",
+      "tier": "Сосед-Новичок",
+      "bonusBalance": 200,
+      "discountRate": 5,
+      "visitsCount": 0,
+      "createdAt": "2026-08-02T06:30:15.445Z",
+      "updatedAt": "2026-08-02T06:30:15.445Z"
+    },
+    {
+      "id": "usr_1785661773952_i4hvmo",
+      "phone": "+7 (701) 8717655",
+      "name": "Арман Батыр",
+      "passwordHash": "UGFzczEyMzQ1",
+      "tier": "Сосед-Новичок",
+      "bonusBalance": 200,
+      "discountRate": 5,
+      "visitsCount": 0,
+      "createdAt": "2026-08-02T09:09:33.952Z",
+      "updatedAt": "2026-08-02T09:09:33.952Z"
+    },
+    {
+      "id": "usr_1785661774182_j9jr0m",
+      "phone": "+7 (702) 6541409",
+      "name": "Динара К.",
+      "passwordHash": "UGFzczEyMzQ1",
+      "tier": "Сосед-Новичок",
+      "bonusBalance": 200,
+      "discountRate": 5,
+      "visitsCount": 0,
+      "createdAt": "2026-08-02T09:09:34.182Z",
+      "updatedAt": "2026-08-02T09:09:34.182Z"
+    },
+    {
+      "id": "usr_1785661774416_lvunvv",
+      "phone": "+7 (703) 6513340",
+      "name": "Ерлан Т.",
+      "passwordHash": "UGFzczEyMzQ1",
+      "tier": "Активный Көрші",
+      "bonusBalance": 700,
+      "discountRate": 10,
+      "visitsCount": 1,
+      "createdAt": "2026-08-02T09:09:34.416Z",
+      "updatedAt": "2026-08-02T09:09:34.502Z"
+    },
+    {
+      "id": "usr_1785661774748_7tr55e",
+      "phone": "+7 (704) 1843545",
+      "name": "Айгерим С.",
+      "passwordHash": "UGFzczEyMzQ1",
+      "tier": "Сосед-Новичок",
+      "bonusBalance": 200,
+      "discountRate": 5,
+      "visitsCount": 0,
+      "createdAt": "2026-08-02T09:09:34.748Z",
+      "updatedAt": "2026-08-02T09:09:34.748Z"
+    },
+    {
+      "id": "usr_1785661785866_uy0zuw",
+      "phone": "+7 (701) 2078844",
+      "name": "Арман Батыр",
+      "passwordHash": "UGFzczEyMzQ1",
+      "tier": "Сосед-Новичок",
+      "bonusBalance": 200,
+      "discountRate": 5,
+      "visitsCount": 0,
+      "createdAt": "2026-08-02T09:09:45.866Z",
+      "updatedAt": "2026-08-02T09:09:45.866Z"
+    },
+    {
+      "id": "usr_1785661786082_rk3vmz",
+      "phone": "+7 (702) 5075653",
+      "name": "Динара К.",
+      "passwordHash": "UGFzczEyMzQ1",
+      "tier": "Сосед-Новичок",
+      "bonusBalance": 200,
+      "discountRate": 5,
+      "visitsCount": 0,
+      "createdAt": "2026-08-02T09:09:46.082Z",
+      "updatedAt": "2026-08-02T09:09:46.082Z"
+    },
+    {
+      "id": "usr_1785661786333_fig7xg",
+      "phone": "+7 (703) 6085555",
+      "name": "Ерлан Т.",
+      "passwordHash": "UGFzczEyMzQ1",
+      "tier": "Активный Көрші",
+      "bonusBalance": 700,
+      "discountRate": 10,
+      "visitsCount": 1,
+      "createdAt": "2026-08-02T09:09:46.333Z",
+      "updatedAt": "2026-08-02T09:09:46.419Z"
+    },
+    {
+      "id": "usr_1785661786700_ue3yrn",
+      "phone": "+7 (704) 7642560",
+      "name": "Айгерим С.",
+      "passwordHash": "UGFzczEyMzQ1",
+      "tier": "Сосед-Новичок",
+      "bonusBalance": 200,
+      "discountRate": 5,
+      "visitsCount": 0,
+      "createdAt": "2026-08-02T09:09:46.700Z",
+      "updatedAt": "2026-08-02T09:09:46.700Z"
+    },
+    {
+      "id": "usr_1785661842804_ckeloe",
+      "phone": "+7 (701) 4110939",
+      "name": "Арман Батыр",
+      "passwordHash": "UGFzczEyMzQ1",
+      "tier": "Сосед-Новичок",
+      "bonusBalance": 200,
+      "discountRate": 5,
+      "visitsCount": 0,
+      "createdAt": "2026-08-02T09:10:42.804Z",
+      "updatedAt": "2026-08-02T09:10:42.804Z"
+    },
+    {
+      "id": "usr_1785661843119_r2x007",
+      "phone": "+7 (702) 8108266",
+      "name": "Динара К.",
+      "passwordHash": "UGFzczEyMzQ1",
+      "tier": "Сосед-Новичок",
+      "bonusBalance": 200,
+      "discountRate": 5,
+      "visitsCount": 0,
+      "createdAt": "2026-08-02T09:10:43.119Z",
+      "updatedAt": "2026-08-02T09:10:43.119Z"
+    },
+    {
+      "id": "usr_1785661843367_b6x94e",
+      "phone": "+7 (703) 7186203",
+      "name": "Ерлан Т.",
+      "passwordHash": "UGFzczEyMzQ1",
+      "tier": "Активный Көрші",
+      "bonusBalance": 700,
+      "discountRate": 10,
+      "visitsCount": 1,
+      "createdAt": "2026-08-02T09:10:43.367Z",
+      "updatedAt": "2026-08-02T09:10:43.455Z"
+    },
+    {
+      "id": "usr_1785661843717_wm11be",
+      "phone": "+7 (704) 1368250",
+      "name": "Айгерим С.",
+      "passwordHash": "UGFzczEyMzQ1",
+      "tier": "Сосед-Новичок",
+      "bonusBalance": 200,
+      "discountRate": 5,
+      "visitsCount": 0,
+      "createdAt": "2026-08-02T09:10:43.717Z",
+      "updatedAt": "2026-08-02T09:10:43.717Z"
+    },
+    {
+      "id": "usr_1785661854266_a4qtgd",
+      "phone": "+7 (701) 4914888",
+      "name": "Арман Батыр",
+      "passwordHash": "UGFzczEyMzQ1",
+      "tier": "Сосед-Новичок",
+      "bonusBalance": 200,
+      "discountRate": 5,
+      "visitsCount": 0,
+      "createdAt": "2026-08-02T09:10:54.266Z",
+      "updatedAt": "2026-08-02T09:10:54.266Z"
+    },
+    {
+      "id": "usr_1785661854500_yar04s",
+      "phone": "+7 (702) 4535058",
+      "name": "Динара К.",
+      "passwordHash": "UGFzczEyMzQ1",
+      "tier": "Сосед-Новичок",
+      "bonusBalance": 200,
+      "discountRate": 5,
+      "visitsCount": 0,
+      "createdAt": "2026-08-02T09:10:54.500Z",
+      "updatedAt": "2026-08-02T09:10:54.500Z"
+    },
+    {
+      "id": "usr_1785661854733_ltv05b",
+      "phone": "+7 (703) 6240166",
+      "name": "Ерлан Т.",
+      "passwordHash": "UGFzczEyMzQ1",
+      "tier": "Активный Көрші",
+      "bonusBalance": 700,
+      "discountRate": 10,
+      "visitsCount": 1,
+      "createdAt": "2026-08-02T09:10:54.733Z",
+      "updatedAt": "2026-08-02T09:10:54.816Z"
+    },
+    {
+      "id": "usr_1785661855050_51m7x5",
+      "phone": "+7 (704) 4920939",
+      "name": "Айгерим С.",
+      "passwordHash": "UGFzczEyMzQ1",
+      "tier": "Сосед-Новичок",
+      "bonusBalance": 200,
+      "discountRate": 5,
+      "visitsCount": 0,
+      "createdAt": "2026-08-02T09:10:55.050Z",
+      "updatedAt": "2026-08-02T09:10:55.050Z"
+    }
+  ],
+  "sessions": [
+    {
+      "id": "s_1785652200224",
+      "userId": "usr_1785652200223_tp8lx6",
+      "token": "sess_1785652200224_4y4gtlkekm",
+      "expiresAt": "2026-09-01T06:30:00.224Z",
+      "createdAt": "2026-08-02T06:30:00.223Z"
+    },
+    {
+      "id": "s_1785652200632",
+      "userId": "usr_1785652200632_yhwcv8",
+      "token": "sess_1785652200632_vfz9ymo0io",
+      "expiresAt": "2026-09-01T06:30:00.632Z",
+      "createdAt": "2026-08-02T06:30:00.632Z"
+    },
+    {
+      "id": "s_1785652200981",
+      "userId": "usr_1785652200981_1dvysd",
+      "token": "sess_1785652200981_4rnlnuaso9",
+      "expiresAt": "2026-09-01T06:30:00.981Z",
+      "createdAt": "2026-08-02T06:30:00.981Z"
+    },
+    {
+      "id": "s_1785652214679",
+      "userId": "usr_1785652214679_3hp6v0",
+      "token": "sess_1785652214679_b6xnt5orck",
+      "expiresAt": "2026-09-01T06:30:14.679Z",
+      "createdAt": "2026-08-02T06:30:14.679Z"
+    },
+    {
+      "id": "s_1785652214912",
+      "userId": "usr_1785652214912_ylvjva",
+      "token": "sess_1785652214912_9xucp8htj9",
+      "expiresAt": "2026-09-01T06:30:14.912Z",
+      "createdAt": "2026-08-02T06:30:14.912Z"
+    },
+    {
+      "id": "s_1785652215149",
+      "userId": "usr_1785652215149_cuq893",
+      "token": "sess_1785652215149_s558rwe1n9",
+      "expiresAt": "2026-09-01T06:30:15.149Z",
+      "createdAt": "2026-08-02T06:30:15.149Z"
+    },
+    {
+      "id": "s_1785661773952",
+      "userId": "usr_1785661773952_i4hvmo",
+      "token": "sess_1785661773952_55wz7pox2l",
+      "expiresAt": "2026-09-01T09:09:33.952Z",
+      "createdAt": "2026-08-02T09:09:33.952Z"
+    },
+    {
+      "id": "s_1785661774182",
+      "userId": "usr_1785661774182_j9jr0m",
+      "token": "sess_1785661774182_5xs9br1991",
+      "expiresAt": "2026-09-01T09:09:34.182Z",
+      "createdAt": "2026-08-02T09:09:34.182Z"
+    },
+    {
+      "id": "s_1785661774416",
+      "userId": "usr_1785661774416_lvunvv",
+      "token": "sess_1785661774416_f7ivqru7g5",
+      "expiresAt": "2026-09-01T09:09:34.416Z",
+      "createdAt": "2026-08-02T09:09:34.416Z"
+    },
+    {
+      "id": "s_1785661785866",
+      "userId": "usr_1785661785866_uy0zuw",
+      "token": "sess_1785661785866_qptlpd4xq8",
+      "expiresAt": "2026-09-01T09:09:45.866Z",
+      "createdAt": "2026-08-02T09:09:45.866Z"
+    },
+    {
+      "id": "s_1785661786082",
+      "userId": "usr_1785661786082_rk3vmz",
+      "token": "sess_1785661786082_fcwzgczhac",
+      "expiresAt": "2026-09-01T09:09:46.082Z",
+      "createdAt": "2026-08-02T09:09:46.082Z"
+    },
+    {
+      "id": "s_1785661786333",
+      "userId": "usr_1785661786333_fig7xg",
+      "token": "sess_1785661786333_wipvocmn7t",
+      "expiresAt": "2026-09-01T09:09:46.333Z",
+      "createdAt": "2026-08-02T09:09:46.333Z"
+    },
+    {
+      "id": "s_1785661842804",
+      "userId": "usr_1785661842804_ckeloe",
+      "token": "sess_1785661842804_ndu9eqr301",
+      "expiresAt": "2026-09-01T09:10:42.804Z",
+      "createdAt": "2026-08-02T09:10:42.804Z"
+    },
+    {
+      "id": "s_1785661843119",
+      "userId": "usr_1785661843119_r2x007",
+      "token": "sess_1785661843119_0cwzn1090r",
+      "expiresAt": "2026-09-01T09:10:43.119Z",
+      "createdAt": "2026-08-02T09:10:43.119Z"
+    },
+    {
+      "id": "s_1785661843367",
+      "userId": "usr_1785661843367_b6x94e",
+      "token": "sess_1785661843367_igbyvb03h9",
+      "expiresAt": "2026-09-01T09:10:43.367Z",
+      "createdAt": "2026-08-02T09:10:43.367Z"
+    },
+    {
+      "id": "s_1785661854266",
+      "userId": "usr_1785661854266_a4qtgd",
+      "token": "sess_1785661854266_x58dnlx6ir",
+      "expiresAt": "2026-09-01T09:10:54.266Z",
+      "createdAt": "2026-08-02T09:10:54.266Z"
+    },
+    {
+      "id": "s_1785661854500",
+      "userId": "usr_1785661854500_yar04s",
+      "token": "sess_1785661854500_lft4iv4oqn",
+      "expiresAt": "2026-09-01T09:10:54.500Z",
+      "createdAt": "2026-08-02T09:10:54.500Z"
+    },
+    {
+      "id": "s_1785661854733",
+      "userId": "usr_1785661854733_ltv05b",
+      "token": "sess_1785661854733_ofi4vc2re8",
+      "expiresAt": "2026-09-01T09:10:54.733Z",
+      "createdAt": "2026-08-02T09:10:54.733Z"
+    }
+  ],
+  "bonusTransactions": [
+    {
+      "id": "tx_1785652200224_pbn7j3",
+      "userId": "usr_1785652200223_tp8lx6",
+      "type": "WELCOME",
+      "amount": 200,
+      "description": "Приветственный бонус Көрші",
+      "createdAt": "2026-08-02T06:30:00.223Z"
+    },
+    {
+      "id": "tx_1785652200632_pwepgd",
+      "userId": "usr_1785652200632_yhwcv8",
+      "type": "WELCOME",
+      "amount": 200,
+      "description": "Приветственный бонус Көрші",
+      "createdAt": "2026-08-02T06:30:00.632Z"
+    },
+    {
+      "id": "tx_1785652200981_l2509e",
+      "userId": "usr_1785652200981_1dvysd",
+      "type": "WELCOME",
+      "amount": 200,
+      "description": "Приветственный бонус Көрші",
+      "createdAt": "2026-08-02T06:30:00.981Z"
+    },
+    {
+      "id": "tx_1785652201083_kmrgzt",
+      "userId": "usr_1785652200981_1dvysd",
+      "type": "EARNED",
+      "amount": 500,
+      "description": "Гашение купона: Бесплатный фреш к боулу (Urban Coffee)",
+      "createdAt": "2026-08-02T06:30:01.083Z",
+      "relatedCouponId": "coup-003"
+    },
+    {
+      "id": "tx_1785652201397_xw5fyp",
+      "userId": "usr_1785652201397_flg9kc",
+      "type": "WELCOME",
+      "amount": 200,
+      "description": "Приветственный бонус Көрші",
+      "createdAt": "2026-08-02T06:30:01.397Z"
+    },
+    {
+      "id": "tx_1785652214679_g6i3ys",
+      "userId": "usr_1785652214679_3hp6v0",
+      "type": "WELCOME",
+      "amount": 200,
+      "description": "Приветственный бонус Көрші",
+      "createdAt": "2026-08-02T06:30:14.679Z"
+    },
+    {
+      "id": "tx_1785652214912_li7aum",
+      "userId": "usr_1785652214912_ylvjva",
+      "type": "WELCOME",
+      "amount": 200,
+      "description": "Приветственный бонус Көрші",
+      "createdAt": "2026-08-02T06:30:14.912Z"
+    },
+    {
+      "id": "tx_1785652215149_pet6z7",
+      "userId": "usr_1785652215149_cuq893",
+      "type": "WELCOME",
+      "amount": 200,
+      "description": "Приветственный бонус Көрші",
+      "createdAt": "2026-08-02T06:30:15.149Z"
+    },
+    {
+      "id": "tx_1785652215228_xo01qz",
+      "userId": "usr_1785652215149_cuq893",
+      "type": "EARNED",
+      "amount": 500,
+      "description": "Гашение купона: Бесплатный фреш к боулу (Urban Coffee)",
+      "createdAt": "2026-08-02T06:30:15.228Z",
+      "relatedCouponId": "coup-003"
+    },
+    {
+      "id": "tx_1785652215445_gfovml",
+      "userId": "usr_1785652215445_fs6e1n",
+      "type": "WELCOME",
+      "amount": 200,
+      "description": "Приветственный бонус Көрші",
+      "createdAt": "2026-08-02T06:30:15.445Z"
+    },
+    {
+      "id": "tx_1785661773952_vz2jac",
+      "userId": "usr_1785661773952_i4hvmo",
+      "type": "WELCOME",
+      "amount": 200,
+      "description": "Приветственный бонус Көрші",
+      "createdAt": "2026-08-02T09:09:33.952Z"
+    },
+    {
+      "id": "tx_1785661774182_isz8fw",
+      "userId": "usr_1785661774182_j9jr0m",
+      "type": "WELCOME",
+      "amount": 200,
+      "description": "Приветственный бонус Көрші",
+      "createdAt": "2026-08-02T09:09:34.182Z"
+    },
+    {
+      "id": "tx_1785661774416_z2eowg",
+      "userId": "usr_1785661774416_lvunvv",
+      "type": "WELCOME",
+      "amount": 200,
+      "description": "Приветственный бонус Көрші",
+      "createdAt": "2026-08-02T09:09:34.416Z"
+    },
+    {
+      "id": "tx_1785661774502_ct1m60",
+      "userId": "usr_1785661774416_lvunvv",
+      "type": "EARNED",
+      "amount": 500,
+      "description": "Гашение купона: Бесплатный фреш к боулу (Urban Coffee)",
+      "createdAt": "2026-08-02T09:09:34.502Z",
+      "relatedCouponId": "coup-003"
+    },
+    {
+      "id": "tx_1785661774748_fd5vxi",
+      "userId": "usr_1785661774748_7tr55e",
+      "type": "WELCOME",
+      "amount": 200,
+      "description": "Приветственный бонус Көрші",
+      "createdAt": "2026-08-02T09:09:34.748Z"
+    },
+    {
+      "id": "tx_1785661785866_jc80vg",
+      "userId": "usr_1785661785866_uy0zuw",
+      "type": "WELCOME",
+      "amount": 200,
+      "description": "Приветственный бонус Көрші",
+      "createdAt": "2026-08-02T09:09:45.866Z"
+    },
+    {
+      "id": "tx_1785661786082_lpdmwc",
+      "userId": "usr_1785661786082_rk3vmz",
+      "type": "WELCOME",
+      "amount": 200,
+      "description": "Приветственный бонус Көрші",
+      "createdAt": "2026-08-02T09:09:46.082Z"
+    },
+    {
+      "id": "tx_1785661786333_jvo9jz",
+      "userId": "usr_1785661786333_fig7xg",
+      "type": "WELCOME",
+      "amount": 200,
+      "description": "Приветственный бонус Көрші",
+      "createdAt": "2026-08-02T09:09:46.333Z"
+    },
+    {
+      "id": "tx_1785661786419_wg4vzl",
+      "userId": "usr_1785661786333_fig7xg",
+      "type": "EARNED",
+      "amount": 500,
+      "description": "Гашение купона: Бесплатный фреш к боулу (Urban Coffee)",
+      "createdAt": "2026-08-02T09:09:46.419Z",
+      "relatedCouponId": "coup-003"
+    },
+    {
+      "id": "tx_1785661786700_l4puhj",
+      "userId": "usr_1785661786700_ue3yrn",
+      "type": "WELCOME",
+      "amount": 200,
+      "description": "Приветственный бонус Көрші",
+      "createdAt": "2026-08-02T09:09:46.700Z"
+    },
+    {
+      "id": "tx_1785661842804_ns23cx",
+      "userId": "usr_1785661842804_ckeloe",
+      "type": "WELCOME",
+      "amount": 200,
+      "description": "Приветственный бонус Көрші",
+      "createdAt": "2026-08-02T09:10:42.804Z"
+    },
+    {
+      "id": "tx_1785661843119_1z8ovz",
+      "userId": "usr_1785661843119_r2x007",
+      "type": "WELCOME",
+      "amount": 200,
+      "description": "Приветственный бонус Көрші",
+      "createdAt": "2026-08-02T09:10:43.119Z"
+    },
+    {
+      "id": "tx_1785661843367_7nohnh",
+      "userId": "usr_1785661843367_b6x94e",
+      "type": "WELCOME",
+      "amount": 200,
+      "description": "Приветственный бонус Көрші",
+      "createdAt": "2026-08-02T09:10:43.367Z"
+    },
+    {
+      "id": "tx_1785661843455_q4fhmw",
+      "userId": "usr_1785661843367_b6x94e",
+      "type": "EARNED",
+      "amount": 500,
+      "description": "Гашение купона: Бесплатный фреш к боулу (Urban Coffee)",
+      "createdAt": "2026-08-02T09:10:43.455Z",
+      "relatedCouponId": "coup-003"
+    },
+    {
+      "id": "tx_1785661843717_86v1eb",
+      "userId": "usr_1785661843717_wm11be",
+      "type": "WELCOME",
+      "amount": 200,
+      "description": "Приветственный бонус Көрші",
+      "createdAt": "2026-08-02T09:10:43.717Z"
+    },
+    {
+      "id": "tx_1785661854266_znkvt1",
+      "userId": "usr_1785661854266_a4qtgd",
+      "type": "WELCOME",
+      "amount": 200,
+      "description": "Приветственный бонус Көрші",
+      "createdAt": "2026-08-02T09:10:54.266Z"
+    },
+    {
+      "id": "tx_1785661854500_u31s2p",
+      "userId": "usr_1785661854500_yar04s",
+      "type": "WELCOME",
+      "amount": 200,
+      "description": "Приветственный бонус Көрші",
+      "createdAt": "2026-08-02T09:10:54.500Z"
+    },
+    {
+      "id": "tx_1785661854733_esw23r",
+      "userId": "usr_1785661854733_ltv05b",
+      "type": "WELCOME",
+      "amount": 200,
+      "description": "Приветственный бонус Көрші",
+      "createdAt": "2026-08-02T09:10:54.733Z"
+    },
+    {
+      "id": "tx_1785661854816_cwgxob",
+      "userId": "usr_1785661854733_ltv05b",
+      "type": "EARNED",
+      "amount": 500,
+      "description": "Гашение купона: Бесплатный фреш к боулу (Urban Coffee)",
+      "createdAt": "2026-08-02T09:10:54.816Z",
+      "relatedCouponId": "coup-003"
+    },
+    {
+      "id": "tx_1785661855050_t55czg",
+      "userId": "usr_1785661855050_51m7x5",
+      "type": "WELCOME",
+      "amount": 200,
+      "description": "Приветственный бонус Көрші",
+      "createdAt": "2026-08-02T09:10:55.050Z"
+    }
+  ],
+  "coupons": [
+    {
+      "id": "coup-001",
+      "campaignId": "cmp-001",
+      "pinCode": "1234",
+      "rewardText": "Скидка 20% на стрижку в ManCave",
+      "partnerName": "Барбершоп \"ManCave\"",
+      "customerPhone": "+7 (777) 333-4455",
+      "status": "ACTIVE"
+    },
+    {
+      "id": "coup-002",
+      "campaignId": "cmp-001",
+      "pinCode": "5678",
+      "rewardText": "Бесплатный американо в Urban Coffee",
+      "partnerName": "Urban Coffee",
+      "customerPhone": "+7 (701) 999-0011",
+      "status": "REDEEMED",
+      "redeemedAt": "2026-07-29T18:10:00Z",
+      "redeemedByStaff": "Кассир Алия"
+    },
+    {
+      "id": "coup-003",
+      "campaignId": "cmp-002",
+      "pinCode": "7890",
+      "rewardText": "Бесплатный фреш к боулу",
+      "partnerName": "Urban Coffee",
+      "customerPhone": "+7 (701) 555-8822",
+      "status": "ACTIVE"
+    }
+  ],
+  "campaigns": [
+    {
+      "id": "cmp-001",
+      "title": "Көрші-Маршрут: Кофе & Стрижка",
+      "sourceBusinessId": "biz-001",
+      "targetPartnerIds": [
+        "part-001"
+      ],
+      "rewardText": "Скидка 20% на первую стрижку в ManCave при чеке от 2000 ₸ в Urban Coffee",
+      "minSpend": 2000,
+      "durationDays": 30,
+      "expireDate": "2026-08-30",
+      "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://zherles.kz/b2c/passport?pin=1234",
+      "shareMessage": "Привет! Держи мой Паспорт Алмалинского района со скидкой 20% на стрижку в ManCave!",
+      "status": "ACTIVE",
+      "createdAt": "2026-07-28T10:00:00Z"
+    },
+    {
+      "id": "cmp-002",
+      "title": "Көрші-Маршрут: Фитнес & Завтрак",
+      "sourceBusinessId": "biz-001",
+      "targetPartnerIds": [
+        "part-002"
+      ],
+      "rewardText": "Бесплатный фреш к любому боулу при предъявлении клубной карты FitLife",
+      "minSpend": 2500,
+      "durationDays": 15,
+      "expireDate": "2026-08-15",
+      "qrCodeUrl": "https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://zherles.kz/b2c/passport?pin=7890",
+      "shareMessage": "Лови подарок от FitLife и Urban Coffee — бесплатный фреш!",
+      "status": "ACTIVE",
+      "createdAt": "2026-07-29T14:30:00Z"
+    }
+  ],
+  "partners": [
+    {
+      "id": "part-001",
+      "businessId": "biz-002",
+      "name": "Барбершоп \"ManCave\"",
+      "category": "Барбершоп & Мужской уход",
+      "district": "Алмалинский",
+      "matchScore": 94,
+      "avgCheck": 6000,
+      "status": "ACTIVE",
+      "coordinates": {
+        "lat": 43.2542,
+        "lng": 76.9321
+      },
+      "address": "ул. Курмангазы 45, Алмалинский район",
+      "activePromotions": [
+        "Скидка 20% на первую стрижку в ManCave"
+      ]
+    },
+    {
+      "id": "part-002",
+      "businessId": "biz-003",
+      "name": "Фитнес-клуб \"FitLife\"",
+      "category": "Спорт & Фитнес",
+      "district": "Алмалинский",
+      "matchScore": 88,
+      "avgCheck": 18000,
+      "status": "ACTIVE",
+      "coordinates": {
+        "lat": 43.251,
+        "lng": 76.925
+      },
+      "address": "ул. Шевченко 112, Алмалинский район",
+      "activePromotions": [
+        "Бесплатный фреш к любому боулу",
+        "Гостевой визит в фитнес-клуб"
+      ]
+    },
+    {
+      "id": "part-003",
+      "businessId": "biz-004",
+      "name": "Цветочная студия \"Flora\"",
+      "category": "Цветы & Подарки",
+      "district": "Алмалинский",
+      "matchScore": 82,
+      "avgCheck": 8500,
+      "status": "SUGGESTED",
+      "coordinates": {
+        "lat": 43.258,
+        "lng": 76.936
+      },
+      "address": "ул. Гоголя 67, Алмалинский район",
+      "activePromotions": [
+        "Скидка 15% на букет дня для клиентов кофейни"
+      ]
+    },
+    {
+      "id": "part-004",
+      "businessId": "biz-005",
+      "name": "Пекарня \"Croissant Co\"",
+      "category": "Выпечка & Десерты",
+      "district": "Медеуский",
+      "matchScore": 79,
+      "avgCheck": 3000,
+      "status": "SUGGESTED",
+      "coordinates": {
+        "lat": 43.243,
+        "lng": 76.954
+      },
+      "address": "пр. Достык 120, Медеуский район",
+      "activePromotions": [
+        "Второй круассан в подарок при заказе кофе"
+      ]
+    }
+  ],
+  "businesses": [
+    {
+      "id": "biz-001",
+      "name": "Urban Coffee",
+      "category": "Кофейня & Пекарня",
+      "district": "Алмалинский",
+      "avgCheck": 2500,
+      "phone": "+7 (707) 111-2233",
+      "contactName": "Арман Ибраев",
+      "description": "Уютная спешелти кофейня в центре Алматы с авторскими десертами и свежей выпечкой.",
+      "logoUrl": "☕",
+      "coordinates": {
+        "lat": 43.2565,
+        "lng": 76.9284
+      },
+      "address": "ул. Байтурсынова 88, Алмалинский район",
+      "activePromotions": [
+        "Скидка 20% на спешелти раф при покупке десерта",
+        "Бесплатный американо для соседей района"
+      ]
+    }
+  ],
+  "templates": [
+    {
+      "id": "tmpl-001",
+      "title": "Утренний кофе + Скидка на стрижку",
+      "category": "Кросс-промо",
+      "description": "Клиент кофейни получает скидку 20% в барбершопе, а клиент барбершопа — бесплатный напиток.",
+      "recommendedFor": "Кофейни, Барбершопы",
+      "defaultReward": "Скидка 20% + Бесплатный кофе",
+      "expectedReach": "500+ клиентов/мес",
+      "expectedRoi": "+35% повторных визитов",
+      "tags": [
+        "Кофе",
+        "Стрижка",
+        "Район"
+      ]
+    },
+    {
+      "id": "tmpl-002",
+      "title": "ЗОЖ-маршрут: Фитнес + Полезный завтрак",
+      "category": "Здоровье",
+      "description": "После тренировки клиент получат 15% скидку на протеиновые боулы и смузи в вашей кофейне.",
+      "recommendedFor": "Фитнес-клубы, ЗОЖ-кафе",
+      "defaultReward": "Скидка 15% на боулы",
+      "expectedReach": "350+ клиентов/мес",
+      "expectedRoi": "+25% чека",
+      "tags": [
+        "ЗОЖ",
+        "Фитнес",
+        "Смузи"
+      ]
+    },
+    {
+      "id": "tmpl-003",
+      "title": "Романтический вечер: Букет + Десерт",
+      "category": "Праздники",
+      "description": "При покупке букета клиент получает купон на фирменный десерт при заказе кофе.",
+      "recommendedFor": "Цветочные салоны, Пекарни",
+      "defaultReward": "Фирменный десерт в подарок",
+      "expectedReach": "200+ клиентов/мес",
+      "expectedRoi": "+40% лояльности",
+      "tags": [
+        "Цветы",
+        "Десерт",
+        "Праздник"
+      ]
+    }
+  ],
+  "clients": [
+    {
+      "id": "crm-001",
+      "name": "Айдар Касымов",
+      "phone": "+7 (777) 333-4455",
+      "acquiredFromPartner": "Барбершоп \"ManCave\"",
+      "campaignId": "cmp-001",
+      "totalSpent": 12500,
+      "visitCount": 5,
+      "status": "VIP",
+      "lastVisit": "2026-07-29T16:20:00Z"
+    },
+    {
+      "id": "crm-002",
+      "name": "Динара Сатпаева",
+      "phone": "+7 (701) 555-8822",
+      "acquiredFromPartner": "Фитнес-клуб \"FitLife\"",
+      "campaignId": "cmp-002",
+      "totalSpent": 5000,
+      "visitCount": 2,
+      "status": "ACTIVE",
+      "lastVisit": "2026-07-30T11:00:00Z"
+    },
+    {
+      "id": "crm-003",
+      "name": "Кайрат Нуртасов",
+      "phone": "+7 (705) 888-1122",
+      "acquiredFromPartner": "Барбершоп \"ManCave\"",
+      "campaignId": "cmp-001",
+      "totalSpent": 2500,
+      "visitCount": 1,
+      "status": "NEW",
+      "lastVisit": "2026-07-30T13:45:00Z"
+    }
+  ]
+}

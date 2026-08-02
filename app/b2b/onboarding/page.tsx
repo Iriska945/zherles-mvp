@@ -230,14 +230,15 @@ export default function BusinessOnboardingPage() {
                           key={emoji}
                           type="button"
                           onClick={() => setFormData((prev) => ({ ...prev, logoUrl: emoji }))}
-                          className={`w-8 h-8 rounded-lg text-sm border flex items-center justify-center transition-all ${
+                          className={`w-12 h-12 min-h-[48px] min-w-[48px] rounded-lg text-base border flex items-center justify-center transition-all ${
                             formData.logoUrl === emoji
-                              ? 'bg-emerald-100 border-emerald-500 scale-110'
+                              ? 'bg-emerald-100 border-emerald-500 scale-105'
                               : 'bg-slate-50 border-slate-200 hover:bg-slate-100'
                           }`}
                         >
                           {emoji}
                         </button>
+
                       ))}
                     </div>
                   </div>
@@ -300,7 +301,7 @@ export default function BusinessOnboardingPage() {
               <div className="pt-4 flex items-center justify-end space-x-3 border-t border-slate-100">
                 <button
                   type="submit"
-                  className="w-full sm:w-auto px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-md transition-all flex items-center justify-center space-x-2"
+                  className="w-full sm:w-auto px-6 py-3 min-h-[48px] bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-sm rounded-xl shadow-md transition-all flex items-center justify-center space-x-2"
                 >
                   <CheckCircle2 className="w-4 h-4" />
                   <span>Сохранить профиль бизнеса</span>

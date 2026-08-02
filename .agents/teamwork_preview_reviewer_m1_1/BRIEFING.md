@@ -1,59 +1,51 @@
-# BRIEFING — 2026-08-01T00:34:00Z
+# BRIEFING — 2026-08-01T15:15:27Z
 
 ## Mission
-Review and stress-test Milestone 1 (WhatsApp Green API Integration) code changes and E2E test suite.
+Review Milestone 1 (Interactive Homepage & Map Component) of the ЖЕРЛЕС MVP project for correctness, standards, build/test health, R1 requirement compliance, and integrity violations.
 
 ## 🔒 My Identity
 - Archetype: reviewer_critic
 - Roles: reviewer, critic
 - Working directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_reviewer_m1_1
-- Original parent: eb5563f0-f075-40d2-aaef-8bdfef0597c5
-- Milestone: Milestone 1 (WhatsApp Green API Integration)
+- Original parent: 34c48431-2171-414a-9d2a-c0d08154ad63
+- Milestone: Milestone 1
 - Instance: 1 of 1
 
 ## 🔒 Key Constraints
-- Review-only — do NOT modify implementation code or test code
-- Network mode: CODE_ONLY (no external API calls during review)
-- Thorough verification of security, sanitization, build, E2E tests, and integrity violations
+- Review-only — do NOT modify implementation code
+- Evidence-based review; verify all key claims directly
+- Check strictly for integrity violations (hardcoded test results, facade implementations, shortcuts, fake verification artifacts)
 
 ## Current Parent
-- Conversation ID: eb5563f0-f075-40d2-aaef-8bdfef0597c5
-- Updated: 2026-08-01T00:34:00Z
+- Conversation ID: 34c48431-2171-414a-9d2a-c0d08154ad63
+- Updated: 2026-08-01T15:15:27Z
 
 ## Review Scope
 - **Files to review**:
-  - `app/api/whatsapp/send/route.ts`
-  - `.env.local`
-  - `components/ShareButtons.tsx`
-  - `e2e/zherles_mvp.spec.ts` (Test 7)
-- **Verdict**: FAIL
+  - `app/page.tsx`
+  - `components/InteractiveMap.tsx`
+  - `components/BusinessPassportModal.tsx`
+  - `components/ProductExplanation.tsx`
+  - `types/index.ts`
+  - `data/seedData.json`
+  - `e2e/m1_interactive_homepage.spec.ts`
+- **Interface contracts**: PROJECT.md / SCOPE.md
+- **Review criteria**: correctness, TypeScript & Next.js App Router standards, buildability (`npm run build`), test suite pass rate (`npx playwright test`), R1 compliance, adversarial critic / integrity checks.
 
 ## Key Decisions Made
-- Executed `npm run build` (Passed cleanly).
-- Executed `npx playwright test` (Failed with exit code 1 due to Mobile Chrome viewport UI element interception on Test 7).
-- Audited `.gitignore` and `.env.local` (Identified Critical Security Finding: `.env.local` containing `GREENAPI_TOKEN` is not ignored in `.gitignore`).
-
-## Artifact Index
-- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_reviewer_m1_1/ORIGINAL_REQUEST.md` — Original prompt copy
-- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_reviewer_m1_1/BRIEFING.md` — Working memory
-- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_reviewer_m1_1/progress.md` — Liveness heartbeat
-- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_reviewer_m1_1/handoff.md` — Handoff report with verdict
+- Initiated independent review and verification process.
 
 ## Review Checklist
-- **Items reviewed**:
-  - `app/api/whatsapp/send/route.ts` — Examined sanitization & Green API fetch logic
-  - `.env.local` & `.gitignore` — Checked security & secret leaks
-  - `components/ShareButtons.tsx` — Examined modal & status banner UI
-  - `e2e/zherles_mvp.spec.ts` — Verified Test 7 E2E flow
-- **Verdict**: FAIL
-- **Unverified claims**: None (all claims verified by running build and E2E commands directly).
+- **Items reviewed**: pending
+- **Verdict**: pending
+- **Unverified claims**: pending
 
 ## Attack Surface
-- **Hypotheses tested**:
-  - Mobile Chrome viewport clickability of WhatsApp share button — FAILED (intercepted by fixed bottom nav bar).
-  - Exposure of `.env.local` to git — CONFIRMED RISKY (`.env.local` missing from `.gitignore`).
-  - Hardcoded Green API ID in backend route — CONFIRMED (`710722698257` in route.ts fallback).
-- **Vulnerabilities found**:
-  - Unignored `.env.local` secret token.
-  - Mobile UI pointer event interception bug blocking WhatsApp modal trigger.
-- **Untested angles**: None.
+- **Hypotheses tested**: pending
+- **Vulnerabilities found**: pending
+- **Untested angles**: pending
+
+## Artifact Index
+- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_reviewer_m1_1/ORIGINAL_REQUEST.md` — Original request transcript
+- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_reviewer_m1_1/progress.md` — Heartbeat and progress log
+- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_reviewer_m1_1/handoff.md` — Final review report and verdict

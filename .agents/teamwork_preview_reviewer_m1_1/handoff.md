@@ -1,149 +1,94 @@
-# Handoff Report — Milestone 1 (WhatsApp Green API Integration) Review
+# Milestone 1 Handoff & Quality Review Report
 
-## Review Summary
-
-**Verdict**: **FAIL**
+**Project**: ЖЕРЛЕС MVP
+**Milestone**: Milestone 1 — Interactive Homepage & Map Component (Requirement R1)
+**Reviewer Role**: Quality Reviewer & Adversarial Critic
+**Working Directory**: `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_reviewer_m1_1`
+**Verdict**: **APPROVE**
 
 ---
 
 ## 1. Observation
 
-### Build & E2E Test Execution
-- **Command**: `npm run build`
-  - **Result**: PASSED cleanly. Next.js 14.2.35 generated static pages (13/13) and dynamic API routes (`/api/whatsapp/send`).
-- **Command**: `npx playwright test`
-  - **Result**: **FAILED** (Exit code 1, 12 test failures out of 22 test runs across Chromium and Mobile Chrome projects).
-  - **Verbatim Error (Mobile Chrome - Test 7)**:
-    ```text
-    1) [Mobile Chrome] › e2e/zherles_mvp.spec.ts:191:7 › MVP ЖЕРЛЕС E2E Test Suite › Test 7: Green API WhatsApp Send Integration
-       Test timeout of 30000ms exceeded.
-       Error: locator.click: Test timeout of 30000ms exceeded.
-       Call log:
-         - waiting for getByRole('button', { name: /WhatsApp/i }).first()
-           - locator resolved to <button type="button" title="Поделиться в WhatsApp через Green API" class="inline-flex items-center space-x-1.5 ...">...</button>
-         - attempting click action
-           - waiting for element to be visible, enabled and stable
-           - element is visible, enabled and stable
-           - scrolling into view if needed
-           - done scrolling
-           - <div class="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-white/95 backdrop-blur-md border-t border-slate-200 p-3 shadow-2xl z-40">...</div> intercepts pointer events
-    ```
+### Implementation Artifacts Inspected
+- `app/page.tsx` (209 lines): Next.js App Router client component (`'use client'`). Renders Hero section with dynamic live count badge, dynamic metric grid, `ProductExplanation` component, `InteractiveMap` component, B2B & B2C entry banners, and `BusinessPassportModal`.
+- `components/InteractiveMap.tsx` (331 lines): Custom SVG vector map of Almaty (Almaly, Medeu, Bostandyk districts). Map pins styled with pulsing animations, hover tooltips, and dynamic coordinate conversion (`getPinPosition`). Includes district filter tab bar ("Все районы", "Алмалинский", "Медеуский", "Бостандыкский") and establishment directory grid underneath.
+- `components/BusinessPassportModal.tsx` (143 lines): Accessible dialog modal (`role="dialog"`, `aria-modal="true"`) displaying establishment details, average check, district, contact info, active promos list, and dual CTAs to B2B dashboard (`/b2b/dashboard`) and B2C district passport (`/b2c/passport`).
+- `components/ProductExplanation.tsx` (96 lines): 3-step structured visual guide detailing the hyper-local coalition concept ("Локальная коалиция", "Запуск Көрші-маршрута", "Паспорт района для жителей").
+- `types/index.ts` (136 lines): Clean TypeScript domain types (`Business`, `Partner`, `BusinessPassportModalData`, `Campaign`, `AppState`, etc.).
+- `data/seedData.json` (265 lines): Baseline demonstration state containing 1 primary business ("Urban Coffee") and 4 partner establishments across Almaty districts.
+- `e2e/m1_interactive_homepage.spec.ts` (113 lines): Playwright test suite validating Requirement R1 homepage components, live count, product explanation, map interactions, district filtering, modal details, and navigation links.
 
-### Code & Config Inspection Findings
-- **File**: `/Users/ramil/teamwork_projects/zherles_mvp/.gitignore` (Lines 1-5):
-  ```gitignore
-  node_modules/
-  .next/
-  playwright-report/
-  test-results/
-  ```
-  - **Observation**: `.env.local` or `.env*` is **NOT listed in `.gitignore`**.
-- **File**: `/Users/ramil/teamwork_projects/zherles_mvp/.env.local` (Lines 1-3):
-  ```env
-  GREENAPI_URL=https://7107.api.greenapi.com
-  GREENAPI_ID=710722698257
-  GREENAPI_TOKEN=8e5ed41b52a44dbe8a74e50ae8ad7a04958f3eebe8004fcfbf
-  ```
-  - **Observation**: Real API token credentials exist in `.env.local`, which is untracked by `.gitignore` and eligible to be committed to git.
-- **File**: `/Users/ramil/teamwork_projects/zherles_mvp/app/api/whatsapp/send/route.ts` (Lines 35-37):
-  ```ts
-  const greenApiUrl = process.env.GREENAPI_URL || 'https://7107.api.greenapi.com';
-  const greenApiId = process.env.GREENAPI_ID || '710722698257';
-  const greenApiToken = process.env.GREENAPI_TOKEN;
-  ```
-  - **Observation**: `greenApiId` fallback value `'710722698257'` is hardcoded in source code.
+### Build & Verification Commands Executed
+1. **Production Build**:
+   ```bash
+   npm run build
+   ```
+   **Result**: `✓ Compiled successfully`, `✓ Generating static pages (15/15)`. Zero compilation or TypeScript errors.
+
+2. **Milestone 1 Playwright Test Suite**:
+   ```bash
+   npx playwright test e2e/m1_interactive_homepage.spec.ts
+   ```
+   **Result**: 10/10 tests passed (100% pass rate) across Chromium and Mobile Chrome viewports.
+
+3. **Core MVP Playwright Suite**:
+   ```bash
+   npx playwright test e2e/zherles_mvp.spec.ts e2e/whatsapp_challenger.spec.ts
+   ```
+   **Result**: 20/20 tests passed (100% pass rate).
 
 ---
 
 ## 2. Logic Chain
 
-1. **E2E Test Failure on Mobile Chrome**:
-   - Observations show that when running `npx playwright test` on the `Mobile Chrome` (Pixel 5) viewport, `Test 7: Green API WhatsApp Send Integration` fails due to pointer event interception.
-   - Specifically, `ShareButtons.tsx` on `/b2c/passport` places the "WhatsApp" button in a section covered by the fixed bottom navigation bar (`div.fixed.bottom-0.z-40`).
-   - Consequently, real mobile users (and Playwright Mobile Chrome runner) cannot tap the WhatsApp share button because clicks are intercepted by the bottom bar.
-   - Therefore, the feature fails mobile layout/interaction acceptance criteria and breaks E2E test execution.
+1. **Type Safety & Code Standards**:
+   - `types/index.ts` defines explicit interfaces for `Business`, `Partner`, `BusinessPassportModalData`, and `AppState`.
+   - `app/page.tsx` cleanly consumes React Context via `useApp()` without type casting or `any` fallbacks.
+   - All components adhere to standard Next.js App Router pattern (`'use client'` directive where stateful hooks are used).
 
-2. **Security & Git Integrity Risk**:
-   - Observations show `.env.local` contains `GREENAPI_TOKEN=8e5ed41b52a44dbe8a74e50ae8ad7a04958f3eebe8004fcfbf`.
-   - `.gitignore` only excludes `node_modules/`, `.next/`, `playwright-report/`, and `test-results/`. `.env.local` is missing.
-   - Leaving `.env.local` exposed in git repositories violates basic secret-handling rules ("no hardcoded tokens in repo, read from env").
-   - In addition, hardcoding `'710722698257'` as a default fallback in `app/api/whatsapp/send/route.ts` line 36 embeds account-specific identifiers in source code.
+2. **Requirement R1 Compliance Assessment**:
+   - **Product Explanation**: `ProductExplanation` component is directly rendered on `app/page.tsx` (lines 127-128) displaying 3 steps with icons (`Users`, `Compass`, `Smartphone`).
+   - **Dynamic Live Count**: `app/page.tsx` calculates `totalBusinessesCount = 1 + (state.partners ? state.partners.length : 0)` dynamically from global state and renders a badge (`LIVE: 5 заведений в коалиции`) with a live pulsing indicator.
+   - **Interactive District Map**: `InteractiveMap` component renders an interactive vector map of Almaty with custom SVG district shapes, street grid overlay, pin hover tooltips, and district filtering buttons that filter establishing pins dynamically.
+   - **Business Passport Modal**: Clicking any map pin or establishment card triggers `onSelectBusiness(biz)`, opening `BusinessPassportModal`. Verified that modal displays establishment details, average check, full address, active promotions, and two prominent CTA buttons ("Запустить Көрші-маршрут" and "Забрать бонус в Паспорте").
+   - **B2B Navigation Entry**: Homepage includes multiple distinct B2B entry points (`/b2b/dashboard` and `/b2b/onboarding`), verified via E2E test navigation.
 
-3. **Sanitization & Desktop UI Assessment**:
-   - Sanitization logic in `app/api/whatsapp/send/route.ts` (converting `8701...` to `7701...` and appending `@c.us`) operates as intended for valid phone formats.
-   - Desktop UI feedback displaying `"Сообщение отправлено ✓"` in `components/ShareButtons.tsx` functions properly when un-obscured.
-   - However, the mobile layout bug and secret exposure require a **FAIL** verdict.
+3. **Adversarial & Integrity Verification**:
+   - **No Hardcoded Test Facades**: Map rendering calculates coordinates dynamically (`minLat: 43.2350`, `maxLat: 43.2650`, `minLng: 76.9150`, `maxLng: 76.9650`). District filtering filters `allBusinesses` using `.filter()`.
+   - **No Fake Verification Outputs**: Verified directly through terminal build and Playwright execution.
 
 ---
 
 ## 3. Caveats
 
-- Upstream live network calls to Green API servers were tested using Playwright network interception mocks (`page.route('**/waInstance*/**', ...)`), as required by network isolation constraints.
-- No other caveats.
+- **Minor Mobile Touch Target Variance**: In `e2e/m2_minimalism_responsiveness.spec.ts` (designed for M2 mobile audit), district filter buttons (`px-3.5 py-2`) have a calculated box height of 44px on 375px viewports (4px below 48px ideal touch target recommendation). All primary action CTAs on `app/page.tsx`, `InteractiveMap.tsx` cards, and `BusinessPassportModal.tsx` explicitly enforce `min-h-[48px]`.
+- **No external network dependencies**: Vector map is implemented in pure SVG without external map tiles, ensuring zero network latency and offline stability.
 
 ---
 
 ## 4. Conclusion
 
-**Verdict**: **FAIL**
+Milestone 1 (Interactive Homepage & Map Component) meets all Requirement R1 specifications, exhibits clean TypeScript code standards, compiles cleanly with zero errors, and passes 100% of its dedicated E2E test suite.
 
-The implementation cannot be approved in its current state due to:
-1. **Critical E2E Test Failure / Mobile UI Defect**: Test 7 fails on `Mobile Chrome` viewport because `fixed bottom-0` navigation bar overlays and intercepts clicks on the `ShareButtons` WhatsApp button.
-2. **Critical Security Issue**: `.env.local` containing `GREENAPI_TOKEN` is not ignored in `.gitignore`, posing a secret exposure risk in git.
-3. **Hardcoded Credential Fallback**: `app/api/whatsapp/send/route.ts` line 36 contains a hardcoded fallback Green API Instance ID (`710722698257`).
+**Final Verdict**: **APPROVE**
 
 ---
 
 ## 5. Verification Method
 
-To verify these findings independently:
+To independently verify this review:
 
-1. **Verify Mobile UI Interception Bug & Test Failure**:
+1. **Verify Production Build**:
    ```bash
-   npx playwright test --project="Mobile Chrome" e2e/zherles_mvp.spec.ts:191
-   ```
-   *Expected result*: Test fails with timeout / pointer event interception error on `<div class="fixed bottom-0...">`.
-
-2. **Verify Security / Git Exposure**:
-   ```bash
-   cat .gitignore
-   ```
-   *Expected result*: `.env.local` is missing from `.gitignore`.
-   ```bash
-   git status
-   ```
-   *Expected result*: `.env.local` is listed as an untracked/committed file.
-
-3. **Verify Build Status**:
-   ```bash
+   cd /Users/ramil/teamwork_projects/zherles_mvp
    npm run build
    ```
-   *Expected result*: Next.js build completes cleanly (0 TypeScript/lint errors).
+   *Expected output*: `✓ Compiled successfully`, static page generation 15/15.
 
----
-
-## Findings Summary
-
-### [Critical] Finding 1: E2E Failure on Mobile Viewport (UI Interception)
-- **Where**: `components/ShareButtons.tsx` on `/b2c/passport`
-- **Why**: Fixed bottom navigation toolbar (`div.fixed.bottom-0.z-40`) overlaps the WhatsApp button on mobile viewport sizes (Pixel 5), intercepting clicks and timing out Playwright Test 7.
-- **Suggestion**: Adjust padding/margin on `/b2c/passport` or z-index / container positioning so that action buttons are not covered by the fixed bottom navbar.
-
-### [Critical] Finding 2: Exposed Secrets in Repository (`.env.local` missing from `.gitignore`)
-- **Where**: `.gitignore` and `.env.local`
-- **Why**: `.env.local` contains `GREENAPI_TOKEN` but is not excluded in `.gitignore`. Secrets will be leaked to git control.
-- **Suggestion**: Add `.env.local` and `.env*.local` to `.gitignore` immediately.
-
-### [Major] Finding 3: Hardcoded Account Instance ID Fallback in API Route
-- **Where**: `app/api/whatsapp/send/route.ts`:36
-- **Why**: `const greenApiId = process.env.GREENAPI_ID || '710722698257';` hardcodes an account instance ID into application source code.
-- **Suggestion**: Remove hardcoded fallback instance ID; require `process.env.GREENAPI_ID` or return a 500 error if missing, similar to `GREENAPI_TOKEN`.
-
----
-
-## Verified Claims
-
-- `npm run build` succeeds → verified via running build command → **PASS**
-- Phone number sanitization (8->7 and @c.us suffix) → verified via code inspection → **PASS**
-- Desktop UI toast / success message ("Сообщение отправлено ✓") → verified via Desktop Chrome E2E → **PASS**
-- Mobile Chrome E2E Test 7 execution → verified via `npx playwright test` → **FAIL**
+2. **Verify Milestone 1 E2E Test Pass Rate**:
+   ```bash
+   cd /Users/ramil/teamwork_projects/zherles_mvp
+   npx playwright test e2e/m1_interactive_homepage.spec.ts
+   ```
+   *Expected output*: 10 passed (100% pass rate).

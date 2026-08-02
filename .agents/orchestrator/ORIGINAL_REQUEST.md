@@ -1,79 +1,41 @@
 # Original User Request
 
-## 2026-08-01T00:25:15Z
+## 2026-08-01T15:09:43Z
 
-<USER_REQUEST>
-Доработка MVP «ЖЕРЛЕС» — платформы кросс-маркетинга локальных бизнесов. Проект уже работает на Vercel. Эта итерация фокусируется на трёх вещах: (1) подключение реальной отправки сообщений через Green API (WhatsApp), (2) полный редизайн интерфейса в духе психологии минимализма — «один экран = одно действие», (3) обновление PROJECT.md с новым планом.
+Redesign the main page to include a clear product explanation, a live count of collaborating businesses, and a real interactive map (using an API like Google Maps, Yandex, or Mapbox) where clicking a pin opens the business passport. Implement a B2C personal cabinet backed by a real database and authentication system (e.g., phone number login) to track discounts, bonuses, and levels. Provide a distinct B2B entry point leading to the business dashboard. Integrate a WhatsApp bot experience to deliver promotions and information directly via chat. Wrap the entire experience in a clean, lightweight design with Kazakh aesthetic touches, optimized using social engineering and marketing psychology (inspired by community-driven brands like Zebra Coffee) to maximize user engagement.
 
 Working directory: /Users/ramil/teamwork_projects/zherles_mvp
-Integrity mode: benchmark
-
----
-
-## Контекст — Green API (WhatsApp)
-
-Инстанс уже авторизован и готов к работе:
-- apiUrl: https://7107.api.greenapi.com
-- mediaUrl: https://7107.api.greenapi.com
-- idInstance: 710722698257
-- apiTokenInstance: ВСТАВИТЬ_ИЗ_ENV (хранить в .env.local, не коммитить)
-
-API для отправки сообщения: POST `{apiUrl}/waInstance{idInstance}/sendMessage/{apiTokenInstance}`
-Body: `{ "chatId": "77XXXXXXXXX@c.us", "message": "текст" }`
-
----
+Integrity mode: development
 
 ## Requirements
 
-### R1. Интеграция Green API (WhatsApp)
-- Создать серверный API-роут Next.js (`/api/whatsapp/send`), который принимает номер телефона и текст, и отправляет сообщение через Green API.
-- Credentials хранить в `.env.local` (переменные: `GREENAPI_URL`, `GREENAPI_ID`, `GREENAPI_TOKEN`).
-- На странице B2C «Паспорт района» кнопка «Поделиться в WhatsApp» должна вызывать этот API-роут, отправляя реальное сообщение с текстом акции и ссылкой на паспорт.
-- Показывать пользователю статус: «Сообщение отправлено ✓» или «Ошибка — попробуйте ещё раз».
+### R1. Interactive Homepage & Map
+Implement a lightweight, intuitive homepage. It must feature a clear explanation of the product, display the number of cooperating businesses, and integrate a real mapping service (e.g., Google Maps/Yandex/Mapbox) to show establishment locations. Clicking an establishment's pin must open its business passport.
 
-### R2. Редизайн — психология минимализма
-Применить следующие принципы UX-психологии:
-- **Закон Хика**: на каждом экране не более 3-4 ключевых действий. Убрать всё лишнее.
-- **Закон Миллера** (7±2): навигация содержит не более 5 пунктов.
-- **F-паттерн чтения**: самое важное — вверху слева. Заголовок страницы — 1 строка, подзаголовок — максимум 2 строки.
-- **Визуальная иерархия**: крупный заголовок → короткое описание → одна большая CTA-кнопка. Никаких стен текста.
-- **Цвет как сигнал**: зелёный = успех/действие, серый = вторичное, красный = ошибка. Не более 2 основных цветов на странице.
-- Мобильный B2C: карточки с большими иконками и короткими подписями (1-3 слова), кнопки min 48px в высоту.
-- Десктоп B2B: sidebar-навигация с иконками, основной контент в одной колонке, карточки метрик — компактные (не более 4 на ряд).
-- Убрать все длинные описательные тексты из интерфейса. Оставить только labels, статусы и CTA.
+### R2. B2C Personal Cabinet with Real Database & Auth
+Implement a B2C Personal Cabinet that uses a real database and authentication system (e.g., Firebase Auth or Supabase with phone/email login). The cabinet must accurately display the authenticated user's current level, accumulated bonuses, and active discounts.
 
-### R3. Обновление PROJECT.md
-Обновить (или создать) файл `PROJECT.md` в корне проекта со следующими разделами:
-- Описание продукта (2-3 абзаца)
-- Текущий статус и roadmap (что сделано, что в плане)
-- Инструкции для разработчика (как запустить, как настроить env)
-- Описание архитектуры (маршруты, data flow, LocalStorage schema)
-- Описание WhatsApp-интеграции (как она работает, как тестировать)
+### R3. WhatsApp Bot Integration
+Implement the WhatsApp bot integration to provide users with necessary information and promotions directly via chat. The exact technical scope (e.g., full Green API webhooks vs. frontend simulation) is left to the agent team's discretion, provided it fulfills the user experience goal.
 
-### R4. Сохранение всех существующих функций
-Все ранее реализованные модули (B2B Dashboard, CRM, Admin CRUD, Campaign Builder, QR-генерация, PIN-редемпция) должны продолжать работать корректно после редизайна. Никакие функции не должны быть удалены или сломаны.
-
----
+### R4. Aesthetic & Psychological Optimization
+Design the interface to be practical, light, and easy to understand. Incorporate subtle Kazakh aesthetics. Apply marketing psychology and social engineering principles (e.g., cues for community belonging and quick service, akin to Zebra Coffee) to encourage users to actively engage with the system.
 
 ## Acceptance Criteria
 
+### Homepage & Map
+- [ ] The homepage loads without errors and displays the product explanation and business count.
+- [ ] A real map component renders successfully on the page.
+- [ ] Clicking a map marker successfully opens the corresponding business passport (via navigation or modal).
+
+### Database & Authentication
+- [ ] A user can successfully register and log in using the implemented authentication system.
+- [ ] The user's personal cabinet successfully reads and writes their level, bonuses, and discounts to the real database.
+
 ### WhatsApp Integration
-- [ ] API-роут `/api/whatsapp/send` существует и принимает POST с `{ phone, message }`.
-- [ ] При нажатии кнопки «Поделиться в WhatsApp» на странице B2C отправляется реальный HTTP-запрос к Green API.
-- [ ] Credentials не захардкожены в коде, читаются из переменных окружения.
-- [ ] Показывается toast/статус «Отправлено ✓» или сообщение об ошибке.
-- [ ] Playwright-тест проверяет, что API-роут возвращает 200 при корректном запросе (можно мокировать внешний запрос).
+- [ ] The WhatsApp bot integration is demonstrable (either via verified backend webhooks or a functional frontend simulation) and clearly shows the flow of information retrieval.
 
-### UX/Дизайн
-- [ ] На каждой странице не более 4 действий в primary-зоне (выше fold).
-- [ ] Навигация содержит не более 5 пунктов.
-- [ ] Мобильный B2C-экран помещается на экране 375px без горизонтального скролла.
-- [ ] Нет страниц с блоком текста длиннее 3 строк подряд без визуального разделителя.
-- [ ] `npm run build` проходит без ошибок.
-- [ ] Все предыдущие 12 E2E-тестов продолжают проходить успешно.
-
-### PROJECT.md
-- [ ] Файл `PROJECT.md` существует в корне, содержит все 5 разделов.
-- [ ] Инструкция `npm run dev` описана корректно.
-- [ ] Описание WhatsApp-интеграции присутствует.
-</USER_REQUEST>
+### Design & Marketing
+- [ ] The UI visually reflects a lighter, less cluttered design compared to the previous iteration.
+- [ ] Kazakh aesthetic elements (e.g., patterns, color palettes, or typography) are visibly integrated.
+- [ ] At least one specific psychological lever (e.g., social proof, community belonging) is demonstrably applied in the UI/UX.

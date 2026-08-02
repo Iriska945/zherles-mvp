@@ -1,13 +1,15 @@
 # Progress Log
 
-Last visited: 2026-08-01T00:32:05Z
+Last visited: 2026-08-01T20:19:15+05:00
 
-- [x] Initialized workspace and recorded BRIEFING.md and ORIGINAL_REQUEST.md
-- [x] Located WhatsApp Green API integration files (`app/api/whatsapp/send/route.ts`) and Playwright test files (`e2e/zherles_mvp.spec.ts`)
-- [x] Inspected implementation of `/api/whatsapp/send` and phone formatting logic
-- [x] Created empirical stress test suite `e2e/whatsapp_challenger.spec.ts` and unit test runner `test_route_empirical.ts`
-- [x] Executed `npx playwright test e2e/zherles_mvp.spec.ts` (14/14 tests PASSED)
-- [x] Executed `npx tsx .agents/teamwork_preview_challenger_m1_1/test_route_empirical.ts` (16/16 tests PASSED)
-- [x] Executed `npx playwright test e2e/whatsapp_challenger.spec.ts` (6/6 tests PASSED)
-- [x] Documented empirical findings in `handoff.md`
-- [ ] Send summary message to orchestrator
+- [x] Initialized setup (ORIGINAL_REQUEST.md, BRIEFING.md, progress.md)
+- [x] Run `npm run build` — FAILED (ENOENT build-manifest.json error)
+- [x] Run `npx playwright test e2e/m1_interactive_homepage.spec.ts` — PASSED (10/10)
+- [x] Run `npx playwright test` — 25 passed, 23 failed (M2 48px touch targets, full suite timeouts)
+- [x] Empirically verify interactive behavior & stress test:
+  - [x] Map district filter tabs (All, Almaly, Medeu, Bostandyk) — Functional logic verified, grammar flaw noticed ("1 мест").
+  - [x] Marker hover tooltips and click event dispatching — Desktop verified, Mobile 375px pointer intercept bug confirmed.
+  - [x] Modal backdrop click & escape key closing handlers — Backdrop click passes, Escape key closing handler MISSING/FAILED.
+  - [x] B2B CTA button navigation link to `/b2b/onboarding` and `/b2b/dashboard` — Verified and working.
+  - [x] Touch targets and mobile viewport rendering at 375px — FAILED (417.35px horizontal overflow in Header nav & hero background glows; Header nav link height ~30px < 48px).
+- [x] Write `handoff.md` and notify orchestrator

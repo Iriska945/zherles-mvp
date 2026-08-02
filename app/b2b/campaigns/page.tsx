@@ -297,20 +297,21 @@ export default function CampaignsOverviewPage() {
                     <button
                       type="button"
                       onClick={() => setSelectedQrCampaign(campaign)}
-                      className="flex-1 py-2.5 px-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all flex items-center justify-center space-x-1.5"
+                      className="flex-1 h-12 min-h-[48px] px-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all flex items-center justify-center space-x-1.5"
                     >
-                      <QrCode className="w-3.5 h-3.5" />
+                      <QrCode className="w-4 h-4" />
                       <span>Показать QR-код</span>
                     </button>
 
                     <Link
                       href={`/b2c/passport?campaignId=${campaign.id}`}
-                      className="py-2.5 px-3.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition-all flex items-center justify-center space-x-1"
+                      className="h-12 min-h-[48px] px-3.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-xl transition-all flex items-center justify-center space-x-1"
                       title="Просмотреть в Паспорте B2C"
                     >
-                      <Smartphone className="w-3.5 h-3.5 text-slate-500" />
+                      <Smartphone className="w-4 h-4 text-slate-500" />
                       <span>Паспорт B2C</span>
                     </Link>
+
                   </div>
                 </div>
               );

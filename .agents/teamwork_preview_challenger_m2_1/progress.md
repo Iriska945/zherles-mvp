@@ -1,10 +1,9 @@
 # Progress Log
 
-Last visited: 2026-08-01T00:36:46Z
+Last visited: 2026-08-01T15:30:27Z
 
 - [x] Initialized setup (ORIGINAL_REQUEST.md, BRIEFING.md, progress.md)
-- [x] Inspect project structure, Playwright config, and existing tests
-- [x] Run Playwright tests (`npx playwright test`) for Desktop & Mobile Chrome (20/20 passed, including all 14 core E2E tests)
-- [x] Empirically analyze mobile responsiveness at 375px (zero horizontal scroll: PASSED, zero bottom nav obscuration: PASSED, min-h-[48px] touch target height: FINDINGS documented)
-- [x] Draft stress-test harness (`e2e/m2_minimalism_responsiveness.spec.ts`)
-- [x] Document empirical findings in handoff.md and send message to orchestrator
+- [ ] Step 1: Run `npm run build` to confirm production build stability
+- [ ] Step 2: Run `npx playwright test e2e/m2_b2c_cabinet_auth.spec.ts` and `npx playwright test`
+- [ ] Step 3: Empirically verify interactive behavior (Registration +200 bonus, Session persistence, Redemption 1234 -> 700 points & tier, Logout flow)
+- [ ] Step 4: Write verification report to handoff.md and send message to orchestrator

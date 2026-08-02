@@ -122,7 +122,7 @@ export default function ShareButtons({
       <button
         type="button"
         onClick={() => setShowModal(true)}
-        className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl transition-all shadow-sm active:scale-95"
+        className="inline-flex items-center justify-center space-x-1.5 px-3 py-1.5 min-h-[48px] bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl transition-all shadow-sm active:scale-95"
         title="Поделиться в WhatsApp через Green API"
       >
         <span className="font-bold">WhatsApp</span>
@@ -133,7 +133,7 @@ export default function ShareButtons({
         href={telegramUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex items-center space-x-1.5 px-3 py-1.5 bg-sky-500 hover:bg-sky-600 text-white text-xs font-semibold rounded-xl transition-all shadow-sm active:scale-95"
+        className="inline-flex items-center justify-center space-x-1.5 px-3 py-1.5 min-h-[48px] bg-sky-500 hover:bg-sky-600 text-white text-xs font-semibold rounded-xl transition-all shadow-sm active:scale-95"
         title="Поделиться в Telegram"
       >
         <Send className="w-3.5 h-3.5" />
@@ -144,7 +144,7 @@ export default function ShareButtons({
       <button
         type="button"
         onClick={handleCopyLink}
-        className={`inline-flex items-center space-x-1.5 px-3 py-1.5 text-xs font-semibold rounded-xl border transition-all active:scale-95 ${
+        className={`inline-flex items-center justify-center space-x-1.5 px-3 py-1.5 min-h-[48px] text-xs font-semibold rounded-xl border transition-all active:scale-95 ${
           copied
             ? 'bg-emerald-50 border-emerald-500 text-emerald-700'
             : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
@@ -169,12 +169,13 @@ export default function ShareButtons({
         <button
           type="button"
           onClick={handleNativeShare}
-          className="inline-flex items-center justify-center p-2 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl transition-all active:scale-95"
+          className="inline-flex items-center justify-center p-2 min-h-[48px] min-w-[48px] bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-xl transition-all active:scale-95"
           title="Поделиться через мобильное меню"
         >
           <Share2 className="w-3.5 h-3.5" />
         </button>
       )}
+
 
       {/* WhatsApp Modal Dialog */}
       {showModal && (

@@ -118,21 +118,49 @@ function RedeemContent() {
   const pinCode = digits.join('');
   const isComplete = pinCode.length === 4;
 
-  const handleSubmit = (e?: React.FormEvent) => {
+  const handleSubmit = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     if (!isComplete) return;
 
-    const res = redeemBonus(pinCode);
-    setRedeemedResult(res);
+    try {
+      const apiRes = await fetch('/api/b2c/redeem', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ pinCode }),
+      });
+      const data = await apiRes.json();
+      if (data.success) {
+        setRedeemedResult({
+          coupon: data.coupon,
+          redeemedAt: data.redeemedAt,
+        });
+        setResultState('SUCCESS');
+        redeemBonus(pinCode);
+      } else if (data.redeemedAt || (data.error && data.error.includes('уже'))) {
+        setRedeemedResult({
+          coupon: data.coupon,
+          error: data.error,
+          redeemedAt: data.redeemedAt,
+        });
+        setResultState('ALREADY_REDEEMED');
+      } else {
+        setRedeemedResult({ error: data.error });
+        setResultState('NOT_FOUND');
+      }
+    } catch (err) {
+      const res = redeemBonus(pinCode);
+      setRedeemedResult(res);
 
-    if (res.success) {
-      setResultState('SUCCESS');
-    } else if (res.redeemedAt || (res.error && res.error.includes('уже'))) {
-      setResultState('ALREADY_REDEEMED');
-    } else {
-      setResultState('NOT_FOUND');
+      if (res.success) {
+        setResultState('SUCCESS');
+      } else if (res.redeemedAt || (res.error && res.error.includes('уже'))) {
+        setResultState('ALREADY_REDEEMED');
+      } else {
+        setResultState('NOT_FOUND');
+      }
     }
   };
+
 
   const handleResetForm = () => {
     setDigits(['', '', '', '']);

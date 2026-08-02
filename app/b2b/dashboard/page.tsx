@@ -423,7 +423,7 @@ export default function B2BDashboardPage() {
                   <button
                     key={st}
                     onClick={() => setStatusFilter(st)}
-                    className={`px-3 py-1.5 rounded-full text-xs font-bold transition-all ${
+                    className={`px-3 py-1.5 min-h-[48px] inline-flex items-center justify-center rounded-full text-xs font-bold transition-all ${
                       statusFilter === st
                         ? 'bg-white text-slate-900 shadow-sm'
                         : 'text-slate-500 hover:text-slate-900'
@@ -431,6 +431,7 @@ export default function B2BDashboardPage() {
                   >
                     {st === 'ALL' ? 'Все' : st}
                   </button>
+
                 ))}
               </div>
             </div>

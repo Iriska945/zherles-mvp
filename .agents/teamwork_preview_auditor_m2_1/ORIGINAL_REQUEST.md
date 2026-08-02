@@ -1,16 +1,15 @@
-## 2026-08-01T00:34:34Z
+## 2026-08-01T15:30:27Z
+You are a Forensic Auditor agent assigned to perform an integrity audit for Milestone 2 of the ЖЕРЛЕС MVP project.
 
-You are Forensic Auditor 2 for Milestone 2 (Minimalism UX Redesign).
 Working directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_auditor_m2_1
+Project root: /Users/ramil/teamwork_projects/zherles_mvp
 
 Your task:
-1. Perform forensic integrity audit of Milestone 2 UX redesign.
-2. Audit checks:
-   - Is `timelineData` in `app/b2b/dashboard/page.tsx` dynamically calculated from `coupons`, `clients`, `campaigns` instead of static hardcoded array?
-   - Is `GREENAPI_ID` in `app/api/whatsapp/send/route.ts` loaded dynamically from `process.env` without hardcoded fallback strings?
-   - Is `.env.local` ignored in `.gitignore`?
-   - Are metric cards on B2B Dashboard capped at 4 per row (`grid-cols-2 lg:grid-cols-4`)?
-   - Are mobile buttons at least 48px height (`min-h-[48px]`)?
-   - Does `npm run build` succeed with exit code 0?
-   - Do all 14 Playwright E2E tests pass?
-3. Output your verdict (CLEAN or INTEGRITY VIOLATION) to `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_auditor_m2_1/handoff.md`. Send summary message to orchestrator.
+Perform static code analysis, runtime execution checks, and git diff analysis to ensure:
+1. No hardcoded test assertions, dummy mocks, or fake implementations exist in `lib/db.ts`, `context/AuthContext.tsx`, `app/b2c/cabinet/page.tsx`, or `/api/auth/` route handlers.
+2. `lib/db.ts` genuinely reads and writes persistent database state to `data/db.json` with atomic file replace operations.
+3. User tier progression calculations, bonus balance additions, and coupon redemptions genuinely execute database updates.
+4. Build (`npm run build`) and E2E tests (`npx playwright test`) pass genuinely without suppressed errors.
+
+Render a strict verdict: CLEAN or INTEGRITY VIOLATION.
+Write your full forensic audit report to `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_auditor_m2_1/handoff.md` and send a message to the orchestrator.

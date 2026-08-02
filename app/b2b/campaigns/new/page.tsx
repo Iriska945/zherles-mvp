@@ -191,7 +191,7 @@ function CampaignWizardContent() {
           {/* Step 1 Pill */}
           <button
             onClick={() => setStep(1)}
-            className={`flex flex-col sm:flex-row items-center justify-center space-y-1 sm:space-y-0 sm:space-x-2 p-3 rounded-xl transition-all ${
+            className={`flex flex-col sm:flex-row items-center justify-center min-h-[48px] space-y-1 sm:space-y-0 sm:space-x-2 p-3 rounded-xl transition-all ${
               step === 1
                 ? 'bg-emerald-600 text-white font-bold shadow-sm'
                 : step > 1
@@ -219,7 +219,7 @@ function CampaignWizardContent() {
               if (selectedPartnerIds.length > 0) setStep(2);
             }}
             disabled={selectedPartnerIds.length === 0}
-            className={`flex flex-col sm:flex-row items-center justify-center space-y-1 sm:space-y-0 sm:space-x-2 p-3 rounded-xl transition-all ${
+            className={`flex flex-col sm:flex-row items-center justify-center min-h-[48px] space-y-1 sm:space-y-0 sm:space-x-2 p-3 rounded-xl transition-all ${
               step === 2
                 ? 'bg-emerald-600 text-white font-bold shadow-sm'
                 : step > 2
@@ -247,7 +247,7 @@ function CampaignWizardContent() {
               if (selectedPartnerIds.length > 0 && title && rewardText) setStep(3);
             }}
             disabled={selectedPartnerIds.length === 0 || !title || !rewardText}
-            className={`flex flex-col sm:flex-row items-center justify-center space-y-1 sm:space-y-0 sm:space-x-2 p-3 rounded-xl transition-all ${
+            className={`flex flex-col sm:flex-row items-center justify-center min-h-[48px] space-y-1 sm:space-y-0 sm:space-x-2 p-3 rounded-xl transition-all ${
               step === 3
                 ? 'bg-emerald-600 text-white font-bold shadow-sm'
                 : 'bg-slate-50 text-slate-400 font-medium opacity-80'
@@ -293,14 +293,14 @@ function CampaignWizardContent() {
                 <button
                   type="button"
                   onClick={selectAllPartners}
-                  className="px-3 py-1.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-semibold rounded-lg transition-all"
+                  className="px-3 py-1.5 min-h-[48px] inline-flex items-center justify-center bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-semibold rounded-lg transition-all"
                 >
                   Выбрать всех
                 </button>
                 <button
                   type="button"
                   onClick={deselectAllPartners}
-                  className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-semibold rounded-lg transition-all"
+                  className="px-3 py-1.5 min-h-[48px] inline-flex items-center justify-center bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-semibold rounded-lg transition-all"
                 >
                   Снять все
                 </button>
@@ -308,6 +308,7 @@ function CampaignWizardContent() {
             </div>
 
             {/* Partners Grid */}
+
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
               {partners.map((partner) => {
                 const isSelected = selectedPartnerIds.includes(partner.id);
@@ -370,10 +371,11 @@ function CampaignWizardContent() {
             <button
               type="button"
               onClick={() => router.push('/b2b/catalog')}
-              className="px-4 py-2.5 text-slate-600 hover:text-slate-900 text-xs sm:text-sm font-semibold rounded-xl"
+              className="px-4 h-12 min-h-[48px] inline-flex items-center justify-center text-slate-600 hover:text-slate-900 text-xs sm:text-sm font-semibold rounded-xl"
             >
               Отмена
             </button>
+
 
             <button
               type="button"

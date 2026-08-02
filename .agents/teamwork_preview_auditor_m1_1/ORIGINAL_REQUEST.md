@@ -1,15 +1,15 @@
-## 2026-08-01T00:30:15Z
-<USER_REQUEST>
-You are Forensic Auditor 1 for Milestone 1 (WhatsApp Green API Integration).
+## 2026-08-01T15:15:27Z
+You are a Forensic Auditor agent assigned to perform an integrity audit for Milestone 1 of the ЖЕРЛЕС MVP project.
+
 Working directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_auditor_m1_1
+Project root: /Users/ramil/teamwork_projects/zherles_mvp
 
 Your task:
-1. Perform forensic integrity audit of Milestone 1 implementation.
-2. Check for potential integrity violations:
-   - Are Green API credentials loaded dynamically from process.env (`GREENAPI_URL`, `GREENAPI_ID`, `GREENAPI_TOKEN`)?
-   - Does `/api/whatsapp/send/route.ts` execute actual `fetch` call to Green API endpoint rather than returning static dummy JSON?
-   - Does `components/ShareButtons.tsx` execute genuine POST `fetch('/api/whatsapp/send')` request and display real-time response status?
-   - Does `e2e/zherles_mvp.spec.ts` perform genuine test assertions against the endpoint and UI?
-3. Execute `npm run build` and `npx playwright test` independently.
-4. Output verdict (CLEAN or INTEGRITY VIOLATION) with evidence to `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_auditor_m1_1/handoff.md`. Send message to orchestrator with verdict.
-</USER_REQUEST>
+Perform static code analysis, runtime execution checks, and git diff analysis to ensure:
+1. No hardcoded test assertions, dummy state mocks, or fake implementations exist in `app/page.tsx`, `components/InteractiveMap.tsx`, `components/BusinessPassportModal.tsx`, or `components/ProductExplanation.tsx`.
+2. The interactive map component genuinely calculates establishment positions, filters by district, handles click state, and renders real business passport modal content.
+3. The business count calculation is dynamic and reflects live state.
+4. Build (`npm run build`) and E2E tests (`npx playwright test`) are run genuinely without suppressed errors or bypassed assertions.
+
+Render a strict verdict: CLEAN or INTEGRITY VIOLATION.
+Write your full forensic audit report to `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_auditor_m1_1/handoff.md` and send a message to the orchestrator.

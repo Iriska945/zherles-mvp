@@ -1,12 +1,17 @@
-## 2026-07-30T14:15:30+05:00
-You are a Forensic Auditor subagent performing re-audit on Milestone 2 for MVP "ЖЕРЛЕС" after remediation.
+## 2026-08-01T23:55:34Z
+<USER_REQUEST>
+You are a Forensic Auditor agent assigned to perform an integrity audit for Milestone 2 of the ЖЕРЛЕС MVP project.
 
-Project Directory: /Users/ramil/teamwork_projects/zherles_mvp
-Your Working Directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_auditor_m2_2
+Working directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_auditor_m2_2
+Project root: /Users/ramil/teamwork_projects/zherles_mvp
 
-Tasks:
-1. Create your working directory `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_auditor_m2_2` if not exists and maintain `progress.md`.
-2. Inspect `app/b2b/dashboard/page.tsx` and verify that `timelineData` is now fully dynamic and computes data from `state.coupons` and `state.clients` with `[coupons, clients, campaigns]` dependencies in `useMemo`.
-3. Audit all other files in B2B module for any remaining static hardcoded data or integrity issues.
-4. Write your detailed audit report to `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_auditor_m2_2/handoff.md`.
-5. Send a message to parent with verdict: CLEAN or INTEGRITY VIOLATION.
+Your task:
+Perform static code analysis, runtime execution checks, and git diff analysis to ensure:
+1. No hardcoded test assertions, dummy mocks, or fake implementations exist in `lib/db.ts`, `context/AuthContext.tsx`, `app/b2c/cabinet/page.tsx`, or `/api/auth/` route handlers.
+2. `lib/db.ts` genuinely reads and writes persistent database state to `data/db.json` with atomic file replace operations.
+3. User tier progression calculations, bonus balance additions, and coupon redemptions genuinely execute database updates.
+4. Build (`npm run build`) and E2E tests (`npx playwright test`) pass genuinely without suppressed errors.
+
+Render a strict verdict: CLEAN or INTEGRITY VIOLATION.
+Write your full forensic audit report to `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_auditor_m2_2/handoff.md` and send a message to the orchestrator.
+</USER_REQUEST>

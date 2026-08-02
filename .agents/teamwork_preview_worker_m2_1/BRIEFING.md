@@ -1,51 +1,68 @@
-# BRIEFING — 2026-08-01T00:34:00Z
+# BRIEFING — 2026-08-01T15:21:40Z
 
 ## Mission
-Implement Minimalism UX Redesign (Milestone 2) for Zherles MVP across app pages, headers, and nav components, strictly preserving E2E test contracts and verifying with build and playwright tests.
+Implement Milestone 2: B2C Personal Cabinet with Real Database & Auth System (Requirement R2) for ЖЕРЛЕС MVP.
 
 ## 🔒 My Identity
-- Archetype: implementer, qa, specialist
+- Archetype: implementer/qa/specialist
 - Roles: implementer, qa, specialist
 - Working directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_worker_m2_1
-- Original parent: eb5563f0-f075-40d2-aaef-8bdfef0597c5
-- Milestone: Milestone 2 (Minimalism UX Redesign)
+- Original parent: 34c48431-2171-414a-9d2a-c0d08154ad63
+- Milestone: M2 - B2C Personal Cabinet & Database Auth
 
 ## 🔒 Key Constraints
-- DO NOT CHEAT. No hardcoding or facade implementations.
-- Preserve all E2E test selectors, placeholders, button names, test ids, text content expected by `e2e/zherles_mvp.spec.ts`.
-- `app/page.tsx`: Hero title/subtitle 1-2 lines max, short description, large CTA button (`h-12`).
-- `app/b2b/dashboard/page.tsx`: Metric cards `grid-cols-2 lg:grid-cols-4` (max 4/row), single column main layout.
-- `app/b2c/passport/page.tsx` & `app/b2c/redeem/page.tsx`: Primary CTA buttons min 48px height (`h-12` or `min-h-[48px]`), cards with large icons and 1-3 word labels, 375px mobile responsive without horizontal scroll.
-- `components/Header.tsx` & `components/B2BNav.tsx`: Max 5 nav items (Miller's Law). Compact icon sidebar layout for B2B.
-- Remove long text blocks (> 3 lines without visual separator). Keep concise labels/statuses/CTAs.
-- Enforce color signals: Emerald/Green primary/success, Slate/Grey secondary, Rose/Red error.
+- CODE_ONLY network mode: No external URL access.
+- File-backed JSON database engine managing `data/db.json` with atomic file replace writes (`saveDb`).
+- Real auth logic: session tokens stored in DB and HTTP-only cookie `zherles_session_token`.
+- Real Kazakh B2C tiers ("Сосед-Новичок", "Активный Көрші", "Почетный Көрші", "Легенда Района").
+- All code and tests must pass without hardcoded shortcuts.
 
 ## Current Parent
-- Conversation ID: eb5563f0-f075-40d2-aaef-8bdfef0597c5
-- Updated: 2026-08-01T00:34:00Z
+- Conversation ID: 34c48431-2171-414a-9d2a-c0d08154ad63
+- Updated: 2026-08-01T15:21:40Z
 
 ## Task Summary
-- **What to build**: Minimalism UX redesign for `app/page.tsx`, `app/b2b/dashboard/page.tsx`, `app/b2c/passport/page.tsx`, `app/b2c/redeem/page.tsx`, `components/Header.tsx`, `components/B2BNav.tsx`.
-- **Success criteria**: All UX requirements met, `npm run build` succeeds, `npx playwright test` passes 100%.
-- **Interface contracts**: `e2e/zherles_mvp.spec.ts`
-
-## Key Decisions Made
-- Starting context recovery by reading Explorer handoff report and E2E test spec.
+- **What to build**: Update types/index.ts, lib/db.ts, API routes, AuthContext, app/b2c/cabinet/page.tsx, M1 polish, e2e test.
+- **Success criteria**: All API routes work, session persistence, tier progression, Playwright tests pass, `npm run build` succeeds.
+- **Interface contracts**: See explorer handoff report.
+- **Code layout**: Project root /Users/ramil/teamwork_projects/zherles_mvp
 
 ## Change Tracker
-- **Files modified**: `app/page.tsx`, `app/b2b/dashboard/page.tsx`, `app/b2c/passport/page.tsx`, `app/b2c/redeem/page.tsx`, `components/Header.tsx`, `components/B2BNav.tsx`
-- **Build status**: PASS (`npm run build`)
-- **Pending issues**: None
+- **Files modified**:
+  - `types/index.ts`: Added User, UserTier, AuthSession, TierInfo, DatabaseSchema, UserCabinetData, AuthResponse, UserBonusTransaction interfaces.
+  - `lib/db.ts`: Created file-backed JSON database engine with atomic `saveDb` writes and `calculateTierInfo` logic.
+  - `app/api/auth/register/route.ts`: Registration API endpoint (+200 pts bonus, cookie token).
+  - `app/api/auth/login/route.ts`: Login API endpoint.
+  - `app/api/auth/logout/route.ts`: Logout API endpoint.
+  - `app/api/auth/me/route.ts`: Session check API endpoint.
+  - `app/api/user/cabinet/route.ts`: Cabinet data API endpoint.
+  - `app/api/user/bonuses/route.ts`: Bonus management API endpoint.
+  - `app/api/b2c/redeem/route.ts`: Anti-fraud PIN redemption API endpoint (+500 pts).
+  - `app/api/demo/reset/route.ts`: Database seed reset API endpoint.
+  - `context/AuthContext.tsx`: React AuthContext provider with `useAuth` hook.
+  - `app/layout.tsx`: Wrapped root layout in AuthProvider.
+  - `app/b2c/cabinet/page.tsx`: B2C Personal Cabinet page (guest auth & user profile).
+  - `app/b2c/redeem/page.tsx`: Connected PIN redemption form to `/api/b2c/redeem`.
+  - `components/BusinessPassportModal.tsx`: Added Escape key event listener.
+  - `components/Header.tsx`: Added B2C Cabinet link and min 48px touch targets.
+  - `components/ResetDemoButton.tsx`: Added API call to `/api/demo/reset`.
+  - `components/ShareButtons.tsx`: Min 48px touch targets for WhatsApp/Telegram buttons.
+  - `e2e/m2_b2c_cabinet_auth.spec.ts`: Created E2E test suite for M2 (10 tests).
+- **Build status**: PASS (`npm run build` compiled 100% successfully).
+- **Pending issues**: None.
 
 ## Quality Status
-- **Build/test result**: PASS (20/20 Playwright E2E tests passed)
-- **Lint status**: Clean
-- **Tests added/modified**: Preserved all 35 E2E contracts in `e2e/zherles_mvp.spec.ts`
+- **Build/test result**: PASS (10/10 M2 E2E tests, 18/18 responsiveness tests, 10/10 M1 tests passed).
+- **Lint status**: 0 violations.
+- **Tests added/modified**: `e2e/m2_b2c_cabinet_auth.spec.ts` (added), `e2e/m2_minimalism_responsiveness.spec.ts` (updated), `e2e/zherles_mvp.spec.ts` (updated).
 
 ## Loaded Skills
 - None
 
+## Key Decisions Made
+- Implemented file-backed atomic replace writes (`.tmp` -> `db.json`) for zero-corruption state persistence.
+- Session tokens set via HTTP-only cookie (`zherles_session_token`) for security and seamless persistence across page reloads.
+
 ## Artifact Index
-- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_worker_m2_1/ORIGINAL_REQUEST.md` — Original request log
-- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_worker_m2_1/BRIEFING.md` — Working memory briefing
-- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_worker_m2_1/handoff.md` — Handoff report for Milestone 2
+- `.agents/teamwork_preview_worker_m2_1/handoff.md` — Handoff Report for Milestone 2
+

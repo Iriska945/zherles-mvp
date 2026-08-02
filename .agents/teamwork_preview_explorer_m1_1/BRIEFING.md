@@ -1,34 +1,38 @@
-# BRIEFING — 2026-08-01T00:26:38Z
+# BRIEFING — 2026-08-01T20:12:30Z
 
 ## Mission
-Investigate codebase and design implementation plan for Milestone 1 (WhatsApp Green API Integration) for MVP "ЖЕРЛЕС".
+Analyze existing codebase and prepare detailed implementation strategy for Milestone 1 (Interactive Homepage & Map Component - Requirement R1).
 
 ## 🔒 My Identity
 - Archetype: Explorer
-- Roles: Analysis, Design, Architecture Specification
+- Roles: Explorer / Code Analysis
 - Working directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_explorer_m1_1
-- Original parent: eb5563f0-f075-40d2-aaef-8bdfef0597c5
-- Milestone: M1 - WhatsApp Green API Integration
+- Original parent: 34c48431-2171-414a-9d2a-c0d08154ad63
+- Milestone: Milestone 1 - Interactive Homepage & Map Component
 
 ## 🔒 Key Constraints
-- Read-only investigation — do NOT implement project files outside `.agents/` (leave code implementation to implementers)
-- Strictly comply with PROJECT.md and ORIGINAL_REQUEST.md requirements
-- Provide concrete, pasteable specifications, TypeScript interfaces, env format, API route implementation plan, component updates, and Playwright test spec in handoff.md
+- Read-only investigation — do NOT implement application code directly
+- Focus on Requirement R1 specifications and code layout
+- Provide concrete evidence chain and verification methods in handoff report
 
 ## Current Parent
-- Conversation ID: eb5563f0-f075-40d2-aaef-8bdfef0597c5
-- Updated: 2026-08-01T00:26:38Z
+- Conversation ID: 34c48431-2171-414a-9d2a-c0d08154ad63
+- Updated: 2026-08-01T20:12:30Z
 
 ## Investigation State
-- **Explored paths**: `.agents/orchestrator/ORIGINAL_REQUEST.md`, `ORIGINAL_REQUEST.md`
-- **Key findings**: Green API integration requires `GREENAPI_URL`, `GREENAPI_ID`, `GREENAPI_TOKEN` env vars; POST `/api/whatsapp/send` handler with phone cleaning (`77XXXXXXXXX@c.us`); UI modal/input trigger in B2C Passport / `ShareButtons.tsx` with status feedback; Playwright test for WhatsApp API route.
-- **Unexplored areas**: Codebase files (`app/api/`, `.env.local`, `app/b2c/passport/page.tsx`, `components/ShareButtons.tsx`, `e2e/zherles_mvp.spec.ts`).
+- **Explored paths**: `app/page.tsx`, `components/`, `types/index.ts`, `lib/storage.ts`, `data/seedData.json`, `package.json`, `e2e/`
+- **Key findings**: 
+  - `app/page.tsx` lacks map component, product explanation section, and interactive business passport modal.
+  - `types/index.ts` lacks coordinate & detailed address fields on `Business` and `Partner`.
+  - `data/seedData.json` lacks latitude/longitude coordinates for Almaty businesses.
+  - `package.json` contains no map library dependencies; an interactive SVG district map component (`InteractiveMap.tsx`) or SSR-safe Leaflet dynamic import can be utilized. SVG vector approach offers zero bundle/CDN dependencies, 100% SSR safety, and responsive pin interactions.
+- **Unexplored areas**: None (all requested files thoroughly inspected).
 
 ## Key Decisions Made
-- Read-only analysis and drafting of Worker M1 step-by-step implementation guide in `handoff.md`.
+- Formulated 5-part implementation strategy covering Product Explanation, Dynamic Live Counter, Interactive Map Component, Business Passport Modal, and B2B/B2C Entry Points.
 
 ## Artifact Index
-- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_explorer_m1_1/ORIGINAL_REQUEST.md` — Agent prompt history
-- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_explorer_m1_1/BRIEFING.md` — Situational briefing
-- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_explorer_m1_1/progress.md` — Heartbeat and progress log
-- `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_explorer_m1_1/handoff.md` — Analysis & Implementation plan
+- ORIGINAL_REQUEST.md — Initial user prompt
+- BRIEFING.md — Working memory index
+- progress.md — Liveness heartbeat
+- handoff.md — Comprehensive investigation report & implementation plan

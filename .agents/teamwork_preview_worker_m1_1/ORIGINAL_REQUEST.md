@@ -1,41 +1,31 @@
-## 2026-08-01T00:28:12Z
+## 2026-08-01T15:12:40Z
+Implement Milestone 1 (Interactive Homepage & Map Component - Requirement R1) for the ЖЕРЛЕС MVP project.
 
-You are Worker 1 for Milestone 1 (WhatsApp Green API Integration).
 Working directory: /Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_worker_m1_1
+Project root: /Users/ramil/teamwork_projects/zherles_mvp
 
-MANDATORY INTEGRITY WARNING:
-DO NOT CHEAT. All implementations must be genuine. DO NOT hardcode test results, create dummy/facade implementations, or circumvent the intended task. A Forensic Auditor will independently verify your work. Integrity violations WILL be detected and your work WILL be rejected.
+Read investigation report and implementation plan at:
+`/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_explorer_m1_1/handoff.md`
 
-Refer to the Explorer's report at `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_explorer_m1_1/handoff.md`.
+Tasks:
+1. Update `types/index.ts`:
+   - Extend `Business` and `Partner` interfaces with `coordinates?: { lat: number; lng: number }`, `address?: string`, `activePromotions?: string[]`.
+   - Export `BusinessPassportModalData` type.
+2. Update `data/seedData.json`:
+   - Enrich all entries (Urban Coffee, ManCave, FitLife, Flora, Croissant Co) with real Almaty district coordinates, street addresses, and active promotion lists.
+3. Create `components/ProductExplanation.tsx`:
+   - Visual 3-step value proposition component ("Шаг 1. Локальная коалиция", "Шаг 2. Запуск Көрші-маршрута", "Шаг 3. Паспорт района для жителей").
+4. Create `components/InteractiveMap.tsx`:
+   - Interactive SVG/Vector Almaty district map component with interactive pins for establishments, district filtering tabs (All, Almaly, Medeu, Bostandyk), hover tooltips, and click handlers.
+5. Create `components/BusinessPassportModal.tsx`:
+   - Modal popup rendering business details, category badge, district & address, average check (in KZT), match score, active promotions list, and clear CTA buttons (B2B "Запустить Көрші-маршрут", B2C "Забрать бонус в Паспорте").
+6. Update `app/page.tsx`:
+   - Integrate Product Explanation block, dynamic live count of collaborating businesses, Interactive Map with pin click handlers opening `BusinessPassportModal`, and distinct prominent B2B and B2C entry banners/buttons.
+7. Create Playwright test `e2e/m1_interactive_homepage.spec.ts`:
+   - Test homepage loading, live count display, map rendering, map pin click opening Business Passport modal, and B2B navigation link.
+8. Verify your work by running:
+   - `npm run build`
+   - `npx playwright test e2e/m1_interactive_homepage.spec.ts`
+   - Document all build and test command outputs in your handoff report.
 
-Your task:
-1. Environment configuration:
-   Create or update `/Users/ramil/teamwork_projects/zherles_mvp/.env.local`:
-   GREENAPI_URL=https://7107.api.greenapi.com
-   GREENAPI_ID=710722698257
-   GREENAPI_TOKEN=8e5ed41b52a44dbe8a74e50ae8ad7a04958f3eebe8004fcfbf
-
-2. Next.js Server API Route:
-   Create `/Users/ramil/teamwork_projects/zherles_mvp/app/api/whatsapp/send/route.ts`
-   - Handle POST request receiving JSON `{ phone, message }`.
-   - Validate and sanitize phone number (e.g. remove non-digits; handle 87... -> 77...; format as 77XXXXXXXXX@c.us).
-   - Read `GREENAPI_URL`, `GREENAPI_ID`, `GREENAPI_TOKEN` from process.env.
-   - Forward request via `fetch` to `${GREENAPI_URL}/waInstance${GREENAPI_ID}/sendMessage/${GREENAPI_TOKEN}` with payload `{ "chatId": chatId, "message": message }`.
-   - Return 200 JSON `{ success: true, idMessage: data.idMessage }` on success, or 400/500 JSON `{ success: false, error: ... }` on failure.
-
-3. B2C UI Component Update:
-   Update `/Users/ramil/teamwork_projects/zherles_mvp/components/ShareButtons.tsx` (and `app/b2c/passport/page.tsx` if relevant):
-   - When clicking "Поделиться в WhatsApp", prompt/open modal for entering phone number (or default test number with option to change).
-   - Call `/api/whatsapp/send` with user phone and deal/passport share message.
-   - Display real-time UI feedback toast/banner: "Сообщение отправлено ✓" (green) or "Ошибка — попробуйте ещё раз" (red).
-
-4. E2E Test:
-   Update `/Users/ramil/teamwork_projects/zherles_mvp/e2e/zherles_mvp.spec.ts` (or create `e2e/whatsapp.spec.ts`):
-   - Add test for `/api/whatsapp/send` returning 200 on valid POST request (mocking external Green API endpoint `**/waInstance*/**` with page.route or API request).
-   - Verify UI "Поделиться в WhatsApp" displays "Сообщение отправлено ✓".
-
-5. Build & Test Verification:
-   - Run `npm run build` and `npx playwright test` to verify zero errors and all tests passing.
-   - Document build and test outputs in your handoff report.
-
-6. Write your handoff report to `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_worker_m1_1/handoff.md` and send a message back to orchestrator.
+Write handoff report to `/Users/ramil/teamwork_projects/zherles_mvp/.agents/teamwork_preview_worker_m1_1/handoff.md` and send summary message to orchestrator.
