@@ -54,16 +54,16 @@ export default function CampaignsOverviewPage() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Top Header & CTA */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm mb-6">
           <div>
             <div className="inline-flex items-center space-x-1.5 bg-emerald-50 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full mb-1 border border-emerald-200">
               <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
               <span>Районный кросс-маркетинг</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
               Акции «Көрші-маршрут»
             </h1>
-            <p className="text-xs sm:text-sm text-slate-500 mt-1">
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1">
               Активные и прошедшие кампании взаимного притока клиентов в районе{' '}
               <strong>{business.district}</strong>.
             </p>
@@ -81,7 +81,7 @@ export default function CampaignsOverviewPage() {
         {/* Metrics Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           {/* Metric 1 */}
-          <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+          <div className="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm space-y-2">
             <div className="flex items-center justify-between text-slate-500">
               <span className="text-xs font-semibold uppercase tracking-wider">
                 Активных акций
@@ -90,14 +90,14 @@ export default function CampaignsOverviewPage() {
                 <CheckCircle2 className="w-4 h-4" />
               </div>
             </div>
-            <div className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+            <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
               {activeCount}
             </div>
             <p className="text-[11px] text-slate-400">Из {campaigns.length} общих кампаний</p>
           </div>
 
           {/* Metric 2 */}
-          <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+          <div className="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm space-y-2">
             <div className="flex items-center justify-between text-slate-500">
               <span className="text-xs font-semibold uppercase tracking-wider">
                 Выдано купонов
@@ -106,14 +106,14 @@ export default function CampaignsOverviewPage() {
                 <Tag className="w-4 h-4" />
               </div>
             </div>
-            <div className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+            <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
               {totalIssuedCoupons}
             </div>
             <p className="text-[11px] text-slate-400">Сгенерировано для клиентов</p>
           </div>
 
           {/* Metric 3 */}
-          <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+          <div className="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm space-y-2">
             <div className="flex items-center justify-between text-slate-500">
               <span className="text-xs font-semibold uppercase tracking-wider">
                 Использовано бонусов
@@ -129,7 +129,7 @@ export default function CampaignsOverviewPage() {
           </div>
 
           {/* Metric 4 */}
-          <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-2">
+          <div className="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm space-y-2">
             <div className="flex items-center justify-between text-slate-500">
               <span className="text-xs font-semibold uppercase tracking-wider">
                 Конверсия погашения
@@ -138,7 +138,7 @@ export default function CampaignsOverviewPage() {
                 <TrendingUp className="w-4 h-4" />
               </div>
             </div>
-            <div className="text-2xl sm:text-3xl font-extrabold text-slate-900">
+            <div className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white">
               {conversionRate}%
             </div>
             <p className="text-[11px] text-slate-400">Средний показатель по району</p>
@@ -147,9 +147,9 @@ export default function CampaignsOverviewPage() {
 
         {/* Campaigns Grid Header */}
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-bold text-slate-900 flex items-center space-x-2">
+          <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center space-x-2">
             <span>Список кампаний</span>
-            <span className="bg-slate-100 text-slate-700 text-xs px-2.5 py-0.5 rounded-full font-semibold">
+            <span className="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs px-2.5 py-0.5 rounded-full font-semibold">
               {campaigns.length}
             </span>
           </h2>
@@ -157,7 +157,7 @@ export default function CampaignsOverviewPage() {
 
         {/* Empty state */}
         {campaigns.length === 0 ? (
-          <div className="bg-white rounded-2xl p-12 text-center border border-slate-200 space-y-4">
+          <div className="bg-white dark:bg-slate-800 rounded-2xl p-12 text-center border border-slate-200 dark:border-slate-700 space-y-4">
             <div className="w-12 h-12 rounded-full bg-emerald-50 flex items-center justify-center mx-auto text-emerald-600">
               <PlusCircle className="w-6 h-6" />
             </div>
@@ -198,13 +198,13 @@ export default function CampaignsOverviewPage() {
               return (
                 <div
                   key={campaign.id}
-                  className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition-all p-6 flex flex-col justify-between space-y-5"
+                  className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-all p-6 flex flex-col justify-between space-y-5"
                 >
                   <div className="space-y-4">
                     {/* Top Status & Title */}
                     <div className="flex items-start justify-between gap-3">
                       <div>
-                        <h3 className="text-lg font-extrabold text-slate-900 leading-snug">
+                        <h3 className="text-lg font-extrabold text-slate-900 dark:text-white leading-snug">
                           {campaign.title}
                         </h3>
                         <p className="text-xs text-slate-400 mt-1 flex items-center space-x-1">
@@ -231,7 +231,7 @@ export default function CampaignsOverviewPage() {
                     </div>
 
                     {/* Reward Details Box */}
-                    <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 space-y-2">
+                    <div className="bg-slate-50 dark:bg-slate-900 rounded-xl p-4 border border-slate-100 dark:border-slate-700 space-y-2">
                       <div className="text-xs font-bold text-slate-800 flex items-start space-x-2">
                         <Gift className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                         <span>{campaign.rewardText}</span>
@@ -272,7 +272,7 @@ export default function CampaignsOverviewPage() {
                     </div>
 
                     {/* Coupon Performance Stats */}
-                    <div className="grid grid-cols-3 gap-2 bg-slate-50 p-3 rounded-xl border border-slate-100 text-center">
+                    <div className="grid grid-cols-3 gap-2 bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-100 dark:border-slate-700 text-center">
                       <div>
                         <div className="text-[10px] uppercase font-bold text-slate-400">Купонов</div>
                         <div className="text-sm font-extrabold text-slate-800">
@@ -322,7 +322,7 @@ export default function CampaignsOverviewPage() {
         {/* QR Code Modal Dialog */}
         {selectedQrCampaign && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fadeIn">
-            <div className="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl relative space-y-4 border border-slate-200">
+            <div className="bg-white dark:bg-slate-800 rounded-3xl max-w-md w-full p-6 shadow-2xl relative space-y-4 border border-slate-200 dark:border-slate-700">
               {/* Close Button */}
               <button
                 type="button"
@@ -337,7 +337,7 @@ export default function CampaignsOverviewPage() {
                 <span className="text-[11px] font-bold text-emerald-600 uppercase tracking-wider bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
                   QR-код акции «Көрші-маршрут»
                 </span>
-                <h3 className="text-lg font-extrabold text-slate-900 mt-1">
+                <h3 className="text-lg font-extrabold text-slate-900 dark:text-white mt-1">
                   {selectedQrCampaign.title}
                 </h3>
               </div>

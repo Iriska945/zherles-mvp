@@ -4,6 +4,7 @@ import React, { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { useApp } from '@/context/AppContext';
+import { useLanguage } from '@/context/LanguageContext';
 import ShareButtons from '@/components/ShareButtons';
 import QRGenerator from '@/components/QRGenerator';
 import {
@@ -58,6 +59,7 @@ function CategoryIcon({ category }: { category: string }) {
 
 function DistrictPassportContent() {
   const { state } = useApp();
+  const { t } = useLanguage();
   const searchParams = useSearchParams();
   const pinParam = searchParams.get('pin');
 
@@ -125,7 +127,7 @@ function DistrictPassportContent() {
   const districtName = state.districtPassport?.districtName || 'Алмалинский район';
 
   return (
-    <div className="max-w-md mx-auto shadow-2xl min-h-screen bg-slate-50 border-x border-slate-200 flex flex-col font-sans pb-32 overflow-x-hidden">
+    <div className="max-w-md mx-auto shadow-2xl min-h-screen bg-slate-50 dark:bg-slate-900 border-x border-slate-200 dark:border-slate-800 flex flex-col font-sans pb-32 overflow-x-hidden transition-colors duration-205">
       {/* Header */}
       <header className="bg-gradient-to-br from-emerald-700 via-emerald-600 to-teal-800 text-white p-6 rounded-b-3xl shadow-lg relative overflow-hidden">
         {/* Background decorative elements */}
@@ -144,12 +146,12 @@ function DistrictPassportContent() {
           </div>
 
           <h1 className="text-2xl font-black tracking-tight text-white mb-2 flex items-center gap-2">
-            <span>Паспорт района</span>
+            <span>{t('passport.title')}</span>
             <Sparkles className="w-5 h-5 text-amber-300 animate-pulse" />
           </h1>
 
           <p className="text-xs text-emerald-100 leading-relaxed font-medium">
-            Единый эко-паспорт района. Скидки и бонусы в лучших локальных заведениях.
+            {t('passport.desc')}
           </p>
 
           {/* Quick redemption callout */}
@@ -159,15 +161,15 @@ function DistrictPassportContent() {
                 PIN
               </div>
               <div>
-                <div className="text-xs font-extrabold text-white">Есть PIN-код?</div>
-                <div className="text-[11px] text-emerald-100">Погашение за 2 сек</div>
+                <div className="text-xs font-extrabold text-white">{t('passport.hasPin')}</div>
+                <div className="text-[11px] text-emerald-100">{t('passport.quickRedeem')}</div>
               </div>
             </div>
             <Link
               href="/b2c/redeem"
               className="bg-white text-emerald-800 hover:bg-emerald-50 h-10 min-h-[44px] px-3.5 rounded-xl text-xs font-black transition-all shadow active:scale-95 flex items-center space-x-1 shrink-0 justify-center"
             >
-              <span>Ввести</span>
+              <span>{t('passport.enter')}</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
           </div>
@@ -179,18 +181,18 @@ function DistrictPassportContent() {
         
         {/* Global User Profile Status Banner */}
         {state.userProfile && (
-          <div className="bg-white p-5 rounded-2xl shadow-sm border border-slate-200">
+          <div className="bg-white dark:bg-slate-800 p-5 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-700 transition-colors">
             <div className="flex items-center justify-between mb-4">
               <div>
-                <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Мой статус</div>
-                <div className="text-xl font-black text-slate-900 flex items-center space-x-2">
+                <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1">{t('passport.myStatus')}</div>
+                <div className="text-xl font-black text-slate-900 dark:text-white flex items-center space-x-2">
                   <Award className={`w-6 h-6 ${state.userProfile.tier === 'Gold' ? 'text-amber-500' : state.userProfile.tier === 'Silver' ? 'text-slate-400' : 'text-amber-700'}`} />
                   <span>{state.userProfile.tier}</span>
                 </div>
               </div>
               <div className="text-right">
-                <div className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-1">Скидка сети</div>
-                <div className="text-xl font-black text-emerald-600">{state.userProfile.globalDiscount}%</div>
+                <div className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest mb-1">{t('passport.networkDiscount')}</div>
+                <div className="text-xl font-black text-emerald-600 dark:text-emerald-400">{state.userProfile.globalDiscount}%</div>
               </div>
             </div>
             
@@ -198,10 +200,10 @@ function DistrictPassportContent() {
             {state.userProfile.tier !== 'Gold' && (
               <div className="mb-4">
                 <div className="flex justify-between text-xs font-bold mb-1">
-                  <span className="text-slate-500">Визитов: {state.userProfile.visitsCount}</span>
-                  <span className="text-emerald-600">Цель: {state.userProfile.tier === 'Bronze' ? 5 : 10}</span>
+                  <span className="text-slate-500 dark:text-slate-400">{t('passport.visits', { count: state.userProfile.visitsCount })}</span>
+                  <span className="text-emerald-600 dark:text-emerald-400">{t('passport.goal', { count: state.userProfile.tier === 'Bronze' ? 5 : 10 })}</span>
                 </div>
-                <div className="w-full bg-slate-100 rounded-full h-2">
+                <div className="w-full bg-slate-100 dark:bg-slate-700 rounded-full h-2">
                   <div 
                     className="bg-emerald-500 h-2 rounded-full transition-all"
                     style={{ width: `${(state.userProfile.visitsCount / (state.userProfile.tier === 'Bronze' ? 5 : 10)) * 100}%` }}
@@ -211,38 +213,39 @@ function DistrictPassportContent() {
             )}
             
             {/* Holiday Bonuses */}
-            <div className="flex items-center justify-between bg-amber-50 p-3 rounded-xl border border-amber-200">
+            <div className="flex items-center justify-between bg-amber-50 dark:bg-amber-950/20 p-3 rounded-xl border border-amber-200 dark:border-amber-900 transition-colors">
               <div className="flex items-center space-x-2">
                 <Star className="w-5 h-5 text-amber-500" />
-                <span className="text-xs font-extrabold text-amber-900">Праздничные бонусы</span>
+                <span className="text-xs font-extrabold text-amber-950 dark:text-amber-300">{t('passport.holidayBonuses')}</span>
               </div>
-              <span className="text-sm font-black text-amber-700">{state.userProfile.holidayBonuses} ₸</span>
+              <span className="text-sm font-black text-amber-700 dark:text-amber-400">{state.userProfile.holidayBonuses} ₸</span>
             </div>
           </div>
         )}
+        
         {/* URL PIN Banner indicator if parameter was supplied */}
         {highlightedPin && (
-          <div className="bg-amber-50 border border-amber-300 p-3.5 rounded-2xl flex items-center justify-between shadow-sm animate-pulse">
+          <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-300 dark:border-amber-900 p-3.5 rounded-2xl flex items-center justify-between shadow-sm animate-pulse transition-colors">
             <div className="flex items-center space-x-2">
-              <Tag className="w-4 h-4 text-amber-600" />
-              <span className="text-xs font-extrabold text-amber-900">
-                Выбран бонус по PIN: <span className="font-mono text-sm underline">{highlightedPin}</span>
+              <Tag className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+              <span className="text-xs font-extrabold text-amber-950 dark:text-amber-300">
+                {t('passport.pinSelected')} <span className="font-mono text-sm underline">{highlightedPin}</span>
               </span>
             </div>
             <button
               onClick={() => setHighlightedPin(null)}
-              className="text-amber-700 hover:text-amber-900 text-xs font-bold"
+              className="text-amber-700 dark:text-amber-400 hover:text-amber-900 dark:hover:text-amber-200 text-xs font-bold"
             >
-              Сбросить
+              {t('passport.reset')}
             </button>
           </div>
         )}
 
         {/* Section title */}
         <div className="flex items-center justify-between px-1 pt-2">
-          <h2 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider flex items-center space-x-1.5">
-            <Building2 className="w-4 h-4 text-emerald-600" />
-            <span>Активные предложения района ({deals.length})</span>
+          <h2 className="text-sm font-extrabold text-slate-900 dark:text-white uppercase tracking-wider flex items-center space-x-1.5">
+            <Building2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
+            <span>{t('passport.activeOffers', { count: deals.length })}</span>
           </h2>
         </div>
 
@@ -255,62 +258,62 @@ function DistrictPassportContent() {
               <div
                 key={deal.id}
                 id={`deal-${deal.pinCode}`}
-                className={`bg-white rounded-2xl p-4 shadow-sm border transition-all ${
+                className={`bg-white dark:bg-slate-850 rounded-2xl p-4 shadow-sm border transition-colors ${
                   isHighlighted
-                    ? 'border-2 border-emerald-500 ring-4 ring-emerald-100 shadow-md'
-                    : 'border-slate-200 hover:border-slate-300'
+                    ? 'border-2 border-emerald-500 ring-4 ring-emerald-100 dark:ring-emerald-950/40 shadow-md'
+                    : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
                 }`}
               >
                 {/* Top Badge & Category */}
                 <div className="flex items-start justify-between mb-3">
                   <div className="flex items-center space-x-2.5">
-                    <div className="p-2.5 bg-slate-100 rounded-xl flex items-center justify-center">
+                    <div className="p-2.5 bg-slate-100 dark:bg-slate-800 rounded-xl flex items-center justify-center transition-colors">
                       <CategoryIcon category={deal.category} />
                     </div>
                     <div>
-                      <h3 className="text-sm font-extrabold text-slate-900 leading-snug">
+                      <h3 className="text-sm font-extrabold text-slate-900 dark:text-white leading-snug">
                         {deal.businessName}
                       </h3>
-                      <span className="text-[11px] font-medium text-slate-500 bg-slate-100 px-2 py-0.5 rounded-md inline-block mt-0.5">
+                      <span className="text-[11px] font-medium text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800 px-2 py-0.5 rounded-md inline-block mt-0.5 transition-colors">
                         {deal.category}
                       </span>
                     </div>
                   </div>
 
                   {isHighlighted && (
-                    <span className="bg-emerald-100 text-emerald-800 text-[10px] font-extrabold px-2 py-1 rounded-full uppercase tracking-wider">
-                      Активен
+                    <span className="bg-emerald-100 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 text-[10px] font-extrabold px-2 py-1 rounded-full uppercase tracking-wider">
+                      {t('passport.dealActive')}
                     </span>
                   )}
                 </div>
 
                 {/* Offer details (Simplified) */}
                 <div className="mb-4">
-                  <div className="text-base font-black text-slate-900 mb-1 leading-tight">
+                  <div className="text-base font-black text-slate-900 dark:text-white mb-1 leading-tight">
                     {deal.title}
                   </div>
-                  <div className="text-sm text-slate-600 font-medium">
+                  <div className="text-sm text-slate-600 dark:text-slate-350 font-medium">
                     {deal.reward}
                   </div>
                   {deal.minSpend && (
-                    <div className="text-xs text-emerald-600 font-bold mt-2 bg-emerald-50 inline-block px-2 py-1 rounded-md">
-                      При чеке от {deal.minSpend.toLocaleString('ru-RU')} ₸
+                    <div className="text-xs text-emerald-600 dark:text-emerald-400 font-bold mt-2 bg-emerald-50 dark:bg-emerald-950/20 inline-block px-2 py-1 rounded-md transition-colors">
+                      {t('passport.minSpend', { amount: deal.minSpend.toLocaleString('ru-RU') })}
                     </div>
                   )}
                 </div>
 
                 {/* PIN preview block */}
-                <div className="flex items-center justify-between bg-slate-50 p-2.5 rounded-xl border border-slate-100 mb-3">
-                  <div className="text-[11px] text-slate-500 font-medium">
-                    ПИН-код для показа кассиру:
+                <div className="flex items-center justify-between bg-slate-50 dark:bg-slate-900 p-2.5 rounded-xl border border-slate-100 dark:border-slate-800/60 mb-3 transition-colors">
+                  <div className="text-[11px] text-slate-500 dark:text-slate-400 font-medium">
+                    {t('passport.showPinToCashier')}
                   </div>
-                  <div className="font-mono text-sm font-black text-slate-900 bg-white px-2.5 py-1 rounded-lg border border-slate-200 shadow-sm tracking-wider">
+                  <div className="font-mono text-sm font-black text-slate-900 dark:text-white bg-white dark:bg-slate-800 px-2.5 py-1 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm tracking-wider transition-colors">
                     {deal.pinCode}
                   </div>
                 </div>
 
                 {/* Action Buttons with h-12 (min 48px height) touch targets */}
-                <div className="space-y-2 pt-1 border-t border-slate-100">
+                <div className="space-y-2 pt-1 border-t border-slate-100 dark:border-slate-850">
                   <div className="grid grid-cols-2 gap-2">
                     {/* Show QR Modal Button */}
                     <button
@@ -319,23 +322,23 @@ function DistrictPassportContent() {
                       className="inline-flex items-center justify-center space-x-1.5 h-12 min-h-[48px] px-3 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold rounded-xl transition-all shadow-sm active:scale-95"
                     >
                       <QrCode className="w-4 h-4" />
-                      <span>QR / PIN код</span>
+                      <span>{t('passport.qrPinCode')}</span>
                     </button>
 
                     {/* Redeem page link */}
                     <Link
                       href={`/b2c/redeem?pin=${deal.pinCode}`}
-                      className="inline-flex items-center justify-center space-x-1.5 h-12 min-h-[48px] px-3 bg-slate-900 hover:bg-slate-800 text-white text-xs font-extrabold rounded-xl transition-all shadow-sm active:scale-95"
+                      className="inline-flex items-center justify-center space-x-1.5 h-12 min-h-[48px] px-3 bg-slate-900 hover:bg-slate-800 dark:bg-slate-800 dark:hover:bg-slate-700 text-white text-xs font-extrabold rounded-xl transition-all shadow-sm active:scale-95"
                     >
                       <CheckCircle2 className="w-4 h-4 text-emerald-400" />
-                      <span>Погасить</span>
+                      <span>{t('passport.redeem')}</span>
                     </Link>
                   </div>
 
                   {/* Messenger Share section */}
                   <div className="pt-2">
-                    <div className="text-[10px] uppercase font-extrabold text-slate-400 mb-1.5">
-                      Поделиться предложением:
+                    <div className="text-[10px] uppercase font-extrabold text-slate-400 dark:text-slate-500 mb-1.5">
+                      {t('passport.shareOffer')}
                     </div>
                     <ShareButtons
                       title={`Бонус от ${deal.businessName}`}
@@ -352,52 +355,52 @@ function DistrictPassportContent() {
       </main>
 
       {/* Floating Bottom Navigation Bar */}
-      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-white/95 backdrop-blur-md border-t border-slate-200 p-3 shadow-2xl z-40">
+      <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-md bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 p-3 shadow-2xl z-40 transition-colors">
         <Link
           href="/b2c/redeem"
           className="w-full inline-flex items-center justify-center space-x-2 bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-700 hover:to-teal-700 text-white font-extrabold text-sm h-12 min-h-[48px] px-4 rounded-xl shadow-lg transition-all active:scale-98"
         >
           <QrCode className="w-5 h-5" />
-          <span>Погасить бонус по PIN-коду</span>
+          <span>{t('passport.redeemByPinButton')}</span>
         </Link>
       </div>
 
       {/* QR Code Modal Overlay */}
       {selectedDeal && (
         <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl relative animate-in fade-in zoom-in duration-200">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl max-w-sm w-full p-6 shadow-2xl relative animate-in fade-in zoom-in duration-200 transition-colors">
             {/* Close button */}
             <button
               type="button"
               onClick={() => setSelectedDeal(null)}
-              className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 p-1.5 bg-slate-100 rounded-full transition-colors"
+              className="absolute top-4 right-4 text-slate-400 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 p-1.5 bg-slate-100 dark:bg-slate-800 rounded-full transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
 
             {/* Modal Content */}
             <div className="text-center">
-              <span className="inline-block text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full mb-2">
+              <span className="inline-block text-[11px] font-bold text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/30 px-2.5 py-1 rounded-full mb-2">
                 {selectedDeal.businessName}
               </span>
-              <h3 className="text-lg font-black text-slate-900 mb-1">
+              <h3 className="text-lg font-black text-slate-900 dark:text-white mb-1">
                 {selectedDeal.title}
               </h3>
-              <p className="text-xs text-slate-600 mb-4">{selectedDeal.reward}</p>
+              <p className="text-xs text-slate-600 dark:text-slate-400 mb-4">{selectedDeal.reward}</p>
 
               {/* QR Code Display */}
               <QRGenerator
                 value={`https://zherles.kz/b2c/passport?pin=${selectedDeal.pinCode}`}
-                title="Покажите QR на кассе"
-                subtitle="Кассир отсканирует QR или введет PIN-код"
+                title={t('passport.showQrPrompt')}
+                subtitle={t('passport.cashierInstruction')}
                 size={180}
                 showActions={false}
               />
 
               {/* Prominent PIN Code */}
-              <div className="bg-slate-900 text-white p-3.5 rounded-2xl my-4 text-center">
-                <div className="text-[10px] text-slate-400 font-bold uppercase tracking-wider mb-0.5">
-                  ПИН-код для гашения
+              <div className="bg-slate-900 dark:bg-slate-950 text-white p-3.5 rounded-2xl my-4 text-center transition-colors">
+                <div className="text-[10px] text-slate-400 dark:text-slate-500 font-bold uppercase tracking-wider mb-0.5">
+                  {t('passport.pinForRedeem')}
                 </div>
                 <div className="text-2xl font-mono font-black text-emerald-400 tracking-widest">
                   {selectedDeal.pinCode}
@@ -411,12 +414,12 @@ function DistrictPassportContent() {
                   className="w-full inline-flex items-center justify-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs h-12 min-h-[48px] rounded-xl transition-all shadow"
                 >
                   <CheckCircle2 className="w-4 h-4" />
-                  <span>Перейти к гашению бонуса</span>
+                  <span>{t('passport.goToRedemption')}</span>
                 </Link>
 
-                <div className="pt-2 border-t border-slate-100">
-                  <div className="text-[10px] text-slate-400 font-bold mb-1.5">
-                    Поделиться этим кодом:
+                <div className="pt-2 border-t border-slate-100 dark:border-slate-800">
+                  <div className="text-[10px] text-slate-400 dark:text-slate-500 font-bold mb-1.5">
+                    {t('passport.shareCode')}
                   </div>
                   <ShareButtons
                     title={`Бонус от ${selectedDeal.businessName}`}
@@ -435,12 +438,13 @@ function DistrictPassportContent() {
 }
 
 export default function PassportPage() {
+  const { t } = useLanguage();
   return (
     <Suspense
       fallback={
-        <div className="max-w-md mx-auto min-h-screen bg-slate-50 flex items-center justify-center p-6 text-center">
+        <div className="max-w-md mx-auto min-h-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center p-6 text-center transition-colors">
           <div className="animate-spin w-8 h-8 border-4 border-emerald-600 border-t-transparent rounded-full mx-auto mb-3" />
-          <p className="text-xs text-slate-500 font-medium">Загрузка Паспорта района...</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">{t('passport.loading')}</p>
         </div>
       }
     >

@@ -177,16 +177,16 @@ function CampaignWizardContent() {
           <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
           <span>Мастер создания Көрші-маршрута</span>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
           Создание новой кросс-акции «Көрші-маршрут»
         </h1>
-        <p className="text-slate-500 text-xs sm:text-sm mt-1">
+        <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-1">
           Объединитесь с бизнесами района {business.district} для обмена целевым трафиком клиентов.
         </p>
       </div>
 
       {/* Stepper Navigation */}
-      <div className="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm mb-8">
+      <div className="bg-white dark:bg-slate-800 rounded-2xl p-4 border border-slate-200 dark:border-slate-700 shadow-sm mb-8">
         <div className="grid grid-cols-3 gap-2 text-center">
           {/* Step 1 Pill */}
           <button
@@ -276,10 +276,10 @@ function CampaignWizardContent() {
       {/* STEP 1: PARTNER SELECTION */}
       {step === 1 && (
         <div className="space-y-6">
-          <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+          <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-700 pb-4">
               <div>
-                <h2 className="text-lg font-bold text-slate-900 flex items-center space-x-2">
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center space-x-2">
                   <Users className="w-5 h-5 text-emerald-600" />
                   <span>Шаг 1: Выбор партнёров по району</span>
                 </h2>
@@ -337,7 +337,7 @@ function CampaignWizardContent() {
                     <div className="flex-1 space-y-2">
                       <div className="flex items-start justify-between">
                         <div>
-                          <h3 className="text-base font-bold text-slate-900">{partner.name}</h3>
+                          <h3 className="text-base font-bold text-slate-900 dark:text-white">{partner.name}</h3>
                           <div className="flex items-center space-x-1.5 text-xs text-slate-500 mt-0.5">
                             <CatIcon className="w-3.5 h-3.5 text-slate-400" />
                             <span>{partner.category}</span>
@@ -392,9 +392,9 @@ function CampaignWizardContent() {
       {/* STEP 2: REWARDS & CONDITIONS */}
       {step === 2 && (
         <div className="space-y-6">
-          <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-6">
-            <div className="border-b border-slate-100 pb-4">
-              <h2 className="text-lg font-bold text-slate-900 flex items-center space-x-2">
+          <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm space-y-6">
+            <div className="border-b border-slate-100 dark:border-slate-700 pb-4">
+              <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center space-x-2">
                 <Gift className="w-5 h-5 text-emerald-600" />
                 <span>Шаг 2: Настройка наград и условий акции</span>
               </h2>
@@ -519,9 +519,9 @@ function CampaignWizardContent() {
         <div className="space-y-6">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* WhatsApp Live Preview Card */}
-            <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm space-y-4">
-              <div className="flex items-center justify-between border-b border-slate-100 pb-3">
-                <h3 className="text-sm font-bold text-slate-900 flex items-center space-x-2">
+            <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm space-y-4">
+              <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-700 pb-3">
+                <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center space-x-2">
                   <Smartphone className="w-4 h-4 text-emerald-600" />
                   <span>Превью WhatsApp-сообщения</span>
                 </h3>
@@ -543,7 +543,7 @@ function CampaignWizardContent() {
 
                 {/* Chat Bubble Body */}
                 <div className="bg-[#efeae2] p-4 rounded-b-xl space-y-3 min-h-[220px]">
-                  <div className="bg-white rounded-2xl p-4 shadow-sm border border-slate-200/80 max-w-[90%] space-y-3">
+                  <div className="bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm border border-slate-200/80 max-w-[90%] space-y-3">
                     <p className="text-xs text-slate-800 leading-relaxed font-medium">
                       {shareMessage}
                     </p>
@@ -576,7 +576,7 @@ function CampaignWizardContent() {
                 </div>
               </div>
 
-              <div className="text-xs text-slate-500 bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-1">
+              <div className="text-xs text-slate-500 bg-slate-50 p-3 rounded-xl border border-slate-100 dark:border-slate-700 space-y-1">
                 <div className="font-bold text-slate-700">Выбранные партнёры ({selectedPartners.length}):</div>
                 <div className="flex flex-wrap gap-1.5 pt-1">
                   {selectedPartners.map((p) => (

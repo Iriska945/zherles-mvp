@@ -188,18 +188,18 @@ function RedeemContent() {
   };
 
   return (
-    <div className="max-w-md mx-auto shadow-2xl min-h-screen bg-slate-50 border-x border-slate-200 flex flex-col font-sans">
+    <div className="max-w-md mx-auto shadow-2xl min-h-screen bg-slate-50 dark:bg-slate-900 border-x border-slate-200 dark:border-slate-800 flex flex-col font-sans transition-colors duration-205">
       {/* Header Bar */}
-      <header className="bg-white border-b border-slate-200 px-4 py-3.5 flex items-center justify-between sticky top-0 z-30">
+      <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 px-4 py-3.5 flex items-center justify-between sticky top-0 z-30 transition-colors">
         <Link
           href="/b2c/passport"
-          className="inline-flex items-center space-x-1.5 text-xs font-bold text-slate-600 hover:text-slate-900 bg-slate-100 px-3 py-1.5 rounded-xl transition-colors"
+          className="inline-flex items-center space-x-1.5 text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-slate-800 px-3 py-1.5 rounded-xl transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Паспорт района</span>
         </Link>
-        <div className="text-xs font-black text-slate-900 uppercase tracking-wider flex items-center space-x-1">
-          <KeyRound className="w-4 h-4 text-emerald-600" />
+        <div className="text-xs font-black text-slate-900 dark:text-white uppercase tracking-wider flex items-center space-x-1">
+          <KeyRound className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
           <span>Гашение бонуса</span>
         </div>
       </header>
@@ -209,20 +209,20 @@ function RedeemContent() {
         <div className="space-y-6">
           {/* Title Banner */}
           <div className="text-center pt-2">
-            <div className="w-14 h-14 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-inner">
+            <div className="w-14 h-14 bg-emerald-100 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-400 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-inner transition-colors">
               <KeyRound className="w-7 h-7" />
             </div>
-            <h1 className="text-xl font-black text-slate-900 tracking-tight mb-1">
+            <h1 className="text-xl font-black text-slate-900 dark:text-white tracking-tight mb-1">
               Ввод 4-значного PIN-кода
             </h1>
-            <p className="text-xs text-slate-500 max-w-xs mx-auto">
+            <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xs mx-auto">
               Введите PIN-код для гашения купона или предъявите его на кассе партнера
             </p>
           </div>
 
           {/* SUCCESS STATE DISPLAY */}
           {resultState === 'SUCCESS' && redeemedResult?.coupon && (
-            <div className="bg-emerald-50 border-2 border-emerald-500 rounded-3xl p-5 shadow-lg space-y-4 animate-in fade-in zoom-in duration-200">
+            <div className="bg-emerald-50 dark:bg-emerald-950/20 border-2 border-emerald-500 rounded-3xl p-5 shadow-lg space-y-4 animate-in fade-in zoom-in duration-200 transition-colors">
               <div className="flex items-center space-x-3 pb-3 border-b border-emerald-200">
                 <div className="w-10 h-10 rounded-full bg-emerald-600 text-white flex items-center justify-center flex-shrink-0 shadow">
                   <CheckCircle2 className="w-6 h-6" />
@@ -231,23 +231,23 @@ function RedeemContent() {
                   <h2 className="text-base font-black text-emerald-950">
                     Бонус успешно погашен!
                   </h2>
-                  <p className="text-xs text-emerald-700 font-semibold">
+                  <p className="text-xs text-emerald-700 dark:text-emerald-400 font-semibold">
                     Статус: Подтверждено в системе
                   </p>
                 </div>
               </div>
 
               {/* Global Points Notification */}
-              <div className="bg-amber-50 p-3 rounded-xl border border-amber-200 flex items-start space-x-3">
+              <div className="bg-amber-50 dark:bg-amber-950/20 p-3 rounded-xl border border-amber-200 dark:border-amber-900 flex items-start space-x-3 transition-colors">
                 <Gift className="w-5 h-5 text-amber-500 mt-0.5" />
                 <div>
-                  <div className="text-xs font-bold text-amber-900 mb-0.5">Визит засчитан!</div>
-                  <div className="text-[11px] text-amber-700 leading-tight">Ваш визит добавлен в глобальную бонусную систему Zherles. Вы на шаг ближе к новому уровню и повышенной скидке!</div>
+                  <div className="text-xs font-bold text-amber-900 dark:text-amber-300 mb-0.5">Визит засчитан!</div>
+                  <div className="text-[11px] text-amber-700 dark:text-amber-400 leading-tight">Ваш визит добавлен в глобальную бонусную систему Zherles. Вы на шаг ближе к новому уровню и повышенной скидке!</div>
                 </div>
               </div>
 
               {/* Coupon details */}
-              <div className="space-y-2.5 text-xs text-slate-700 bg-white/80 backdrop-blur-sm p-4 rounded-2xl border border-emerald-100">
+              <div className="space-y-2.5 text-xs text-slate-700 dark:text-slate-300 bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-4 rounded-2xl border border-emerald-100 dark:border-emerald-900 transition-colors">
                 <div className="flex items-start space-x-2">
                   <Gift className="w-4 h-4 text-emerald-600 mt-0.5 flex-shrink-0" />
                   <div>
@@ -322,7 +322,7 @@ function RedeemContent() {
                 </button>
                 <Link
                   href="/b2c/passport"
-                  className="w-full h-12 min-h-[48px] px-4 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 font-bold text-xs rounded-xl transition-all flex items-center justify-center"
+                  className="w-full h-12 min-h-[48px] px-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 font-bold text-xs rounded-xl transition-all flex items-center justify-center"
                 >
                   Вернуться в Паспорт района
                 </Link>
@@ -332,7 +332,7 @@ function RedeemContent() {
 
           {/* RE-REDEMPTION BLOCKED STATE DISPLAY */}
           {resultState === 'ALREADY_REDEEMED' && (
-            <div className="bg-red-50 border-2 border-red-500 rounded-3xl p-5 shadow-lg space-y-4 animate-in fade-in zoom-in duration-200">
+            <div className="bg-red-50 dark:bg-red-950/20 border-2 border-red-500 rounded-3xl p-5 shadow-lg space-y-4 animate-in fade-in zoom-in duration-200 transition-colors">
               <div className="flex items-center space-x-3 pb-3 border-b border-red-200">
                 <div className="w-10 h-10 rounded-full bg-red-600 text-white flex items-center justify-center flex-shrink-0 shadow">
                   <AlertTriangle className="w-6 h-6" />
@@ -374,7 +374,7 @@ function RedeemContent() {
                 </button>
                 <Link
                   href="/b2c/passport"
-                  className="w-full h-12 min-h-[48px] px-4 bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 font-bold text-xs rounded-xl transition-all flex items-center justify-center"
+                  className="w-full h-12 min-h-[48px] px-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 font-bold text-xs rounded-xl transition-all flex items-center justify-center"
                 >
                   Вернуться в Паспорт района
                 </Link>
@@ -384,7 +384,7 @@ function RedeemContent() {
 
           {/* NOT FOUND / INVALID PIN STATE */}
           {resultState === 'NOT_FOUND' && (
-            <div className="bg-amber-50 border-2 border-amber-400 rounded-3xl p-5 shadow-lg space-y-4 animate-in fade-in zoom-in duration-200">
+            <div className="bg-amber-50 dark:bg-amber-950/20 border-2 border-amber-400 dark:border-amber-700 rounded-3xl p-5 shadow-lg space-y-4 animate-in fade-in zoom-in duration-200 transition-colors">
               <div className="flex items-center space-x-3 pb-3 border-b border-amber-200">
                 <div className="w-10 h-10 rounded-full bg-amber-500 text-white flex items-center justify-center flex-shrink-0 shadow">
                   <XCircle className="w-6 h-6" />
@@ -432,8 +432,8 @@ function RedeemContent() {
                     onKeyDown={(e) => handleKeyDown(idx, e)}
                     className={`w-14 h-16 text-center text-2xl font-mono font-black rounded-2xl border-2 transition-all shadow-sm outline-none ${
                       digit
-                        ? 'border-emerald-600 bg-emerald-50 text-emerald-950 ring-4 ring-emerald-100'
-                        : 'border-slate-300 bg-white text-slate-900 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100'
+                        ? 'border-emerald-600 bg-emerald-50 dark:bg-emerald-950/30 text-emerald-950 dark:text-emerald-300 ring-4 ring-emerald-100 dark:ring-emerald-950/40'
+                        : 'border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-900 dark:text-white focus:border-emerald-500 focus:ring-4 focus:ring-emerald-100 dark:focus:ring-emerald-950/40'
                     }`}
                   />
                 ))}
@@ -454,8 +454,8 @@ function RedeemContent() {
               </button>
 
               {/* Numeric Keypad for touch screens */}
-              <div className="pt-4 border-t border-slate-200">
-                <div className="text-[11px] font-bold text-slate-400 text-center uppercase tracking-wider mb-3">
+              <div className="pt-4 border-t border-slate-200 dark:border-slate-800">
+                <div className="text-[11px] font-bold text-slate-400 dark:text-slate-500 text-center uppercase tracking-wider mb-3">
                   Цифровая клавиатура
                 </div>
                 <div className="grid grid-cols-3 gap-2.5 max-w-xs mx-auto">
@@ -464,7 +464,7 @@ function RedeemContent() {
                       key={num}
                       type="button"
                       onClick={() => handleKeypadPress(num)}
-                      className="h-12 min-h-[48px] bg-white hover:bg-emerald-50 text-slate-900 font-mono font-extrabold text-xl rounded-xl border border-slate-200 shadow-sm active:bg-emerald-100 transition-all"
+                      className="h-12 min-h-[48px] bg-white dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-mono font-extrabold text-xl rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm active:bg-emerald-100 dark:active:bg-emerald-950/40 transition-all"
                     >
                       {num}
                     </button>
@@ -472,21 +472,21 @@ function RedeemContent() {
                   <button
                     type="button"
                     onClick={handleKeypadClear}
-                    className="h-12 min-h-[48px] bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs rounded-xl border border-slate-200 flex items-center justify-center transition-all"
+                    className="h-12 min-h-[48px] bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 font-bold text-xs rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-center transition-all"
                   >
                     Сброс
                   </button>
                   <button
                     type="button"
                     onClick={() => handleKeypadPress('0')}
-                    className="h-12 min-h-[48px] bg-white hover:bg-emerald-50 text-slate-900 font-mono font-extrabold text-xl rounded-xl border border-slate-200 shadow-sm active:bg-emerald-100 transition-all"
+                    className="h-12 min-h-[48px] bg-white dark:bg-slate-800 hover:bg-emerald-50 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-mono font-extrabold text-xl rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm active:bg-emerald-100 dark:active:bg-emerald-950/40 transition-all"
                   >
                     0
                   </button>
                   <button
                     type="button"
                     onClick={handleKeypadBackspace}
-                    className="h-12 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl border border-slate-200 flex items-center justify-center transition-all"
+                    className="h-12 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center justify-center transition-all"
                     title="Стереть"
                   >
                     <Delete className="w-5 h-5 text-slate-600" />
@@ -498,7 +498,7 @@ function RedeemContent() {
         </div>
 
         {/* Footer info */}
-        <div className="mt-8 text-center text-[11px] text-slate-400 font-medium">
+        <div className="mt-8 text-center text-[11px] text-slate-400 dark:text-slate-500 font-medium">
           ЖЕРЛЕС MVP &bull; Паспорт района Алматы
         </div>
       </main>
@@ -510,9 +510,9 @@ export default function RedeemPage() {
   return (
     <Suspense
       fallback={
-        <div className="max-w-md mx-auto min-h-screen bg-slate-50 flex items-center justify-center p-6 text-center">
+        <div className="max-w-md mx-auto min-h-screen bg-slate-50 dark:bg-slate-900 flex items-center justify-center p-6 text-center transition-colors">
           <div className="animate-spin w-8 h-8 border-4 border-emerald-600 border-t-transparent rounded-full mx-auto mb-3" />
-          <p className="text-xs text-slate-500 font-medium">Загрузка формы гашения...</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Загрузка формы гашения...</p>
         </div>
       }
     >

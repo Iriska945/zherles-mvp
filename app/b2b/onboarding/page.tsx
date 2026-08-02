@@ -81,13 +81,13 @@ export default function BusinessOnboardingPage() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header section */}
-        <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="bg-white dark:bg-slate-800 rounded-2xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm mb-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
           <div>
             <div className="inline-flex items-center space-x-2 bg-emerald-50 text-emerald-700 text-xs font-semibold px-3 py-1 rounded-full mb-2">
               <Sparkles className="w-3.5 h-3.5" />
               <span>Настройка профиля B2B</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
               Онбординг & Профиль бизнеса
             </h1>
             <p className="text-slate-600 text-sm mt-1">
@@ -120,10 +120,10 @@ export default function BusinessOnboardingPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Form */}
-          <div className="lg:col-span-2 bg-white rounded-2xl p-6 sm:p-8 border border-slate-200 shadow-sm">
+          <div className="lg:col-span-2 bg-white dark:bg-slate-800 rounded-2xl p-6 sm:p-8 border border-slate-200 dark:border-slate-700 shadow-sm">
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="border-b border-slate-100 pb-4">
-                <h2 className="text-lg font-bold text-slate-900 flex items-center space-x-2">
+              <div className="border-b border-slate-100 dark:border-slate-700 pb-4">
+                <h2 className="text-lg font-bold text-slate-900 dark:text-white flex items-center space-x-2">
                   <Store className="w-5 h-5 text-emerald-600" />
                   <span>Основная информация</span>
                 </h2>

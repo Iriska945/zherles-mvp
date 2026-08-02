@@ -17,7 +17,7 @@ export default function B2BNav() {
   ];
 
   return (
-    <div className="bg-white border-b border-slate-200 mb-6 -mt-2 shadow-xs">
+    <div className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 mb-6 -mt-2 shadow-xs transition-colors">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between overflow-x-auto py-2.5 scrollbar-none">
           <nav className="flex items-center space-x-1 sm:space-x-2">
@@ -30,11 +30,11 @@ export default function B2BNav() {
                   href={link.href}
                   className={`inline-flex items-center space-x-2 px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all whitespace-nowrap ${
                     isActive
-                      ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/80 shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50 border border-transparent'
+                      ? 'bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-400 border border-emerald-200/80 dark:border-emerald-800 shadow-xs'
+                      : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800 border border-transparent'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-emerald-600' : 'text-slate-400'}`} />
+                  <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400'}`} />
                   <span>{link.label}</span>
                 </Link>
               );

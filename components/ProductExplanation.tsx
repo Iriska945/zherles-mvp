@@ -1,52 +1,50 @@
-'use client';
-
 import React from 'react';
+import { useLanguage } from '@/context/LanguageContext';
 import { Users, Compass, Smartphone, ArrowRight, ShieldCheck } from 'lucide-react';
 
 export default function ProductExplanation() {
+  const { t } = useLanguage();
+
   const steps = [
     {
       step: 'Шаг 1',
-      title: 'Локальная коалиция',
+      title: t('explain.step1.title'),
       icon: Users,
-      badgeColor: 'bg-emerald-100 text-emerald-800 border-emerald-200',
+      badgeColor: 'bg-emerald-100 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-300 border-emerald-200 dark:border-emerald-900',
       iconBg: 'bg-emerald-500 text-white',
-      description:
-        'Неконкурирующие заведения одного микрорайона (кофейня, барбершоп, фитнес, цветы) объединяются в партнерскую сеть без рекламных расходов.',
+      description: t('explain.step1.desc'),
     },
     {
       step: 'Шаг 2',
-      title: 'Запуск Көрші-маршрута',
+      title: t('explain.step2.title'),
       icon: Compass,
-      badgeColor: 'bg-blue-100 text-blue-800 border-blue-200',
+      badgeColor: 'bg-blue-100 dark:bg-blue-950/40 text-blue-800 dark:text-blue-300 border-blue-200 dark:border-blue-900',
       iconBg: 'bg-blue-600 text-white',
-      description:
-        'Бизнесы обмениваются взаимными акциями. Клиент кофейни получает купон со скидкой в салон, а гость салона — подарок в кофейне.',
+      description: t('explain.step2.desc'),
     },
     {
       step: 'Шаг 3',
-      title: 'Паспорт района для жителей',
+      title: t('explain.step3.title'),
       icon: Smartphone,
-      badgeColor: 'bg-purple-100 text-purple-800 border-purple-200',
+      badgeColor: 'bg-purple-100 dark:bg-purple-950/40 text-purple-800 dark:text-purple-300 border-purple-200 dark:border-purple-900',
       iconBg: 'bg-purple-600 text-white',
-      description:
-        'Жители микрорайона получают единый цифровой Паспорт с бонусами и привилегиями, обеспечивая регулярный и лояльный клиентопоток.',
+      description: t('explain.step3.desc'),
     },
   ];
 
   return (
-    <section className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-sm space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
+    <section className="bg-white dark:bg-slate-900 p-6 sm:p-8 rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-6 transition-colors duration-205">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 dark:border-slate-800 pb-5">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 mb-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-900 mb-2">
             <ShieldCheck className="w-3.5 h-3.5" />
-            <span>Принцип работы ЖЕРЛЕС</span>
+            <span>{t('explain.title')}</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-            Как работают Көрші-маршруты?
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight animate-fade-in">
+            {t('explain.heading')}
           </h2>
         </div>
-        <p className="text-sm text-slate-500 max-w-md">
+        <p className="text-sm text-slate-500 dark:text-slate-400 max-w-md">
           Модель гиперлокальной кооперации: объединяйте клиентов соседних бизнесов без платного таргетинга.
         </p>
       </div>
@@ -57,7 +55,7 @@ export default function ProductExplanation() {
           return (
             <div
               key={idx}
-              className="bg-slate-50 p-6 rounded-2xl border border-slate-200/80 hover:border-slate-300 hover:shadow-md transition-all flex flex-col justify-between space-y-4 relative group"
+              className="bg-slate-50 dark:bg-slate-800/40 p-6 rounded-2xl border border-slate-200/80 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-md transition-all flex flex-col justify-between space-y-4 relative group"
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
@@ -72,18 +70,18 @@ export default function ProductExplanation() {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-emerald-700 transition-colors">
+                  <h3 className="text-lg font-bold text-slate-900 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">
                     {item.title}
                   </h3>
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mt-2">
+                  <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed mt-2">
                     {item.description}
                   </p>
                 </div>
               </div>
 
               {idx < steps.length - 1 && (
-                <div className="hidden md:block absolute -right-3 top-1/2 -translate-y-1/2 z-10 text-slate-300">
-                  <ArrowRight className="w-5 h-5 bg-white rounded-full border border-slate-200 p-0.5" />
+                <div className="hidden md:block absolute -right-3 top-1/2 -translate-y-1/2 z-10 text-slate-300 dark:text-slate-600">
+                  <ArrowRight className="w-5 h-5 bg-white dark:bg-slate-900 rounded-full border border-slate-200 dark:border-slate-800 p-0.5" />
                 </div>
               )}
             </div>

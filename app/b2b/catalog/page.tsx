@@ -108,7 +108,7 @@ export default function CatalogPage() {
         </div>
 
         {/* Search & Filter Bar */}
-        <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm space-y-4 mb-8">
+        <div className="bg-white dark:bg-slate-800 rounded-2xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm space-y-4 mb-8">
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
             {/* Search Input */}
             <div className="relative w-full md:w-96">
@@ -180,12 +180,12 @@ export default function CatalogPage() {
 
         {/* Template Cards Grid */}
         {filteredTemplates.length === 0 ? (
-          <div className="bg-white rounded-2xl p-12 text-center border border-slate-200 space-y-3">
+          <div className="bg-white dark:bg-slate-800 rounded-2xl p-12 text-center border border-slate-200 dark:border-slate-700 space-y-3">
             <div className="w-12 h-12 rounded-full bg-slate-100 flex items-center justify-center mx-auto text-slate-400">
               <Search className="w-6 h-6" />
             </div>
             <h3 className="text-lg font-bold text-slate-800">Шаблоны не найдены</h3>
-            <p className="text-slate-500 text-sm max-w-md mx-auto">
+            <p className="text-slate-500 dark:text-slate-400 text-sm max-w-md mx-auto">
               Попробуйте сбросить поисковый запрос или выбрать другие фильтры категорий и тегов.
             </p>
             <button
@@ -207,7 +207,7 @@ export default function CatalogPage() {
               return (
                 <div
                   key={template.id}
-                  className={`bg-white rounded-2xl p-6 border transition-all duration-200 flex flex-col justify-between relative shadow-sm hover:shadow-md ${
+                  className={`bg-white dark:bg-slate-800 rounded-2xl p-6 border transition-all duration-200 flex flex-col justify-between relative shadow-sm hover:shadow-md ${
                     recommended
                       ? 'border-emerald-400 ring-2 ring-emerald-500/20 bg-gradient-to-b from-emerald-50/30 to-white'
                       : 'border-slate-200 hover:border-slate-300'
@@ -216,7 +216,7 @@ export default function CatalogPage() {
                   <div className="space-y-4">
                     {/* Top Row: Category & Recommendation Badge */}
                     <div className="flex items-start justify-between gap-2">
-                      <span className="bg-slate-100 text-slate-700 text-xs font-bold px-2.5 py-1 rounded-lg">
+                      <span className="bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-bold px-2.5 py-1 rounded-lg">
                         {template.category}
                       </span>
 
@@ -230,7 +230,7 @@ export default function CatalogPage() {
 
                     {/* Title */}
                     <div>
-                      <h3 className="text-lg font-bold text-slate-900 leading-snug">
+                      <h3 className="text-lg font-bold text-slate-900 dark:text-white leading-snug">
                         {template.title}
                       </h3>
                       <p className="text-xs text-slate-500 mt-1 font-medium">
@@ -244,7 +244,7 @@ export default function CatalogPage() {
                     </p>
 
                     {/* Key Metrics Box */}
-                    <div className="bg-slate-50 rounded-xl p-3.5 border border-slate-100 space-y-2">
+                    <div className="bg-slate-50 dark:bg-slate-900 rounded-xl p-3.5 border border-slate-100 dark:border-slate-700 space-y-2">
                       <div className="flex items-center justify-between text-xs">
                         <span className="text-slate-500 flex items-center space-x-1.5">
                           <Gift className="w-3.5 h-3.5 text-emerald-600" />
