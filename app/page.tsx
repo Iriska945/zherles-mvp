@@ -23,7 +23,7 @@ import { BusinessPassportModalData } from '@/types';
 
 export default function HomePage() {
   const { state } = useApp();
-  const { t } = useLanguage();
+  const { t, tc } = useLanguage();
   const [selectedBusiness, setSelectedBusiness] = useState<BusinessPassportModalData | null>(null);
 
   const totalBusinessesCount = 1 + (state.partners ? state.partners.length : 0);
@@ -61,7 +61,7 @@ export default function HomePage() {
           </h1>
 
           <p className="text-slate-300 text-base sm:text-xl leading-relaxed max-w-2xl">
-            {t('landing.hero.desc', { district: state.business.district })}
+            {t('landing.hero.desc', { district: tc(state.business.district) })}
           </p>
 
           {/* Actionable Hero Buttons */}
@@ -92,8 +92,8 @@ export default function HomePage() {
             <span className="text-xs font-medium">{t('landing.metrics.business')}</span>
             <Store className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
           </div>
-          <p className="text-lg font-extrabold text-slate-900 dark:text-white truncate">{state.business.name}</p>
-          <p className="text-xs text-slate-500 dark:text-slate-400">{state.business.district} район</p>
+          <p className="text-lg font-extrabold text-slate-900 dark:text-white truncate">{tc(state.business.name)}</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400">{tc(state.business.district)} {t('app.districtAlmaty')}</p>
         </div>
 
         <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-1 transition-colors">

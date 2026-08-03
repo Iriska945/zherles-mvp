@@ -17,7 +17,7 @@ export default function InteractiveMap({
   partners,
   onSelectBusiness,
 }: InteractiveMapProps) {
-  const { t } = useLanguage();
+  const { t, tc } = useLanguage();
   const [selectedDistrict, setSelectedDistrict] = useState<string>('ALL');
 
   // Combine primary business & partners into uniform list
@@ -27,7 +27,7 @@ export default function InteractiveMap({
       name: primaryBusiness.name,
       category: primaryBusiness.category,
       district: primaryBusiness.district,
-      address: primaryBusiness.address || 'ул. Байтурсынова 88, Алмалинский район',
+      address: primaryBusiness.address || tc('ул. Байтурсынова 88, Алмалинский район'),
       avgCheck: primaryBusiness.avgCheck,
       phone: primaryBusiness.phone,
       contactName: primaryBusiness.contactName,
@@ -35,7 +35,7 @@ export default function InteractiveMap({
       logoUrl: primaryBusiness.logoUrl || '☕',
       coordinates: primaryBusiness.coordinates || { lat: 43.2565, lng: 76.9284 },
       activePromotions: primaryBusiness.activePromotions || [
-        'Скидка 20% на спешелти раф при покупке десерта',
+        tc('Скидка 20% на спешелти раф при покупке десерта'),
       ],
       isPrimary: true,
     },
@@ -44,7 +44,7 @@ export default function InteractiveMap({
       name: p.name,
       category: p.category,
       district: p.district,
-      address: p.address || `${p.district} район, Алматы`,
+      address: p.address || `${tc(p.district)} ${t('app.districtAlmaty')}`,
       avgCheck: p.avgCheck,
       matchScore: p.matchScore,
       logoUrl:
@@ -53,7 +53,7 @@ export default function InteractiveMap({
         p.category.includes('Цветы') ? '💐' :
         p.category.includes('Выпечка') ? '🥐' : '🏪',
       coordinates: p.coordinates || { lat: 43.2530, lng: 76.9300 },
-      activePromotions: p.activePromotions || [`Спецпредложение для партнеров`],
+      activePromotions: p.activePromotions || [tc('Спецпредложение для партнеров')],
       isPrimary: false,
     })),
   ];
@@ -61,9 +61,9 @@ export default function InteractiveMap({
   // District filter option list
   const districtOptions = [
     { id: 'ALL', label: t('map.allDistricts') },
-    { id: 'Алмалинский', label: 'Алмалинский' },
-    { id: 'Медеуский', label: 'Медеуский' },
-    { id: 'Бостандыкский', label: 'Бостандыкский' },
+    { id: 'Алмалинский', label: tc('Алмалинский') },
+    { id: 'Медеуский', label: tc('Медеуский') },
+    { id: 'Бостандыкский', label: tc('Бостандыкский') },
   ];
 
   // Filter businesses according to active district tab
@@ -125,9 +125,9 @@ export default function InteractiveMap({
                   key={biz.id}
                   geometry={[biz.coordinates?.lat || 43.2565, biz.coordinates?.lng || 76.9284]}
                   properties={{
-                    balloonContentHeader: biz.name,
-                    balloonContentBody: `<div style="font-family: sans-serif; color: #1e293b;"><b>${biz.category}</b><br/>Средний чек: ${biz.avgCheck}₸<br/></div>`,
-                    hintContent: biz.name
+                    balloonContentHeader: tc(biz.name),
+                    balloonContentBody: `<div style="font-family: sans-serif; color: #1e293b;"><b>${tc(biz.category)}</b><br/>${t('map.avgCheck')}: ${biz.avgCheck}₸<br/></div>`,
+                    hintContent: tc(biz.name)
                   }}
                   options={{
                     preset: biz.isPrimary ? 'islands#greenDotIcon' : 'islands#blueIcon'
@@ -186,9 +186,9 @@ export default function InteractiveMap({
                   </span>
                   <div>
                     <h4 className="font-extrabold text-sm text-slate-900 dark:text-white group-hover:text-emerald-700 dark:group-hover:text-emerald-400 transition-colors">
-                      {biz.name}
+                      {tc(biz.name)}
                     </h4>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">{biz.category}</p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">{tc(biz.category)}</p>
                   </div>
                 </div>
 
@@ -209,7 +209,7 @@ export default function InteractiveMap({
               <div className="space-y-1.5 text-xs text-slate-600 dark:text-slate-300">
                 <div className="flex items-center gap-1.5 text-slate-500 dark:text-slate-400">
                   <MapPin className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 flex-shrink-0" />
-                  <span className="truncate">{biz.address}</span>
+                  <span className="truncate">{tc(biz.address || '')}</span>
                 </div>
 
                 <div className="flex items-center justify-between pt-1 border-t border-slate-200/60 dark:border-slate-700/60">

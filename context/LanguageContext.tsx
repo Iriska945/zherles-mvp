@@ -148,7 +148,7 @@ const translations = {
     // Landing Page
     'landing.hero.badge': 'Көрші-маршруттар платформасы',
     'landing.hero.live': 'LIVE: коалицияда {count} мекеме',
-    'landing.hero.title': 'Клиенттермен өза алмасу',
+    'landing.hero.title': 'Клиенттермен өзара алмасу',
     'landing.hero.desc': 'Жергілікті заведениелермен бірлескен акциялар жасап, жаңа қонақтарды маркетингтік шығынсыз тартыңыз ({district} ауданы).',
     'landing.hero.btn.b2b': 'Көрші-маршрутты бастау',
     'landing.hero.btn.b2c': 'Тұрғындарға арналған аудан паспорты',
@@ -252,7 +252,7 @@ const translations = {
     'passport.loading': 'Аудан паспорты жүктелуде...',
     'passport.showQrPrompt': 'Кассада QR көрсетіңіз',
     'passport.cashierInstruction': 'Кассир QR-кодты сканерлейді немесе PIN-кодты енгізеді',
-    'passport.pinForRedeem': 'Өтеуге арналған ПИН-код',
+    'passport.pinForRedeem': 'Өтеуге арналған ПІН-код',
     'passport.goToRedemption': 'Бонусты өтеуге өту',
     'passport.shareCode': 'Бұл кодпен бөлісу:'
   },
@@ -305,9 +305,9 @@ const translations = {
     'map.districtActive': 'District: {district}',
     'map.placesCount': '{count} places',
     'map.coalitionTitle': 'Venues in Coalition ({count})',
-    'map.coalitionSub': 'Click for details passport',
+    'map.coalitionSub': 'Click for detailed passport',
     'map.yourBusiness': 'Your Business',
-    'map.avgCheck': 'Avg Bill',
+    'map.avgCheck': 'Avg Check',
     'map.openPassport': 'Open Venue Passport',
     'map.matching': 'Compatibility {score}%',
     
@@ -383,10 +383,43 @@ const translations = {
   }
 };
 
+// Content translation map — for dynamic data like business categories, names, addresses, districts
+const contentMap: Record<string, Record<string, string>> = {
+  // Categories
+  'Кофейня & Пекарня': { kk: 'Кофехана & Нан пісіру', en: 'Coffee & Bakery' },
+  'Барбершоп & Мужской уход': { kk: 'Барбершоп & Ер адам күтімі', en: "Barbershop & Men's Grooming" },
+  'Спорт & Фитнес': { kk: 'Спорт & Фитнес', en: 'Sports & Fitness' },
+  'Цветы & Подарки': { kk: 'Гүлдер & Сыйлықтар', en: 'Flowers & Gifts' },
+  'Выпечка & Десерты': { kk: 'Наубайхана & Десерттер', en: 'Pastry & Desserts' },
+  'Кофейня': { kk: 'Кофехана', en: 'Coffee Shop' },
+
+  // Business names (brand names kept as-is, only descriptive parts translated)
+  'Urban Coffee': { kk: 'Urban Coffee', en: 'Urban Coffee' },
+  'Барбершоп "ManCave"': { kk: 'Барбершоп "ManCave"', en: 'Barbershop "ManCave"' },
+  'Фитнес-клуб "FitLife"': { kk: 'Фитнес-клуб "FitLife"', en: 'Fitness Club "FitLife"' },
+  'Цветочная студия "Flora"': { kk: 'Гүл студиясы "Flora"', en: 'Flower Studio "Flora"' },
+  'Пекарня "Croissant Co"': { kk: 'Наубайхана "Croissant Co"', en: 'Bakery "Croissant Co"' },
+
+  // Districts
+  'Алмалинский': { kk: 'Алмалы', en: 'Almaly' },
+  'Медеуский': { kk: 'Медеу', en: 'Medeu' },
+  'Бостандыкский': { kk: 'Бостандық', en: 'Bostandyk' },
+  'Алмалинский район': { kk: 'Алмалы ауданы', en: 'Almaly District' },
+  
+  // Addresses
+  'ул. Байтурсынова 88, Алмалинский район': { kk: 'Байтұрсынов к-сі 88, Алмалы ауданы', en: '88 Baitursynov St., Almaly District' },
+  
+  // Common phrases appearing in dynamic data
+  'Прямой визит': { kk: 'Тікелей бару', en: 'Direct visit' },
+  'Скидка 20% на спешелти раф при покупке десерта': { kk: 'Десерт сатып алғанда спешелти рафқа 20% жеңілдік', en: '20% off specialty raf with dessert purchase' },
+  'Спецпредложение для партнеров': { kk: 'Серіктестерге арнайы ұсыныс', en: 'Special offer for partners' },
+};
+
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
   t: (key: string, variables?: Record<string, string | number>) => string;
+  tc: (text: string) => string;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -419,8 +452,16 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     return text;
   };
 
+  // Translate content/data strings (categories, names, addresses, districts)
+  const tc = (text: string): string => {
+    if (language === 'ru') return text;
+    const mapped = contentMap[text];
+    if (mapped && mapped[language]) return mapped[language];
+    return text;
+  };
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t }}>
+    <LanguageContext.Provider value={{ language, setLanguage, t, tc }}>
       {children}
     </LanguageContext.Provider>
   );
