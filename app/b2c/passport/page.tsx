@@ -258,7 +258,7 @@ function DistrictPassportContent() {
               <div
                 key={deal.id}
                 id={`deal-${deal.pinCode}`}
-                className={`bg-white dark:bg-slate-850 rounded-2xl p-4 shadow-sm border transition-colors ${
+                className={`bg-white dark:bg-slate-800 rounded-2xl p-4 shadow-sm border transition-colors ${
                   isHighlighted
                     ? 'border-2 border-emerald-500 ring-4 ring-emerald-100 dark:ring-emerald-950/40 shadow-md'
                     : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
@@ -292,7 +292,7 @@ function DistrictPassportContent() {
                   <div className="text-base font-black text-slate-900 dark:text-white mb-1 leading-tight">
                     {deal.title}
                   </div>
-                  <div className="text-sm text-slate-600 dark:text-slate-350 font-medium">
+                  <div className="text-sm text-slate-600 dark:text-slate-300 font-medium">
                     {deal.reward}
                   </div>
                   {deal.minSpend && (
@@ -313,7 +313,7 @@ function DistrictPassportContent() {
                 </div>
 
                 {/* Action Buttons with h-12 (min 48px height) touch targets */}
-                <div className="space-y-2 pt-1 border-t border-slate-100 dark:border-slate-850">
+                <div className="space-y-2 pt-1 border-t border-slate-100 dark:border-slate-700">
                   <div className="grid grid-cols-2 gap-2">
                     {/* Show QR Modal Button */}
                     <button

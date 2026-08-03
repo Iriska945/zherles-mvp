@@ -470,7 +470,7 @@ export default function PersonalCabinetPage() {
                 <div className="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-slate-800">
                   <div className="text-xs dark:text-slate-300">
                     <span className="text-slate-400 dark:text-slate-500">PIN: </span>
-                    <strong className="font-mono text-slate-900 dark:text-white bg-white dark:bg-slate-900 px-2 py-1 rounded-md border border-slate-200 dark:border-slate-750">
+                    <strong className="font-mono text-slate-900 dark:text-white bg-white dark:bg-slate-900 px-2 py-1 rounded-md border border-slate-200 dark:border-slate-700">
                       {coupon.pinCode}
                     </strong>
                   </div>
